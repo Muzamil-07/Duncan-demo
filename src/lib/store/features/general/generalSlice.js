@@ -1,8 +1,9 @@
 import { createAppSlice } from '../../createAppSlice'
 const initialState = {
-  sceneHeight: '90vh',
+  sceneHeight: '73vh',
   menueCollapsed: false,
-  zoom: 0
+  zoom: 0,
+  mode: 'black'
 }
 
 // If you are not using async thunks you can use the standalone `createSlice`.
@@ -21,6 +22,9 @@ export const generalSlice = createAppSlice({
     }),
     setZoom: create.reducer((state, action) => {
       state.zoom = action.payload
+    }),
+    setMode: create.reducer((state, action) => {
+      state.mode = action.payload
     })
   }),
   // You can define your selectors here. These selectors receive the slice
@@ -28,14 +32,19 @@ export const generalSlice = createAppSlice({
   selectors: {
     selectSceneHeight: state => state.sceneHeight,
     selectMenueCollapsedState: state => state.menueCollapsed,
-    selectZoom: state => state.zoom
+    selectZoom: state => state.zoom,
+    selectMode: state => state.mode
   }
 })
 
 // Action creators are generated for each case reducer function.
-export const { setSceneHeight, toggleMenuCollapse, setZoom } =
+export const { setSceneHeight, toggleMenuCollapse, setZoom, setMode } =
   generalSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectSceneHeight, selectMenueCollapsedState, selectZoom } =
-  generalSlice.selectors
+export const {
+  selectSceneHeight,
+  selectMenueCollapsedState,
+  selectZoom,
+  selectMode
+} = generalSlice.selectors

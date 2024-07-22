@@ -69,4 +69,4 @@ export function Tuckend (props) {
   )
 }
 
-useGLTF.preload('/assets/models/tuckend/tuckend.glb')
+// useGLTF.preload('/assets/models/tuckend/tuckend.glb')

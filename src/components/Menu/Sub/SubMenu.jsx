@@ -1,5 +1,12 @@
 /* eslint-disable react/prop-types */
-import { Box, styled, Tooltip, tooltipClasses, Zoom } from '@mui/material'
+import {
+  Box,
+  styled,
+  Tooltip,
+  tooltipClasses,
+  Typography,
+  Zoom
+} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle' // Make sure to import the icon
 import { toCamelCase } from '../../../lib/utils'
@@ -14,6 +21,18 @@ export const CustomTooltip = styled(({ className, ...props }) => (
     backgroundColor: '#17242B'
   }
 }))
+
+const ToolTipContent = ({ option }) => {
+  return (
+    <Box>
+      <Typography sx={{ fontSize: '14px' }}>
+        <span style={{ fontWeight: 'bold' }}>{option.name} </span> Lorem ipsum
+        dolor sit, amet consectetur adipisicing elit. Quo impedit quos nemo sed
+        nobis officia aliquid voluptas at, in tempore!
+      </Typography>
+    </Box>
+  )
+}
 const SubMenu = ({ options, handleSelector, selectedValue, multiselect }) => {
   const [zoomLevel, setZoomLevel] = useState()
 
@@ -60,7 +79,7 @@ const SubMenu = ({ options, handleSelector, selectedValue, multiselect }) => {
             }}
             onClick={() => handleSelector(option.name)}
           >
-            <CustomTooltip title={option.name}>
+            <CustomTooltip title={<ToolTipContent option={option} />}>
               <Box
                 component='img'
                 src={option.image}
@@ -68,7 +87,11 @@ const SubMenu = ({ options, handleSelector, selectedValue, multiselect }) => {
                   width: zoomLevel > 90 ? '70px' : '100px',
                   height: zoomLevel > 90 ? '70px' : '100px',
                   objectFit: 'cover',
-                  borderRadius: '50%'
+                  borderRadius: '50%',
+                  transition: 'all 0.7s',
+                  '&:hover': {
+                    transform: 'scale(1.2)' // Scale the image on hover
+                  }
                 }}
               />
             </CustomTooltip>

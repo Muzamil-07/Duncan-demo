@@ -1,23 +1,21 @@
 /* eslint-disable react/no-unknown-property */
 import React, { Suspense, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import {
-  Backdrop,
-  OrbitControls,
-  Preload,
-  SoftShadows,
-  Stage
-} from '@react-three/drei'
+import { OrbitControls, Preload, SoftShadows } from '@react-three/drei'
 // import ZoomEffect from '../ZoomEffect'
 import * as THREE from 'three'
 import Lights from '../Lights/Lights'
 import ModelLoader from '../../../components/ModelLoader'
 import { useAppSelector } from '../../../lib/store/hooks'
-import { selectSceneHeight } from '../../../lib/store/features/general/generalSlice'
+import {
+  selectMode,
+  selectSceneHeight
+} from '../../../lib/store/features/general/generalSlice'
 import ZoomEffect from '../ZoomEffect'
 import { subtractVh } from '../../../lib/utils'
 
 const CanvasScreen = ({ children }) => {
+  const mode = useAppSelector(selectMode)
   // const { enabled, ...config } = useControls({
   //   enabled: true,
   //   size: { value: 25, min: 0, max: 100 },
@@ -34,7 +32,7 @@ const CanvasScreen = ({ children }) => {
     <div
       style={{
         width: '100%',
-        height: subtractVh(height, 10),
+        height: subtractVh(height, 0),
         position: 'relative',
         transition: 'all 0.4s'
       }}
@@ -64,7 +62,20 @@ const CanvasScreen = ({ children }) => {
 
         {/************ SHADOWS  ****************/}
         {/* <SoftShadows size={25} samples={100} focus={0.6} /> */}
-        <SoftShadows size={10} samples={30} focus={0.6} />
+        <SoftShadows size={0} samples={10} focus={0} />
+
+        {/* PLANE */}
+        <mesh
+          receiveShadow
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, -1, 0]}
+        >
+          <planeGeometry attach='geometry' args={[100, 100]} />
+          <meshStandardMaterial
+            attach='material'
+            color={mode === 'black' ? '#443E3E' : '#e0dede'}
+          />
+        </mesh>
 
         {/* {enabled && <SoftShadows {...config} />} */}
 
@@ -77,7 +88,7 @@ const CanvasScreen = ({ children }) => {
             makeDefault
             // autoRotate
             enableZoom={false}
-            enablePan={false}
+            enablePan={true}
             //   maxPolarAngle={Math.PI / 2}
             //   minPolarAngle={Math.PI / 2}
           />

@@ -11,23 +11,23 @@ const ModelBuilder = () => {
 
   if (style === 'mailer')
     return (
-      <ModelPreviewer planePositionY={-0.95}>
-        <MailerBox
-          scale={8}
-          position={[0, -0.93, 0]}
-          rotation={[0, angleToRadians(205), 0]}
-        />
-      </ModelPreviewer>
+      // <ModelPreviewer planePositionY={-0.95}>
+      <MailerBox
+        scale={9}
+        position={[0, -0.95, 0]}
+        rotation={[0, angleToRadians(205), 0]}
+      />
+      // </ModelPreviewer>
     )
   else if (style === 'tuckend')
     return (
-      <ModelPreviewer planePositionY={-0.95}>
-        <Tuckend
-          scale={8}
-          position={[0, 0.01, 0]}
-          rotation={[0, angleToRadians(30), 0]}
-        />
-      </ModelPreviewer>
+      // <ModelPreviewer planePositionY={-0.95}>
+      <Tuckend
+        scale={11}
+        position={[0, 0.3, 0]}
+        rotation={[0, angleToRadians(30), 0]}
+      />
+      // </ModelPreviewer>
     )
   else return <></>
 }

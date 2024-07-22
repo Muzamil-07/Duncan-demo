@@ -14,43 +14,79 @@ import PrintSpec from '../../../containers/PrintSpec'
 import PrintSurface from '../../../containers/PrintSurface'
 import Coating from '../../../containers/Coating'
 import Finishing from '../../../containers/Finishing'
-import { useAppDispatch } from '../../../lib/store/hooks'
+import { useAppDispatch, useAppSelector } from '../../../lib/store/hooks'
 import { setSceneHeight } from '../../../lib/store/features/general/generalSlice'
+import { selectBoxAttributes } from '../../../lib/store/features/box/boxSlice'
+import _ from 'lodash'
 
 const steps = {
   style: {
     name: 'Style',
-    page: <Style />
+    page: <Style />,
+    key: 'style',
+    defaultVal: 'none'
   },
-  dimensions: { name: 'Dimension', page: <Dimensions /> },
+  dimensions: {
+    name: 'Dimension',
+    page: <Dimensions />,
+    key: 'dimensions',
+    defaultVal: {
+      length: '',
+      width: '',
+      height: '',
+      unit: 'mm'
+    }
+  },
   material: {
     name: 'Material',
-    page: <Material />
+    page: <Material />,
+    key: 'material',
+    defaultVal: 'none'
   },
   printSpec: {
     name: 'Print Spec',
-    page: <PrintSpec />
+    page: <PrintSpec />,
+    key: 'print',
+    defaultVal: 'none'
   },
   printSurface: {
     name: 'Print Surface',
-    page: <PrintSurface />
+    page: <PrintSurface />,
+    key: 'printSurface',
+    defaultVal: 'none'
   },
   coating: {
     name: 'Coating',
-    page: <Coating />
+    page: <Coating />,
+    key: 'coating',
+    defaultVal: 'none'
   },
   finishing: {
     name: 'Finishing',
-    page: <Finishing />
+    page: <Finishing />,
+    key: 'finishing',
+    defaultVal: {
+      embossing: false,
+      goldFoil: false,
+      spotGloss: false,
+      none: true
+    }
   },
-  quantity: { name: 'Quantity', page: <Quantity /> }
+  quantity: {
+    name: 'Quantity',
+    page: <Quantity />,
+    key: 'quantity',
+    defaultVal: ''
+  }
 }
 
 const MainMenu = () => {
   const stepKeys = Object.keys(steps)
   const [activeIndex, setActiveIndex] = useState(0)
   const [activeTab, setActiveTab] = useState(stepKeys[0])
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(true)
+
+  const boxAttributes = useAppSelector(selectBoxAttributes)
 
   const dispatch = useAppDispatch()
   const handleNext = () => {
@@ -79,6 +115,8 @@ const MainMenu = () => {
     if (!isDropdownOpen) dispatch(setSceneHeight('73vh'))
     else dispatch(setSceneHeight('90vh'))
   }
+
+  console.log('BOX ATTRIBUTES: ', boxAttributes['coating'])
 
   return (
     <Stack
@@ -117,34 +155,54 @@ const MainMenu = () => {
               <ArrowBackIosIcon />
             </IconButton>
 
-            {stepKeys.map((key, index) => (
-              // <Grid item xs={1} key={key}>
-              <Box
-                key={key}
-                sx={{
-                  display: 'flex',
-                  paddingInline: '30px',
-                  paddingBlock: '0px',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                  borderRadius: '20px',
-                  transition: 'all 0.5s',
-                  bgcolor: activeTab === key ? '#3980AB' : 'none',
-                  color: activeTab === key ? 'white' : 'grey'
-                }}
-                onClick={() => handleMenuClick(key, index)}
-              >
-                <Typography sx={{ fontSize: '14px' }}>
-                  {steps[key].name}
-                </Typography>
-                <CheckCircleIcon
+            {stepKeys.map((val, index) => {
+              console.log(
+                '****************',
+                steps[val].key,
+                !_.isEqual(
+                  boxAttributes[steps[val].key],
+                  steps[val].defaultVal
+                ),
+                boxAttributes[steps[val].key],
+                steps[val].defaultVal
+              )
+              return (
+                // <Grid item xs={1} key={key}>
+                <Box
+                  key={val}
                   sx={{
-                    color: activeTab === key ? 'white' : 'green',
-                    height: '18px'
+                    display: 'flex',
+                    paddingInline: '30px',
+                    paddingBlock: '0px',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    borderRadius: '20px',
+                    transition: 'all 0.5s',
+                    bgcolor: activeTab === val ? '#3980AB' : 'none',
+                    color: activeTab === val ? 'white' : 'grey'
                   }}
-                />
-              </Box>
-            ))}
+                  onClick={() => handleMenuClick(val, index)}
+                >
+                  <Typography sx={{ fontSize: '14px' }}>
+                    {steps[val].name}
+                  </Typography>
+                  <CheckCircleIcon
+                    sx={{
+                      color:
+                        activeTab === val
+                          ? 'white'
+                          : !_.isEqual(
+                              boxAttributes[steps[val].key],
+                              steps[val].defaultVal
+                            )
+                          ? 'green'
+                          : '#CCCCCC',
+                      height: '18px'
+                    }}
+                  />
+                </Box>
+              )
+            })}
             <IconButton
               onClick={handleNext}
               disabled={activeIndex === stepKeys.length - 1}
@@ -155,24 +213,22 @@ const MainMenu = () => {
         </Grid>
       </Grid>
 
-      {isDropdownOpen && (
-        <Stack
-          direction='row'
-          spacing={5}
-          justifyContent='center'
-          alignItems='center'
-          sx={{
-            marginTop: '2rem',
-            marginBottom: '1.5rem'
-            // width: '85%',
-            // maxWidth: '85%',
-            // overflowX: 'scroll'
-            // marginInline: 'auto'
-          }}
-        >
-          {steps[activeTab].page}
-        </Stack>
-      )}
+      <Stack
+        direction='row'
+        spacing={5}
+        justifyContent='center'
+        alignItems='center'
+        sx={{
+          marginTop: '2rem',
+          marginBottom: '1.5rem'
+          // width: '85%',
+          // maxWidth: '85%',
+          // overflowX: 'scroll'
+          // marginInline: 'auto'
+        }}
+      >
+        {steps[activeTab].page}
+      </Stack>
     </Stack>
   )
 }

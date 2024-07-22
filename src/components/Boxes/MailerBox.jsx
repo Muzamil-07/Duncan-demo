@@ -68,4 +68,4 @@ export function MailerBox (props) {
   )
 }
 
-useGLTF.preload('/assets/models/mailer/mailer-box.glb')
+// useGLTF.preload('/assets/models/mailer/mailer-box.glb')

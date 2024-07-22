@@ -5,7 +5,11 @@ import { useEffect } from 'react'
 function CircularProgressWithLabel (props) {
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant='determinate' {...props} />
+      <CircularProgress
+        variant='determinate'
+        {...props}
+        sx={{ color: '#3980AB' }}
+      />
       <Box
         sx={{
           top: 0,
@@ -18,12 +22,7 @@ function CircularProgressWithLabel (props) {
           justifyContent: 'center'
         }}
       >
-        <Typography
-          variant='caption'
-          component='div'
-          p={4}
-          color='text.secondary'
-        >
+        <Typography variant='caption' component='div' p={4} color='grey'>
           {`${Math.round(props.value)}%`}
         </Typography>
       </Box>

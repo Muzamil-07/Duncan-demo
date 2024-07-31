@@ -108,6 +108,8 @@ const MainMenu = () => {
   const handleMenuClick = (tab, index) => {
     setActiveIndex(index)
     setActiveTab(tab)
+    setIsDropdownOpen(true)
+    dispatch(setSceneHeight('73vh'))
   }
 
   const toggleDropdown = () => {
@@ -115,8 +117,6 @@ const MainMenu = () => {
     if (!isDropdownOpen) dispatch(setSceneHeight('73vh'))
     else dispatch(setSceneHeight('90vh'))
   }
-
-  console.log('BOX ATTRIBUTES: ', boxAttributes['coating'])
 
   return (
     <Stack
@@ -156,16 +156,6 @@ const MainMenu = () => {
             </IconButton>
 
             {stepKeys.map((val, index) => {
-              console.log(
-                '****************',
-                steps[val].key,
-                !_.isEqual(
-                  boxAttributes[steps[val].key],
-                  steps[val].defaultVal
-                ),
-                boxAttributes[steps[val].key],
-                steps[val].defaultVal
-              )
               return (
                 // <Grid item xs={1} key={key}>
                 <Box

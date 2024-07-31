@@ -17,7 +17,8 @@ const initialState = {
     height: '',
     unit: 'mm'
   },
-  quantity: ''
+  quantity: '',
+  state: 'close' // open | close
 }
 
 // If you are not using async thunks you can use the standalone `createSlice`.
@@ -51,6 +52,9 @@ export const boxSlice = createAppSlice({
     }),
     setBoxQuantity: create.reducer((state, action) => {
       state.quantity = action.payload
+    }),
+    setBoxState: create.reducer((state, action) => {
+      state.state = action.payload
     })
   }),
   // You can define your selectors here. These selectors receive the slice
@@ -64,6 +68,7 @@ export const boxSlice = createAppSlice({
     selectBoxFinishing: box => box.finishing,
     selectBoxDimensions: box => box.dimensions,
     selectBoxQuantity: box => box.quantity,
+    selectBoxState: box => box.state,
     selectBoxAttributes: box => box
   }
 })
@@ -77,6 +82,7 @@ export const {
   setBoxMaterial,
   setBoxPrint,
   setBoxPrintSurface,
+  setBoxState,
   setBoxQuantity
 } = boxSlice.actions
 
@@ -90,5 +96,6 @@ export const {
   selectBoxPrint,
   selectBoxPrintSurface,
   selectBoxStyle,
+  selectBoxState,
   selectBoxQuantity
 } = boxSlice.selectors

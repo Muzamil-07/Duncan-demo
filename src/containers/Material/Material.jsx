@@ -7,7 +7,7 @@ import {
 } from '../../lib/store/features/box/boxSlice'
 
 const MATERIAL_OPTIONS = [
-  { image: '/assets/texture/material/kraft-brown.png', name: 'kraft-brown' },
+  { image: '/assets/texture/material/kraft-brown.png', name: 'kraft' },
   {
     image: '/assets/texture/material/microflute-kraft.png',
     name: 'microflute-kraft'
@@ -35,6 +35,7 @@ const Material = () => {
       options={MATERIAL_OPTIONS}
       handleSelector={handleSelectMaterial}
       selectedValue={material}
+      material={true}
     />
   )
 }

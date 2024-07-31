@@ -87,6 +87,7 @@ const CanvasScreen = ({ children }) => {
             ref={orbitRef}
             makeDefault
             // autoRotate
+            // autoRotateSpeed={10}
             enableZoom={false}
             enablePan={true}
             //   maxPolarAngle={Math.PI / 2}

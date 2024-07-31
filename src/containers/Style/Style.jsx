@@ -29,6 +29,7 @@ const Style = () => {
       options={OPTIONS}
       handleSelector={handleSelectStyle}
       selectedValue={style}
+      styled={true}
     />
   )
 }

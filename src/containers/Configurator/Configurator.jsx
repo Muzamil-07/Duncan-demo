@@ -1,7 +1,11 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../lib/store/hooks'
-import { selectBoxStyle } from '../../lib/store/features/box/boxSlice'
+import {
+  selectBoxState,
+  selectBoxStyle,
+  setBoxState
+} from '../../lib/store/features/box/boxSlice'
 import {
   selectMode,
   selectSceneHeight,
@@ -19,12 +23,17 @@ import { divideVh } from '../../lib/utils'
 const Configurator = () => {
   // const [mode, setMode] = useState('black')
   const style = useAppSelector(selectBoxStyle)
+  const boxState = useAppSelector(selectBoxState)
   const dispatch = useAppDispatch()
   const mode = useAppSelector(selectMode)
 
   const handleMode = () => {
     dispatch(setMode(mode === 'black' ? 'white' : 'black'))
     // setMode(prevMode => (prevMode === 'black' ? 'white' : 'black'))
+  }
+  const toggleBoxState = () => {
+    if (boxState === 'close') dispatch(setBoxState('open'))
+    else if (boxState === 'open') dispatch(setBoxState('close'))
   }
 
   const sceneHeight = useAppSelector(selectSceneHeight)
@@ -104,9 +113,10 @@ const Configurator = () => {
                 bgcolor: 'white'
               }
             }}
+            onClick={toggleBoxState}
           >
             <img
-              src='/assets/icons/box.png'
+              src={`/assets/icons/box-${boxState}.png`}
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>

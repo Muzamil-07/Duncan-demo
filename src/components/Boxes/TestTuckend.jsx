@@ -18,7 +18,8 @@ import { SkeletonUtils } from 'three-stdlib'
 export function TestTuckend (props) {
   const group = React.useRef()
   const { scene, animations } = useGLTF(
-    '/assets/models/tuckend/test-tuckend.glb'
+    '/assets/models/tuckend/tuckend-transformed.glb'
+    // '/assets/models/tuckend/test-tuckend.glb'
   )
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone)

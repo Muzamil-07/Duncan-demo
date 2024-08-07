@@ -3,7 +3,6 @@ import { Stack } from '@mui/material'
 import Menu from '../components/Menu'
 import Configurator from '../containers/Configurator'
 import { preloadTextures } from '../lib/utils'
-import { useGLTF } from '@react-three/drei'
 const Home = () => {
   return (
     <Stack>
@@ -16,4 +15,3 @@ const Home = () => {
 export default Home
 
 preloadTextures()
-useGLTF.preload('/assets/models/tuckend/test-tuckend.glb')

@@ -23,6 +23,17 @@ const ModelBuilder = () => {
   else if (style === 'tuckend')
     return (
       // <ModelPreviewer planePositionY={-0.95}>
+      <Tuckend
+        scale={11}
+        position={[0, 0.3, 0]}
+        rotation={[0, angleToRadians(30), 0]}
+      />
+
+      // </ModelPreviewer>
+    )
+  else if (style === 'skillet')
+    return (
+      // <ModelPreviewer planePositionY={-0.95}>
       // <Tuckend
       //   scale={11}
       //   position={[0, 0.3, 0]}

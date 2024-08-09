@@ -23,8 +23,8 @@ const ModelBuilder = () => {
     return (
       // <ModelPreviewer planePositionY={-0.95}>
       <Tuckend
-        scale={11}
-        position={[0, 0.3, 0]}
+        scale={9.5}
+        position={[0, 0.15, 0]}
         rotation={[0, angleToRadians(30), 0]}
       />
       // </ModelPreviewer>

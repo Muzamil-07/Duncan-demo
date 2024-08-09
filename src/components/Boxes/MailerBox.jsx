@@ -11,12 +11,11 @@ import {
   selectBoxPrintSurface,
   selectBoxState
 } from '../../lib/store/features/box/boxSlice'
+import { useGraph } from '@react-three/fiber'
+import { SkeletonUtils } from 'three-stdlib'
 
 export function MailerBox (props) {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF(
-    '/assets/models/mailer/mailer-box.glb'
-  )
 
   const boxState = useAppSelector(selectBoxState)
   const print = useAppSelector(selectBoxPrint)
@@ -24,6 +23,10 @@ export function MailerBox (props) {
   const printSurface = useAppSelector(selectBoxPrintSurface)
   const coating = useAppSelector(selectBoxCoating)
   const finishing = useAppSelector(selectBoxFinishing)
+  // const { scene, animations } = useGLTF('/assets/models/mailer/mailer-box.glb')
+  const { scene, animations } = useGLTF('/assets/models/mailer/mailer-box.glb')
+  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
+  const { nodes, materials } = useGraph(clone)
   const { actions } = useAnimations(animations, group)
 
   // Ref to track the previous coating and finishing values
@@ -190,75 +193,81 @@ export function MailerBox (props) {
   roughnessMapOutside.flipY = false
   roughnessMapInside.flipY = false
 
+  let metalnessVal = 0
+  if (material === 'uncoated-white') metalnessVal = 0.3
+  else if (material.includes('kraft')) metalnessVal = 0.2
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name='Scene'>
         <group name='Armature001' rotation={[Math.PI, 0, Math.PI]}>
-          <group name='material_print001'>
-            <skinnedMesh
-              castShadow
-              name='outside'
-              geometry={nodes.material_print001_1.geometry}
-              material={materials.Material_color_outside}
-              skeleton={nodes.material_print001_1.skeleton}
-            >
-              <meshPhysicalMaterial
-                map={outsideBaseTexture}
-                bumpMap={bumpMap}
-                bumpScale={10}
-                clearcoatMap={coatingTexture}
-                clearcoat={clearCoat}
-                clearcoatRoughness={clearCoatRoughness}
-                roughnessMap={roughnessMapOutside}
-              />
-            </skinnedMesh>
-            <skinnedMesh
-              castShadow
-              name='inside'
-              geometry={nodes.material_print001_2.geometry}
-              material={materials.Material_color_inside}
-              skeleton={nodes.material_print001_2.skeleton}
-            >
-              <meshPhysicalMaterial
-                map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
-                clearcoat={clearCoat}
-                clearcoatRoughness={clearCoatRoughness}
-                roughnessMap={
-                  printSurface === 'outside-inside' ? roughnessMapInside : null
-                }
-              />
-            </skinnedMesh>
-            <skinnedMesh
-              castShadow
-              name='side'
-              geometry={nodes.material_print001_3.geometry}
-              material={materials.Material_side}
-              skeleton={nodes.material_print001_3.skeleton}
-            >
-              <meshStandardMaterial map={sideBaseTexture} />
-            </skinnedMesh>
-            <skinnedMesh
-              castShadow
-              name='gold_foil'
-              geometry={nodes.material_print001_4.geometry}
-              material={materials.finishing_gold_foil}
-              skeleton={nodes.material_print001_4.skeleton}
-              material-transparent={true}
-              material-opacity={goldFoil_opacity}
-            />
-            <skinnedMesh
-              castShadow
-              name='spot_gloss'
-              geometry={nodes.material_print001_5.geometry}
-              material={materials.finishing_spot_gloss}
-              skeleton={nodes.material_print001_5.skeleton}
-              material-transparent={true}
-              material-opacity={spotgloss_opacity}
-            />
-          </group>
           <primitive object={nodes.Bone008} />
           <primitive object={nodes.neutral_bone} />
+        </group>
+        <group name='material_print001' rotation={[-Math.PI, 0, -Math.PI]}>
+          <skinnedMesh
+            castShadow
+            name='outside'
+            geometry={nodes.material_print001_1.geometry}
+            material={materials.Material_color_outside}
+            skeleton={nodes.material_print001_1.skeleton}
+          >
+            <meshPhysicalMaterial
+              map={outsideBaseTexture}
+              bumpMap={bumpMap}
+              bumpScale={10}
+              clearcoatMap={coatingTexture}
+              clearcoat={clearCoat}
+              clearcoatRoughness={clearCoatRoughness}
+              roughnessMap={roughnessMapOutside}
+              metalness={metalnessVal}
+            />
+          </skinnedMesh>
+          <skinnedMesh
+            castShadow
+            name='inside'
+            geometry={nodes.material_print001_2.geometry}
+            material={materials.Material_color_inside}
+            skeleton={nodes.material_print001_2.skeleton}
+          >
+            <meshPhysicalMaterial
+              map={insideBaseTexture}
+              clearcoatMap={coatingTexture}
+              clearcoat={clearCoat}
+              clearcoatRoughness={clearCoatRoughness}
+              roughnessMap={
+                printSurface === 'outside-inside' ? roughnessMapInside : null
+              }
+              metalness={metalnessVal}
+            />
+          </skinnedMesh>
+          <skinnedMesh
+            castShadow
+            name='side'
+            geometry={nodes.material_print001_3.geometry}
+            material={materials.Material_side}
+            skeleton={nodes.material_print001_3.skeleton}
+          >
+            <meshStandardMaterial map={sideBaseTexture} />
+          </skinnedMesh>
+          <skinnedMesh
+            castShadow
+            name='gold_foil'
+            geometry={nodes.material_print001_4.geometry}
+            material={materials.finishing_gold_foil}
+            skeleton={nodes.material_print001_4.skeleton}
+            material-transparent={true}
+            material-opacity={goldFoil_opacity}
+          />
+          <skinnedMesh
+            castShadow
+            name='spot_gloss'
+            geometry={nodes.material_print001_5.geometry}
+            material={materials.finishing_spot_gloss}
+            skeleton={nodes.material_print001_5.skeleton}
+            material-transparent={true}
+            material-opacity={spotgloss_opacity}
+          />{' '}
         </group>
       </group>
     </group>

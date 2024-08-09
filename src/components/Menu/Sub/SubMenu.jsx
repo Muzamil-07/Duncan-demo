@@ -73,142 +73,159 @@ const SubMenu = ({
 
   if (!multiselect)
     return (
-      <>
-        {options.map((option, index) => (
-          <Stack key={index}>
-            <Box
+      <Box
+        sx={{
+          maxWidth: '90vw',
+          overflowX: 'scroll',
+          '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for Webkit browsers
+          '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
+          'scrollbar-width': 'none'
+        }}
+      >
+        <Stack direction='row' spacing={2} justifyContent='space-between'>
+          {options.map((option, index) => (
+            <Stack
               key={index}
-              sx={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                bgcolor: selectedValue === option.name ? '#ECFDF3' : 'none',
-                borderRadius: '50%',
-                border:
-                  selectedValue === option.name ? '1px solid #3980AB' : 'none',
-                boxShadow:
-                  selectedValue === option.name
+              alignItems='center'
+              sx={{ flex: 1 }} // Ensure equal space for each item
+            >
+              <Box
+                key={index}
+                sx={{
+                  width:
+                    zoomLevel > 90
+                      ? selectedValue === option.name
+                        ? '50px'
+                        : '60px'
+                      : selectedValue === option.name
+                      ? '78px'
+                      : '90px',
+                  height:
+                    zoomLevel > 90
+                      ? selectedValue === option.name
+                        ? '50px'
+                        : '60px'
+                      : selectedValue === option.name
+                      ? '78px'
+                      : '90px',
+                  bgcolor: selectedValue === option.name ? '#ECFDF3' : 'none',
+                  borderRadius: '100%',
+                  border:
+                    selectedValue === option.name
+                      ? '1px solid #3980AB'
+                      : 'none',
+                  boxShadow:
+                    selectedValue === option.name
+                      ? '0 0 2px rgba(0, 0, 0, 0.5)'
+                      : 'none',
+                  padding: selectedValue === option.name ? '5px' : '0',
+                  cursor: 'pointer' // Add cursor to indicate it's clickable
+                }}
+                onClick={() => {
+                  handleSelector(option.name)
+                  if (styled && boxStyle === 'none')
+                    dispatch(setBoxMaterial('coated-white'))
+                }}
+              >
+                <CustomTooltip title={<ToolTipContent option={option} />}>
+                  <Box
+                    component='img'
+                    src={option.image}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                      transition: 'all 0.7s',
+                      '&:hover': {
+                        transform: 'scale(1.2)' // Scale the image on hover
+                      }
+                    }}
+                  />
+                </CustomTooltip>
+              </Box>
+              <Typography
+                sx={{
+                  fontSize: '12px',
+                  color: '#3980AB',
+                  textAlign: 'center',
+                  marginTop: '5px'
+                }}
+              >
+                {option.displayName
+                  ? option.displayName
+                  : _.capitalize(option.name.replaceAll('-', ' '))}
+              </Typography>
+            </Stack>
+          ))}
+        </Stack>
+      </Box>
+    )
+  else
+    return (
+      <Box
+        sx={{
+          maxWidth: '90vw',
+          overflowX: 'scroll',
+          '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for Webkit browsers
+          '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
+          'scrollbar-width': 'none'
+        }}
+      >
+        <Stack direction='row' spacing={2}>
+          {options.map((option, index) => (
+            <Stack key={index} justifyContent='center' alignItems='center'>
+              <Box
+                key={index}
+                sx={{
+                  width: zoomLevel > 90 ? '60px' : '90px',
+                  height: zoomLevel > 90 ? '60px' : '90px',
+                  bgcolor: selectedValue[toCamelCase(option.name)]
+                    ? '#ECFDF3'
+                    : 'none',
+                  borderRadius: '50%',
+                  border: selectedValue[toCamelCase(option.name)]
+                    ? '1px solid #3980AB'
+                    : 'none',
+                  boxShadow: selectedValue[toCamelCase(option.name)]
                     ? '0 0 2px rgba(0, 0, 0, 0.5)'
                     : 'none',
-                padding: selectedValue === option.name ? '5px' : '0',
-                cursor: 'pointer' // Add cursor to indicate it's clickable
-              }}
-              onClick={() => {
-                handleSelector(option.name)
-                if (styled && boxStyle === 'none')
-                  dispatch(setBoxMaterial('coated-white'))
-              }}
-            >
-              <CustomTooltip title={<ToolTipContent option={option} />}>
+                  padding: selectedValue[toCamelCase(option.name)]
+                    ? '5px'
+                    : '0',
+                  cursor: 'pointer' // Add cursor to indicate it's clickable
+                }}
+                onClick={() => handleSelector(option.name)}
+              >
                 <Box
                   component='img'
                   src={option.image}
                   sx={{
-                    width: zoomLevel > 90 ? '70px' : '100px',
-                    height: zoomLevel > 90 ? '70px' : '100px',
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'cover',
                     borderRadius: '50%',
                     transition: 'all 0.7s',
                     '&:hover': {
-                      transform: 'scale(1.2)' // Scale the image on hover
+                      transform: 'scale(1.1)' // Scale the image on hover
                     }
                   }}
                 />
-              </CustomTooltip>
-
-              {selectedValue === option.name && (
-                <CheckCircleIcon
-                  sx={{
-                    position: 'absolute',
-                    top: '-1px',
-                    right: '1px',
-                    color: 'green',
-                    borderRadius: '50%'
-                  }}
-                />
-              )}
-            </Box>
-            <Typography
-              sx={{
-                fontSize: '12px',
-                color: '#3980AB',
-                textAlign: 'center',
-                marginTop: '5px'
-              }}
-            >
-              {_.capitalize(option.name.replaceAll('-', ' '))}
-            </Typography>
-          </Stack>
-        ))}
-      </>
-    )
-  else
-    return (
-      <>
-        {options.map((option, index) => (
-          <Stack key={index}>
-            <Box
-              key={index}
-              sx={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                bgcolor: selectedValue[toCamelCase(option.name)]
-                  ? '#ECFDF3'
-                  : 'none',
-                borderRadius: '50%',
-                border: selectedValue[toCamelCase(option.name)]
-                  ? '1px solid #3980AB'
-                  : 'none',
-                boxShadow: selectedValue[toCamelCase(option.name)]
-                  ? '0 0 2px rgba(0, 0, 0, 0.5)'
-                  : 'none',
-                padding: selectedValue[toCamelCase(option.name)] ? '5px' : '0',
-                cursor: 'pointer' // Add cursor to indicate it's clickable
-              }}
-              onClick={() => handleSelector(option.name)}
-            >
-              <Box
-                component='img'
-                src={option.image}
+              </Box>
+              <Typography
                 sx={{
-                  width: zoomLevel >= 90 ? '70px' : '100px',
-                  height: zoomLevel >= 90 ? '70px' : '100px',
-                  objectFit: 'cover',
-                  borderRadius: '50%',
-                  transition: 'all 0.7s',
-                  '&:hover': {
-                    transform: 'scale(1.2)' // Scale the image on hover
-                  }
+                  fontSize: '12px',
+                  color: '#3980AB',
+                  textAlign: 'center',
+                  marginTop: '5px'
                 }}
-              />
-              {selectedValue[toCamelCase(option.name)] && (
-                <CheckCircleIcon
-                  sx={{
-                    position: 'absolute',
-                    top: '-1px',
-                    right: '1px',
-                    color: 'green',
-                    borderRadius: '50%'
-                  }}
-                />
-              )}
-            </Box>
-            <Typography
-              sx={{
-                fontSize: '12px',
-                color: '#3980AB',
-                textAlign: 'center',
-                marginTop: '5px'
-              }}
-            >
-              {_.capitalize(option.name.replaceAll('-', ' '))}
-            </Typography>
-          </Stack>
-        ))}
-      </>
+              >
+                {_.capitalize(option.name.replaceAll('-', ' '))}
+              </Typography>
+            </Stack>
+          ))}
+        </Stack>
+      </Box>
     )
 }
 

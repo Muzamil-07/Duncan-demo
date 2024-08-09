@@ -11,51 +11,63 @@ import { useThree } from '@react-three/fiber'
 const PRINT_SPEC_OPTIONS = [
   {
     image: '/assets/texture/PrintSpec/Thumb/none.png',
-    name: 'none'
+    name: 'none',
+    displayName: 'none'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/black.png',
-    name: 'black'
+    name: 'black',
+    displayName: 'Black only'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/cmyk.png',
-    name: 'cmyk'
+    name: 'cmyk',
+    displayName: 'CMYK'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/cmyk-1.png',
-    name: 'cmyk_1spot'
+    name: 'cmyk_1spot',
+    displayName: 'CMYK + 1 Pantone (Std)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/cmyk-2.png',
-    name: 'cmyk_2spot'
+    name: 'cmyk_2spot',
+    displayName: 'CMYK + 2 Pantone (Std)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/cmyk1spotmetflo.png',
-    name: 'cmyk_1spot_metflo'
+    name: 'cmyk_1spot_metflo',
+    displayName: 'CMYK + 1 Pantone (Metallic / Fluorescent)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/cmyk2spotmetflo.png',
-    name: 'cmyk_2spot_metflo'
+    name: 'cmyk_2spot_metflo',
+    displayName: 'CMYK + 2 Pantone (Metallic / Fluorescent)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/1spot.png',
-    name: '1spot'
+    name: '1spot',
+    displayName: '1 Pantone (Std)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/2spot.png',
-    name: '2spot'
+    name: '2spot',
+    displayName: '2 Pantone (Std)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/1spotmetflo.png',
-    name: '1spot_metflo'
+    name: '1spot_metflo',
+    displayName: '1 Pantone (Metallic / Fluorescent)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/2spotmetflo.png',
-    name: '2spot_metflo'
+    name: '2spot_metflo',
+    displayName: '2 Pantone (Metallic / Fluorescent)'
   },
   {
     image: '/assets/texture/PrintSpec/Thumb/other.png',
-    name: 'other'
+    name: 'other',
+    displayName: 'other'
   }
 ]
 const PrintSpec = () => {

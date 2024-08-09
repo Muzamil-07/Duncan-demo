@@ -7,11 +7,6 @@ import {
 } from '../../lib/store/features/box/boxSlice'
 
 const MATERIAL_OPTIONS = [
-  { image: '/assets/texture/material/kraft-brown.png', name: 'kraft' },
-  {
-    image: '/assets/texture/material/microflute-kraft.png',
-    name: 'microflute-kraft'
-  },
   { image: '/assets/texture/material/coated-white.png', name: 'coated-white' },
   {
     image: '/assets/texture/material/uncoated-white.png',
@@ -21,7 +16,11 @@ const MATERIAL_OPTIONS = [
     image: '/assets/texture/material/microflute-white.png',
     name: 'microflute-white'
   },
-
+  { image: '/assets/texture/material/kraft-brown.png', name: 'kraft' },
+  {
+    image: '/assets/texture/material/microflute-kraft.png',
+    name: 'microflute-kraft'
+  },
   { image: '/assets/texture/material/other.png', name: 'other' }
 ]
 const Material = () => {

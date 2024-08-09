@@ -12,13 +12,14 @@ import {
   selectBoxState
 } from '../../lib/store/features/box/boxSlice'
 import { useThree, useFrame } from '@react-three/fiber'
+import { SkeletonUtils } from 'three-stdlib'
+import { useGraph } from '@react-three/fiber'
 
 export function Tuckend (props) {
-  const group = useRef()
-  const meshRef = useRef()
-  const { nodes, materials, animations } = useGLTF(
-    '/assets/models/tuckend/tuckend.glb'
-  )
+  const group = React.useRef()
+  const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb')
+  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
+  const { nodes, materials } = useGraph(clone)
   const { actions } = useAnimations(animations, group)
 
   const boxState = useAppSelector(selectBoxState)
@@ -95,6 +96,7 @@ export function Tuckend (props) {
     }/base.jpg`
   }
 
+  console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath)
   const outsideBaseTexture = useTexture(outsideBaseTexturePath)
   outsideBaseTexture.flipY = false
   outsideBaseTexture.colorSpace = SRGBColorSpace
@@ -127,6 +129,7 @@ export function Tuckend (props) {
   sideBaseTexture.flipY = false
   sideBaseTexture.colorSpace = SRGBColorSpace
   sideBaseTexture.wrapS = RepeatWrapping
+  // sideBaseTexture.wrapT = RepeatWrapping
 
   let goldFoil_opacity = 0
   let spotgloss_opacity = 0
@@ -194,10 +197,16 @@ export function Tuckend (props) {
   roughnessMapOutside.flipY = false
   roughnessMapInside.flipY = false
 
+  let metalnessVal = 0
+  if (material === 'uncoated-white') metalnessVal = 0.3
+  else if (material.includes('kraft')) metalnessVal = 0.2
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name='Scene'>
         <group name='Armature' position={[0, -0.01, 0]} scale={0.073}>
+          <primitive object={nodes.main} />
+          <primitive object={nodes.neutral_bone} />
           <group name='Mesh_0004'>
             <skinnedMesh
               name='outside'
@@ -205,7 +214,6 @@ export function Tuckend (props) {
               geometry={nodes.Mesh_0004_1.geometry}
               // material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0004_1.skeleton}
-              ref={meshRef}
             >
               <meshPhysicalMaterial
                 map={outsideBaseTexture}
@@ -215,6 +223,7 @@ export function Tuckend (props) {
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 roughnessMap={roughnessMapOutside}
+                metalness={metalnessVal}
               />
             </skinnedMesh>
             <skinnedMesh
@@ -232,6 +241,7 @@ export function Tuckend (props) {
                 roughnessMap={
                   printSurface === 'outside-inside' ? roughnessMapInside : null
                 }
+                metalness={metalnessVal}
               />
             </skinnedMesh>
             <skinnedMesh
@@ -262,8 +272,6 @@ export function Tuckend (props) {
               skeleton={nodes.Mesh_0004_5.skeleton}
             />
           </group>
-          <primitive object={nodes.main} />
-          <primitive object={nodes.neutral_bone} />
         </group>
       </group>
     </group>

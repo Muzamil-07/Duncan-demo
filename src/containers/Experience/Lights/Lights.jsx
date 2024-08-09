@@ -3,7 +3,12 @@ import { Environment } from '@react-three/drei'
 import React from 'react'
 import { useHelper } from '@react-three/drei'
 import { useRef, useEffect } from 'react'
-import { DirectionalLightHelper, AxesHelper, GridHelper } from 'three'
+import {
+  DirectionalLightHelper,
+  AxesHelper,
+  GridHelper,
+  PointLightHelper
+} from 'three'
 
 const Lights = () => {
   const dirLight1 = useRef()
@@ -12,6 +17,9 @@ const Lights = () => {
   const dirLight4 = useRef()
   const dirLight5 = useRef()
   const dirLight6 = useRef()
+  const dirLight7 = useRef()
+
+  // const pointLight1 = useRef()
 
   // useHelper(dirLight1, DirectionalLightHelper, 1)
   // useHelper(dirLight2, DirectionalLightHelper, 1)
@@ -19,6 +27,9 @@ const Lights = () => {
   // useHelper(dirLight4, DirectionalLightHelper, 1)
   // useHelper(dirLight5, DirectionalLightHelper, 1)
   // useHelper(dirLight6, DirectionalLightHelper, 1)
+  // useHelper(dirLight7, DirectionalLightHelper, 1)
+
+  // useHelper(pointLight1, PointLightHelper, 1)
 
   useEffect(() => {
     // const axesHelper = new AxesHelper(5)
@@ -36,6 +47,12 @@ const Lights = () => {
         position={[2, 0, 4]}
         intensity={0.7}
       />
+      <directionalLight
+        castShadow
+        ref={dirLight7}
+        position={[0, -1, 4]}
+        intensity={0.7}
+      />
       {/* BACK */}
       <directionalLight ref={dirLight2} position={[-2, 0, -4]} intensity={1} />
       {/* TOP */}
@@ -51,7 +68,12 @@ const Lights = () => {
       <directionalLight ref={dirLight5} position={[4, 1, -0.5]} intensity={1} />
       {/* LEFT */}
       <directionalLight ref={dirLight6} position={[-4, 1, 0]} intensity={1} />
-      <ambientLight intensity={1} />
+
+      {/* POINT LIGHT */}
+
+      {/* <pointLight ref={pointLight1} position={[0, 0, 3]} intensity={2} /> */}
+
+      <ambientLight intensity={0.5} />
       {/* <Environment
         background={false} // can be true, false or "only" (which only sets the background) (default: false)
         blur={0} // blur factor between 0 and 1 (default: 0, only works with three 0.146 and up)

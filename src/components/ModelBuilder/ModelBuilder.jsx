@@ -5,7 +5,6 @@ import ModelPreviewer from '../ModelPreviewer'
 import { MailerBox } from '../Boxes/MailerBox'
 import { angleToRadians } from '../../lib/utils'
 import { Tuckend } from '../Boxes/Tuckend'
-import { TestTuckend } from '../Boxes/TestTuckend'
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle)
@@ -24,24 +23,8 @@ const ModelBuilder = () => {
     return (
       // <ModelPreviewer planePositionY={-0.95}>
       <Tuckend
-        scale={11}
-        position={[0, 0.3, 0]}
-        rotation={[0, angleToRadians(30), 0]}
-      />
-
-      // </ModelPreviewer>
-    )
-  else if (style === 'skillet')
-    return (
-      // <ModelPreviewer planePositionY={-0.95}>
-      // <Tuckend
-      //   scale={11}
-      //   position={[0, 0.3, 0]}
-      //   rotation={[0, angleToRadians(30), 0]}
-      // />
-      <TestTuckend
-        scale={11}
-        position={[0, 0.3, 0]}
+        scale={9.5}
+        position={[0, 0.15, 0]}
         rotation={[0, angleToRadians(30), 0]}
       />
       // </ModelPreviewer>

@@ -273,5 +273,3 @@ export function MailerBox (props) {
     </group>
   )
 }
-
-// useGLTF.preload('/assets/models/mailer/mailer-box.glb')

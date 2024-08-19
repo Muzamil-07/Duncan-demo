@@ -12,3 +12,5 @@ function App () {
 }
 
 export default App
+useGLTF.preload('/assets/models/tuckend/tuckend.glb')
+useGLTF.preload('/assets/models/mailer/mailer-box.glb')

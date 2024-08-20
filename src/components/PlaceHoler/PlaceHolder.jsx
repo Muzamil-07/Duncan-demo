@@ -22,17 +22,17 @@ const PlaceHolder = () => {
           <Box sx={{ paddingTop: '25.5rem', paddingLeft: '20rem' }}>
             <Stack>
               <img
-                src='/assets/images/Select Box Style.png'
+                src='/assets/images/Select Box Style.webp'
                 style={{ width: '150px' }}
               />
-              <img src='/assets/images/Frame.png' style={{ width: '150px' }} />
+              <img src='/assets/images/Frame.webp' style={{ width: '150px' }} />
             </Stack>
           </Box>
         </Grid>
 
         <Grid item xs={8} pl={3}>
           <Box sx={{ paddingTop: '3rem', paddingLeft: '5rem' }}>
-            <img src='/assets/images/Frame 1000006265.png' />
+            <img src='/assets/images/Frame 1000006265.webp' />
           </Box>
         </Grid>
       </Grid>

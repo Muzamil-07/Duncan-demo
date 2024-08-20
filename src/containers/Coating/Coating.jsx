@@ -7,11 +7,11 @@ import {
   setBoxPrintSurface
 } from '../../lib/store/features/box/boxSlice'
 const COATING_OPTIONS = [
-  { image: '/assets/texture/Coating/none.png', name: 'none' },
-  { image: '/assets/texture/Coating/gloss.png', name: 'gloss' },
-  { image: '/assets/texture/Coating/silk.png', name: 'silk' },
-  { image: '/assets/texture/Coating/matt.png', name: 'matt' },
-  { image: '/assets/texture/Coating/other.png', name: 'other' }
+  { image: '/assets/texture/Coating/none.webp', name: 'none' },
+  { image: '/assets/texture/Coating/gloss.webp', name: 'gloss' },
+  { image: '/assets/texture/Coating/silk.webp', name: 'silk' },
+  { image: '/assets/texture/Coating/matt.webp', name: 'matt' },
+  { image: '/assets/texture/Coating/other.webp', name: 'other' }
 ]
 
 const Coating = () => {

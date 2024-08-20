@@ -23,8 +23,8 @@ const Navbar = ({ mode }) => {
           <img
             src={
               mode === 'black'
-                ? '/assets/images/white-logo.png'
-                : '/assets/images/black-logo.png'
+                ? '/assets/images/white-logo.webp'
+                : '/assets/images/black-logo.webp'
             }
           />
         </Box>

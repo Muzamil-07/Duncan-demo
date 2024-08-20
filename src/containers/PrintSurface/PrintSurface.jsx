@@ -6,10 +6,10 @@ import {
   setBoxPrintSurface
 } from '../../lib/store/features/box/boxSlice'
 const PRINT_SURFACE_OPTIONS = [
-  { image: '/assets/texture/PrintSurface/None.png', name: 'none' },
-  { image: '/assets/texture/PrintSurface/Outside.png', name: 'outside' },
+  { image: '/assets/texture/PrintSurface/None.webp', name: 'none' },
+  { image: '/assets/texture/PrintSurface/Outside.webp', name: 'outside' },
   {
-    image: '/assets/texture/PrintSurface/Outside-Inside.png',
+    image: '/assets/texture/PrintSurface/Outside-Inside.webp',
     name: 'outside-inside'
   }
 ]

@@ -4,9 +4,6 @@ import Menu from '../components/Menu'
 import Configurator from '../containers/Configurator'
 import { preloadTextures } from '../lib/utils'
 const Home = () => {
-  useEffect(() => {
-    preloadTextures()
-  }, [])
   return (
     <Stack>
       <Configurator />
@@ -17,4 +14,4 @@ const Home = () => {
 
 export default Home
 
-// preloadTextures()
+preloadTextures()

@@ -79,26 +79,26 @@ const CanvasScreen = ({ children }) => {
 
         {/* {enabled && <SoftShadows {...config} />} */}
 
-        <Suspense fallback={<ModelLoader />}>
-          {/************ CONTROLS  ****************/}
-          {/* <Perf /> */}
+        {/* <Suspense fallback={<ModelLoader />}> */}
+        {/************ CONTROLS  ****************/}
+        {/* <Perf /> */}
 
-          <OrbitControls
-            ref={orbitRef}
-            makeDefault
-            // autoRotate
-            // autoRotateSpeed={10}
-            enableZoom={true}
-            enablePan={true}
-            //   maxPolarAngle={Math.PI / 2}
-            //   minPolarAngle={Math.PI / 2}
-          />
+        <OrbitControls
+          ref={orbitRef}
+          makeDefault
+          // autoRotate
+          // autoRotateSpeed={10}
+          enableZoom={true}
+          enablePan={true}
+          //   maxPolarAngle={Math.PI / 2}
+          //   minPolarAngle={Math.PI / 2}
+        />
 
-          {children}
-          {/* <Model isMobile={isMobile} texture={texture} /> */}
+        {children}
+        {/* <Model isMobile={isMobile} texture={texture} /> */}
 
-          <Preload all />
-        </Suspense>
+        <Preload all />
+        {/* </Suspense> */}
       </Canvas>
     </div>
   )

@@ -5,6 +5,7 @@ import ModelPreviewer from '../ModelPreviewer'
 import { MailerBox } from '../Boxes/MailerBox'
 import { angleToRadians } from '../../lib/utils'
 import { Tuckend } from '../Boxes/Tuckend'
+import { MailerBoxGltf } from '../Boxes/MailerBoxGltf'
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle)
@@ -12,7 +13,7 @@ const ModelBuilder = () => {
   if (style === 'mailer')
     return (
       // <ModelPreviewer planePositionY={-0.95}>
-      <MailerBox
+      <MailerBoxGltf
         scale={9}
         position={[0, -0.95, 0]}
         rotation={[0, angleToRadians(205), 0]}

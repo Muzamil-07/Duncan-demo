@@ -1,4 +1,3 @@
-import { useGLTF, useTexture } from '@react-three/drei'
 import './App.css'
 import Home from './pages'
 import { useEffect } from 'react'

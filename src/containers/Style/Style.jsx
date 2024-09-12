@@ -7,16 +7,16 @@ import {
 } from '../../lib/store/features/box/boxSlice'
 
 const OPTIONS = [
-  { image: '/assets/texture/style/mailer.png', name: 'mailer' },
-  { image: '/assets/texture/style/BufferLid.png', name: 'buffer-lid' },
-  { image: '/assets/texture/style/CLB.png', name: 'crash-lock-base' },
-  { image: '/assets/texture/style/RTE.png', name: 'tuckend' },
-  { image: '/assets/texture/style/skillet.png', name: 'skillet' },
-  { image: '/assets/texture/style/sleeve.png', name: 'sleeve' },
-  { image: '/assets/texture/style/sltray.png', name: 'selef-lock-tray' },
-  { image: '/assets/texture/style/lidandbase.png', name: 'lid-and-base' },
-  { image: '/assets/texture/style/headercard.png', name: 'header-card' },
-  { image: '/assets/texture/style/other-ques.png', name: 'other' }
+  { image: '/assets/texture/style/mailer.webp', name: 'mailer' },
+  { image: '/assets/texture/style/BufferLid.webp', name: 'buffer-lid' },
+  { image: '/assets/texture/style/CLB.webp', name: 'crash-lock-base' },
+  { image: '/assets/texture/style/RTE.webp', name: 'tuckend' },
+  { image: '/assets/texture/style/skillet.webp', name: 'skillet' },
+  { image: '/assets/texture/style/sleeve.webp', name: 'sleeve' },
+  { image: '/assets/texture/style/sltray.webp', name: 'selef-lock-tray' },
+  { image: '/assets/texture/style/lidandbase.webp', name: 'lid-and-base' },
+  { image: '/assets/texture/style/headercard.webp', name: 'header-card' },
+  { image: '/assets/texture/style/other-ques.webp', name: 'other' }
 ]
 const Style = () => {
   const dispatch = useAppDispatch()

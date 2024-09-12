@@ -1,7 +1,6 @@
-import { useGLTF, useTexture } from '@react-three/drei'
+import { Box } from '@mui/material'
 import './App.css'
 import Home from './pages'
-import { useEffect } from 'react'
 
 function App () {
   return (

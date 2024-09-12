@@ -76,7 +76,7 @@ const Configurator = () => {
             }}
           >
             <img
-              src='/assets/icons/camera.png'
+              src='/assets/icons/camera.webp'
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
@@ -96,8 +96,8 @@ const Configurator = () => {
             <img
               src={
                 mode === 'black'
-                  ? '/assets/icons/sun.png'
-                  : '/assets/icons/moon.png'
+                  ? '/assets/icons/sun.webp'
+                  : '/assets/icons/moon.webp'
               }
               style={{ width: '20px', height: '20px' }}
             />
@@ -116,7 +116,7 @@ const Configurator = () => {
             onClick={toggleBoxState}
           >
             <img
-              src={`/assets/icons/box-${boxState}.png`}
+              src={`/assets/icons/box-${boxState}.webp`}
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
@@ -133,7 +133,7 @@ const Configurator = () => {
             }}
           >
             <img
-              src='/assets/icons/info-circle.png'
+              src='/assets/icons/info-circle.webp'
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
@@ -149,7 +149,7 @@ const Configurator = () => {
             }}
           >
             <img
-              src='/assets/icons/maximize.png'
+              src='/assets/icons/maximize.webp'
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
@@ -192,7 +192,7 @@ const Configurator = () => {
             }}
           >
             <img
-              src='/assets/icons/zoom-in.png'
+              src='/assets/icons/zoom-in.webp'
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
@@ -211,7 +211,7 @@ const Configurator = () => {
             }}
           >
             <img
-              src='/assets/icons/zoom-out.png'
+              src='/assets/icons/zoom-out.webp'
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>

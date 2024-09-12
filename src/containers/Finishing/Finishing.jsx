@@ -7,11 +7,11 @@ import {
 import { useAppDispatch, useAppSelector } from '../../lib/store/hooks'
 import _ from 'lodash'
 const FINISH_OPTIONS = [
-  { image: '/assets/texture/Finish/thumb/none.png', name: 'none' },
-  { image: '/assets/texture/Finish/thumb/embossing.png', name: 'embossing' },
-  { image: '/assets/texture/Finish/thumb/gold-foil.png', name: 'gold-foil' },
-  { image: '/assets/texture/Finish/thumb/spot-gloss.png', name: 'spot-gloss' },
-  { image: '/assets/texture/Finish/thumb/other.png', name: 'other' }
+  { image: '/assets/texture/Finish/thumb/none.webp', name: 'none' },
+  { image: '/assets/texture/Finish/thumb/embossing.webp', name: 'embossing' },
+  { image: '/assets/texture/Finish/thumb/gold-foil.webp', name: 'gold-foil' },
+  { image: '/assets/texture/Finish/thumb/spot-gloss.webp', name: 'spot-gloss' },
+  { image: '/assets/texture/Finish/thumb/other.webp', name: 'other' }
 ]
 
 const Finishing = () => {

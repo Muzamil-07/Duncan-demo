@@ -97,7 +97,7 @@ const CanvasScreen = ({ children }) => {
           {children}
           {/* <Model isMobile={isMobile} texture={texture} /> */}
 
-          <Preload all />
+          {/* <Preload all /> */}
         </Suspense>
       </Canvas>
     </div>

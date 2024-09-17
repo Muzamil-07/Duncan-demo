@@ -17,9 +17,9 @@ import { useGraph } from '@react-three/fiber'
 import { preloadTextures } from '../../lib/utils'
 
 export function Tuckend (props) {
-  useEffect(() => {
-    preloadTextures()
-  }, [])
+  // useEffect(() => {
+  //   preloadTextures()
+  // }, [])
   const group = React.useRef()
   const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb')
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])

@@ -27,9 +27,9 @@ export function MailerBoxGltf (props) {
   const { nodes, materials } = useGraph(clone)
   const { actions } = useAnimations(animations, group)
 
-  useEffect(() => {
-    preloadTextures()
-  }, [])
+  // useEffect(() => {
+  //   preloadTextures()
+  // }, [])
 
   const boxState = useAppSelector(selectBoxState)
   const print = useAppSelector(selectBoxPrint)
@@ -217,7 +217,7 @@ export function MailerBoxGltf (props) {
               castShadow
               name='outside'
               geometry={nodes.material_print001_1.geometry}
-              material={materials.Material_color_outside}
+              // material={materials.Material_color_outside}
               skeleton={nodes.material_print001_1.skeleton}
             >
               <meshPhysicalMaterial

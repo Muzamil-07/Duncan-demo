@@ -11,7 +11,7 @@ const usePreload = () => {
     // Using setTimeout to ensure it doesn't block initial rendering
     const timeoutId = setTimeout(() => {
       loadTextures()
-    }, 10000) // Or delay it further if needed
+    }, 2000) // Or delay it further if needed
 
     return () => {
       clearTimeout(timeoutId)

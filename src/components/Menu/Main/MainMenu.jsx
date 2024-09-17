@@ -115,8 +115,11 @@ const MainMenu = () => {
     setIsDropdownOpen(true)
     dispatch(setSceneHeight('73vh'))
     // console.log('HIIIIIIIIii', index, tab)
-    if (tab === 'material') preloadMaterialTextures()
-    if (tab === 'printSpec') preloadPrintTextures()
+    if (tab === 'material') {
+      preloadMaterialTextures()
+      preloadPrintTextures()
+    }
+    // if (tab === 'printSpec') preloadPrintTextures()
   }
 
   const toggleDropdown = () => {

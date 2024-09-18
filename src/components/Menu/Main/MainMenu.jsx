@@ -18,6 +18,10 @@ import { useAppDispatch, useAppSelector } from '../../../lib/store/hooks'
 import { setSceneHeight } from '../../../lib/store/features/general/generalSlice'
 import { selectBoxAttributes } from '../../../lib/store/features/box/boxSlice'
 import _ from 'lodash'
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures
+} from '../../../lib/utils'
 
 const steps = {
   style: {
@@ -110,6 +114,12 @@ const MainMenu = () => {
     setActiveTab(tab)
     setIsDropdownOpen(true)
     dispatch(setSceneHeight('73vh'))
+    // console.log('HIIIIIIIIii', index, tab)
+    // if (tab === 'material') {
+    //   preloadMaterialTextures()
+    //   preloadPrintTextures()
+    // }
+    // if (tab === 'printSpec') preloadPrintTextures()
   }
 
   const toggleDropdown = () => {

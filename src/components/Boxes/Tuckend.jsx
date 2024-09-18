@@ -14,12 +14,16 @@ import {
 import { useThree, useFrame } from '@react-three/fiber'
 import { SkeletonUtils } from 'three-stdlib'
 import { useGraph } from '@react-three/fiber'
-import { preloadTextures } from '../../lib/utils'
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadTextures
+} from '../../lib/utils'
 
 export function Tuckend (props) {
-  useEffect(() => {
-    preloadTextures()
-  }, [])
+  // useEffect(() => {
+  //   preloadTextures()
+  // }, [])
   const group = React.useRef()
   const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb')
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
@@ -91,13 +95,13 @@ export function Tuckend (props) {
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/outside_${print}.jpg`
+    }/outside_${print}.webp`
   } else {
     outsideBaseTexturePath = `/assets/models/tuckend/${
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/base.jpg`
+    }/base.webp`
   }
 
   console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath)
@@ -110,13 +114,13 @@ export function Tuckend (props) {
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/inside_${print}.jpg`
+    }/inside_${print}.webp`
   } else {
     insideBaseTexturePath = `/assets/models/tuckend/${
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/base.jpg`
+    }/base.webp`
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath)
@@ -124,9 +128,9 @@ export function Tuckend (props) {
   insideBaseTexture.colorSpace = SRGBColorSpace
 
   if (material.includes('microflute-')) {
-    sideTexturePath = `/assets/models/tuckend/${material}/side.jpg`
+    sideTexturePath = `/assets/models/tuckend/${material}/side.webp`
   } else {
-    sideTexturePath = `/assets/models/tuckend/${material}/base.jpg`
+    sideTexturePath = `/assets/models/tuckend/${material}/base.webp`
   }
 
   const sideBaseTexture = useTexture(sideTexturePath)
@@ -152,7 +156,7 @@ export function Tuckend (props) {
   let clearCoatRoughness = 0
 
   const coatingTexture = useTexture(
-    '/assets/models/tuckend/textures/outside_coating_gloss_OMR.jpg'
+    '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
   )
   coatingTexture.flipY = false
 
@@ -172,28 +176,29 @@ export function Tuckend (props) {
   }
 
   let roughnessMapOutsideTexturePath =
-    '/assets/models/tuckend/textures/base.jpg'
-  let roughnessMapInsideTexturePath = '/assets/models/tuckend/textures/base.jpg'
+    '/assets/models/tuckend/textures/base.webp'
+  let roughnessMapInsideTexturePath =
+    '/assets/models/tuckend/textures/base.webp'
   let roughnessMapOutside = null
   let roughnessMapInside = null
 
   if (print === 'cmyk_1spot_metflo' || print === 'cmyk_2spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_outside.jpg'
+      '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_outside.webp'
     roughnessMapInsideTexturePath =
-      '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_inside.jpg'
+      '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_inside.webp'
   }
   if (print === '1spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/tuckend/textures/1spot_roughness_metflo_outside.jpg'
+      '/assets/models/tuckend/textures/1spot_roughness_metflo_outside.webp'
     roughnessMapInsideTexturePath =
-      '/assets/models/tuckend/textures/1spot_roughness_metflo_inside.jpg'
+      '/assets/models/tuckend/textures/1spot_roughness_metflo_inside.webp'
   }
   if (print === '2spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/tuckend/textures/2spot_roughness_metflo_outside.jpg'
+      '/assets/models/tuckend/textures/2spot_roughness_metflo_outside.webp'
     roughnessMapInsideTexturePath =
-      '/assets/models/tuckend/textures/2spot_roughness_metflo_inside.jpg'
+      '/assets/models/tuckend/textures/2spot_roughness_metflo_inside.webp'
   }
 
   roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath)
@@ -204,7 +209,15 @@ export function Tuckend (props) {
   let metalnessVal = 0
   if (material === 'uncoated-white') metalnessVal = 0.3
   else if (material.includes('kraft')) metalnessVal = 0.2
-
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------')
+      preloadMaterialTextures()
+      preloadPrintTextures()
+      // preloadTextures()
+    }, 0)
+    console.log('DONE----------------------')
+  }, [])
   return (
     <group ref={group} {...props} dispose={null}>
       <group name='Scene'>

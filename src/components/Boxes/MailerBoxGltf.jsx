@@ -8,7 +8,11 @@ import React, { useEffect, useRef } from 'react'
 import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations, useTexture } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
-import { preloadTextures } from '../../lib/utils'
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadTextures
+} from '../../lib/utils'
 import { useAppSelector } from '../../lib/store/hooks'
 import {
   selectBoxCoating,
@@ -95,13 +99,13 @@ export function MailerBoxGltf (props) {
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/outside_${print}.jpg`
+    }/outside_${print}.webp`
   } else {
     outsideBaseTexturePath = `/assets/models/mailer/${
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/base.jpg`
+    }/base.webp`
   }
 
   const outsideBaseTexture = useTexture(outsideBaseTexturePath)
@@ -113,13 +117,13 @@ export function MailerBoxGltf (props) {
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/inside_${print}.jpg`
+    }/inside_${print}.webp`
   } else {
     insideBaseTexturePath = `/assets/models/mailer/${
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/base.jpg`
+    }/base.webp`
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath)
@@ -127,9 +131,9 @@ export function MailerBoxGltf (props) {
   insideBaseTexture.colorSpace = SRGBColorSpace
 
   if (material.includes('microflute-')) {
-    sideTexturePath = `/assets/models/mailer/${material}/side.jpg`
+    sideTexturePath = `/assets/models/mailer/${material}/side.webp`
   } else {
-    sideTexturePath = `/assets/models/mailer/${material}/base.jpg`
+    sideTexturePath = `/assets/models/mailer/${material}/base.webp`
   }
 
   const sideBaseTexture = useTexture(sideTexturePath)
@@ -141,7 +145,7 @@ export function MailerBoxGltf (props) {
   let spotgloss_opacity = 0
   let bumpMap = null
   const embossingTexture = useTexture(
-    '/assets/models/mailer/textures/finishing_emboss_normal_map.jpg'
+    '/assets/models/mailer/textures/finishing_emboss_normal_map.webp'
   )
   embossingTexture.flipY = false
   if (!finishing.none) {
@@ -154,7 +158,7 @@ export function MailerBoxGltf (props) {
   let clearCoatRoughness = 0
 
   const coatingTexture = useTexture(
-    '/assets/models/mailer/textures/inside_coating_gloss_OMR.jpg'
+    '/assets/models/mailer/textures/inside_coating_gloss_OMR.webp'
   )
   coatingTexture.flipY = false
 
@@ -173,28 +177,29 @@ export function MailerBoxGltf (props) {
     }
   }
 
-  let roughnessMapOutsideTexturePath = '/assets/models/mailer/textures/base.jpg'
-  let roughnessMapInsideTexturePath = '/assets/models/mailer/textures/base.jpg'
+  let roughnessMapOutsideTexturePath =
+    '/assets/models/mailer/textures/base.webp'
+  let roughnessMapInsideTexturePath = '/assets/models/mailer/textures/base.webp'
   let roughnessMapOutside = null
   let roughnessMapInside = null
 
   if (print === 'cmyk_1spot_metflo' || print === 'cmyk_2spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/mailer/textures/cmyk_1spot_roughness_metflo_outside.jpg'
+      '/assets/models/mailer/textures/cmyk_1spot_roughness_metflo_outside.webp'
     roughnessMapInsideTexturePath =
-      '/assets/models/mailer/textures/cmyk_1spot_roughness_metflo_inside.jpg'
+      '/assets/models/mailer/textures/cmyk_1spot_roughness_metflo_inside.webp'
   }
   if (print === '1spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/mailer/textures/1spot_roughness_metflo_outside.jpg'
+      '/assets/models/mailer/textures/1spot_roughness_metflo_outside.webp'
     roughnessMapInsideTexturePath =
-      '/assets/models/mailer/textures/1spot_roughness_metflo_inside.jpg'
+      '/assets/models/mailer/textures/1spot_roughness_metflo_inside.webp'
   }
   if (print === '2spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/mailer/textures/2spot_roughness_metflo_outside.jpg'
+      '/assets/models/mailer/textures/2spot_roughness_metflo_outside.webp'
     roughnessMapInsideTexturePath =
-      '/assets/models/mailer/textures/2spot_roughness_metflo_inside.jpg'
+      '/assets/models/mailer/textures/2spot_roughness_metflo_inside.webp'
   }
 
   roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath)
@@ -206,6 +211,15 @@ export function MailerBoxGltf (props) {
   if (material === 'uncoated-white') metalnessVal = 0.3
   else if (material.includes('kraft')) metalnessVal = 0.2
 
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------')
+      preloadMaterialTextures()
+      preloadPrintTextures()
+      // preloadTextures()
+    }, 0)
+    console.log('DONE----------------------')
+  }, [])
   return (
     <group ref={group} {...props} dispose={null}>
       <group name='Scene'>

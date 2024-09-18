@@ -5,6 +5,8 @@ import {
   selectBoxStyle,
   setBoxStyle
 } from '../../lib/store/features/box/boxSlice'
+import usePreload from '../../lib/hooks/usePreload'
+import { preloadTextures } from '../../lib/utils'
 
 const OPTIONS = [
   { image: '/assets/texture/style/mailer.webp', name: 'mailer' },

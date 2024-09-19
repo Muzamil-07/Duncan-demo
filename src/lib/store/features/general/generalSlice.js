@@ -4,7 +4,7 @@ const initialState = {
   menueCollapsed: false,
   zoom: 0,
   mode: 'black',
-  isMaterialsLoaded: false
+  isDefaultMode: true
 }
 
 // If you are not using async thunks you can use the standalone `createSlice`.
@@ -27,8 +27,8 @@ export const generalSlice = createAppSlice({
     setMode: create.reducer((state, action) => {
       state.mode = action.payload
     }),
-    setIsMaterialsLoaded: create.reducer((state, action) => {
-      state.isMaterialsLoaded = action.payload
+    setIsDefaultMode: create.reducer((state, action) => {
+      state.isDefaultMode = action.payload
     })
   }),
   // You can define your selectors here. These selectors receive the slice
@@ -38,7 +38,7 @@ export const generalSlice = createAppSlice({
     selectMenueCollapsedState: state => state.menueCollapsed,
     selectZoom: state => state.zoom,
     selectMode: state => state.mode,
-    selectIsMaterialsLoaded: state => state.isMaterialsLoaded
+    selectIsDefaultMode: state => state.isDefaultMode
   }
 })
 
@@ -48,7 +48,7 @@ export const {
   toggleMenuCollapse,
   setZoom,
   setMode,
-  setIsMaterialsLoaded
+  setIsDefaultMode
 } = generalSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
@@ -57,5 +57,5 @@ export const {
   selectMenueCollapsedState,
   selectZoom,
   selectMode,
-  selectIsMaterialsLoaded
+  selectIsDefaultMode
 } = generalSlice.selectors

@@ -15,10 +15,7 @@ import PrintSurface from '../../../containers/PrintSurface'
 import Coating from '../../../containers/Coating'
 import Finishing from '../../../containers/Finishing'
 import { useAppDispatch, useAppSelector } from '../../../lib/store/hooks'
-import {
-  setIsMaterialsLoaded,
-  setSceneHeight
-} from '../../../lib/store/features/general/generalSlice'
+import { setSceneHeight } from '../../../lib/store/features/general/generalSlice'
 import { selectBoxAttributes } from '../../../lib/store/features/box/boxSlice'
 import _ from 'lodash'
 import {

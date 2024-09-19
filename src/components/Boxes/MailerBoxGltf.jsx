@@ -23,13 +23,9 @@ import {
   selectBoxState
 } from '../../lib/store/features/box/boxSlice'
 import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three'
-import {
-  selectIsMaterialsLoaded,
-  setIsMaterialsLoaded
-} from '../../lib/store/features/general/generalSlice'
 
 export function MailerBoxGltf (props) {
-  const isMaterialLoaded = useAppSelector(selectIsMaterialsLoaded)
+  // const ModelLoaded = useAppSelector(selectIsMaterialsLoaded)
   const group = React.useRef()
   const { scene, animations } = useGLTF('/assets/models/mailer/mailer-box.gltf')
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
@@ -114,11 +110,9 @@ export function MailerBoxGltf (props) {
   }
 
   let outsideBaseTexture = null
-  if (isMaterialLoaded) {
-    outsideBaseTexture = useTexture(outsideBaseTexturePath)
-    outsideBaseTexture.flipY = false
-    outsideBaseTexture.colorSpace = SRGBColorSpace
-  }
+  outsideBaseTexture = useTexture(outsideBaseTexturePath)
+  outsideBaseTexture.flipY = false
+  outsideBaseTexture.colorSpace = SRGBColorSpace
 
   if (print !== 'none' && printSurface === 'outside-inside') {
     insideBaseTexturePath = `/assets/models/mailer/${
@@ -135,11 +129,9 @@ export function MailerBoxGltf (props) {
   }
 
   let insideBaseTexture = null
-  if (isMaterialLoaded) {
-    insideBaseTexture = useTexture(insideBaseTexturePath)
-    insideBaseTexture.flipY = false
-    insideBaseTexture.colorSpace = SRGBColorSpace
-  }
+  insideBaseTexture = useTexture(insideBaseTexturePath)
+  insideBaseTexture.flipY = false
+  insideBaseTexture.colorSpace = SRGBColorSpace
 
   if (material.includes('microflute-')) {
     sideTexturePath = `/assets/models/mailer/${material}/side.webp`
@@ -148,23 +140,19 @@ export function MailerBoxGltf (props) {
   }
 
   let sideBaseTexture = null
-  if (isMaterialLoaded) {
-    sideBaseTexture = useTexture(sideTexturePath)
-    sideBaseTexture.flipY = false
-    sideBaseTexture.colorSpace = SRGBColorSpace
-    sideBaseTexture.wrapS = RepeatWrapping
-  }
+  sideBaseTexture = useTexture(sideTexturePath)
+  sideBaseTexture.flipY = false
+  sideBaseTexture.colorSpace = SRGBColorSpace
+  sideBaseTexture.wrapS = RepeatWrapping
   let goldFoil_opacity = 0
   let spotgloss_opacity = 0
   let bumpMap = null
 
   let embossingTexture = null
-  if (isMaterialLoaded) {
-    embossingTexture = useTexture(
-      '/assets/models/mailer/textures/finishing_emboss_normal_map.webp'
-    )
-    embossingTexture.flipY = false
-  }
+  embossingTexture = useTexture(
+    '/assets/models/mailer/textures/finishing_emboss_normal_map.webp'
+  )
+  embossingTexture.flipY = false
 
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1
@@ -176,12 +164,10 @@ export function MailerBoxGltf (props) {
   let clearCoatRoughness = 0
 
   let coatingTexture = null
-  if (isMaterialLoaded) {
-    coatingTexture = useTexture(
-      '/assets/models/mailer/textures/inside_coating_gloss_OMR.webp'
-    )
-    coatingTexture.flipY = false
-  }
+  coatingTexture = useTexture(
+    '/assets/models/mailer/textures/inside_coating_gloss_OMR.webp'
+  )
+  coatingTexture.flipY = false
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -223,26 +209,14 @@ export function MailerBoxGltf (props) {
       '/assets/models/mailer/textures/2spot_roughness_metflo_inside.webp'
   }
 
-  if (isMaterialLoaded) {
-    roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath)
-    roughnessMapInside = useTexture(roughnessMapInsideTexturePath)
-    roughnessMapOutside.flipY = false
-    roughnessMapInside.flipY = false
-  }
+  roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath)
+  roughnessMapInside = useTexture(roughnessMapInsideTexturePath)
+  roughnessMapOutside.flipY = false
+  roughnessMapInside.flipY = false
 
   let metalnessVal = 0
   if (material === 'uncoated-white') metalnessVal = 0.3
   else if (material.includes('kraft')) metalnessVal = 0.2
-
-  useEffect(() => {
-    setTimeout(() => {
-      console.log('SETTIMEOUT DONE----------------------')
-      preloadMaterialTextures()
-      preloadPrintTextures()
-      // preloadTextures()
-    }, 0)
-    console.log('DONE----------------------')
-  }, [])
 
   return (
     <group ref={group} {...props} dispose={null}>

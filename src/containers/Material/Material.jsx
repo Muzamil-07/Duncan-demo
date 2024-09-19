@@ -5,6 +5,7 @@ import {
   selectBoxMaterial,
   setBoxMaterial
 } from '../../lib/store/features/box/boxSlice'
+import { setIsDefaultMode } from '../../lib/store/features/general/generalSlice'
 
 const MATERIAL_OPTIONS = [
   { image: '/assets/texture/material/coated-white.webp', name: 'coated-white' },
@@ -28,6 +29,7 @@ const Material = () => {
   const dispatch = useAppDispatch()
   const handleSelectMaterial = value => {
     dispatch(setBoxMaterial(value))
+    dispatch(setIsDefaultMode(false))
   }
   return (
     <SubMenu

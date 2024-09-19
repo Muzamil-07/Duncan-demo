@@ -1,4 +1,5 @@
 import { useTexture } from '@react-three/drei'
+import { useAppDispatch } from '../store/hooks'
 
 export function toCamelCase (str) {
   return str.replace(/-([a-z])/g, (match, p1) => p1.toUpperCase())
@@ -380,6 +381,7 @@ const MaterialTexturesUrls = {
     microflute_white: ['/assets/models/mailer/microflute-white/side.webp']
   }
 }
+
 export const preloadMaterialTextures = () => {
   Object.keys(MaterialTexturesUrls).forEach(model => {
     Object.keys(MaterialTexturesUrls[model]).forEach(material => {

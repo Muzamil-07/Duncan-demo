@@ -15,7 +15,10 @@ import PrintSurface from '../../../containers/PrintSurface'
 import Coating from '../../../containers/Coating'
 import Finishing from '../../../containers/Finishing'
 import { useAppDispatch, useAppSelector } from '../../../lib/store/hooks'
-import { setSceneHeight } from '../../../lib/store/features/general/generalSlice'
+import {
+  setIsMaterialsLoaded,
+  setSceneHeight
+} from '../../../lib/store/features/general/generalSlice'
 import { selectBoxAttributes } from '../../../lib/store/features/box/boxSlice'
 import _ from 'lodash'
 import {
@@ -114,6 +117,7 @@ const MainMenu = () => {
     setActiveTab(tab)
     setIsDropdownOpen(true)
     dispatch(setSceneHeight('73vh'))
+
     // console.log('HIIIIIIIIii', index, tab)
     // if (tab === 'material') {
     //   preloadMaterialTextures()

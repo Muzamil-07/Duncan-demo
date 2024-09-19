@@ -114,6 +114,7 @@ const MainMenu = () => {
     setActiveTab(tab)
     setIsDropdownOpen(true)
     dispatch(setSceneHeight('73vh'))
+
     // console.log('HIIIIIIIIii', index, tab)
     // if (tab === 'material') {
     //   preloadMaterialTextures()

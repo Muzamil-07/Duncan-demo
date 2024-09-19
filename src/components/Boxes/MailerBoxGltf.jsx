@@ -234,21 +234,14 @@ export function MailerBoxGltf (props) {
   if (material === 'uncoated-white') metalnessVal = 0.3
   else if (material.includes('kraft')) metalnessVal = 0.2
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log('SETTIMEOUT DONE----------------------')
-  //     preloadMaterialTextures()
-  //     preloadPrintTextures()
-  //     // preloadTextures()
-  //   }, 0)
-  //   setisMaterialLoaded(true)
-  //   console.log('DONE----------------------')
-  // }, [])
-
   useEffect(() => {
-    preloadMaterialTextures()
-    preloadPrintTextures()
-    // setisMaterialLoaded(true)
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------')
+      preloadMaterialTextures()
+      preloadPrintTextures()
+      // preloadTextures()
+    }, 0)
+    console.log('DONE----------------------')
   }, [])
 
   return (

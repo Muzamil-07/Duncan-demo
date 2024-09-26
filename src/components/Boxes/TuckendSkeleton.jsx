@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { useGLTF, useAnimations, useTexture } from '@react-three/drei'
 
 import { useThree, useFrame } from '@react-three/fiber'
+
 import { SkeletonUtils } from 'three-stdlib'
 import { useGraph } from '@react-three/fiber'
 import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils'

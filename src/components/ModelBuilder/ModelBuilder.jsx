@@ -1,22 +1,25 @@
-import React, { Suspense } from 'react'
-import { useAppSelector } from '../../lib/store/hooks'
+import React, { Suspense } from 'react';
+import { useAppSelector } from '../../lib/store/hooks';
 import {
   selectBoxPrint,
-  selectBoxStyle
-} from '../../lib/store/features/box/boxSlice'
-import ModelPreviewer from '../ModelPreviewer'
-import { MailerBox } from '../Boxes/MailerBox'
-import { angleToRadians } from '../../lib/utils'
-import { Tuckend } from '../Boxes/Tuckend'
-import { MailerBoxGltf } from '../Boxes/MailerBoxGltf'
-import ModelLoader from '../ModelLoader'
-import { MailerBoxSkeleton } from '../Boxes/MailerSkeleton'
-import { selectIsDefaultMode } from '../../lib/store/features/general/generalSlice'
-import { TuckendSkeleton } from '../Boxes/TuckendSkeleton'
+  selectBoxStyle,
+} from '../../lib/store/features/box/boxSlice';
+import ModelPreviewer from '../ModelPreviewer';
+import { MailerBox } from '../Boxes/MailerBox';
+import { angleToRadians } from '../../lib/utils';
+import { Tuckend } from '../Boxes/Tuckend';
+import { MailerBoxGltf } from '../Boxes/MailerBoxGltf';
+import ModelLoader from '../ModelLoader';
+import { MailerBoxSkeleton } from '../Boxes/MailerSkeleton';
+import { selectIsDefaultMode } from '../../lib/store/features/general/generalSlice';
+import { TuckendSkeleton } from '../Boxes/TuckendSkeleton';
+import { CrashLockBaseSkeleton } from '../Boxes/CrashLockBaseSkeleton';
+import { CrashLockBase } from '../Boxes/CrashLockBase';
 
 const ModelBuilder = () => {
-  const style = useAppSelector(selectBoxStyle)
-  const isDefaultMode = useAppSelector(selectIsDefaultMode)
+  const style = useAppSelector(selectBoxStyle);
+  const isDefaultMode = useAppSelector(selectIsDefaultMode);
+
   if (style === 'mailer') {
     if (!isDefaultMode)
       return (
@@ -30,7 +33,7 @@ const ModelBuilder = () => {
           />
         </Suspense>
         // </ModelPreviewer>
-      )
+      );
     else
       return (
         <Suspense fallback={<ModelLoader />}>
@@ -40,7 +43,7 @@ const ModelBuilder = () => {
             rotation={[0, angleToRadians(205), 0]}
           />
         </Suspense>
-      )
+      );
   } else if (style === 'tuckend') {
     if (!isDefaultMode)
       return (
@@ -53,7 +56,7 @@ const ModelBuilder = () => {
           />
         </Suspense>
         // </ModelPreviewer>
-      )
+      );
     else
       return (
         <Suspense fallback={<ModelLoader />}>
@@ -63,8 +66,31 @@ const ModelBuilder = () => {
             rotation={[0, angleToRadians(30), 0]}
           />
         </Suspense>
-      )
-  } else return <></>
-}
+      );
+  } else if (style === 'crash-lock-base') {
+    if (!isDefaultMode)
+      return (
+        // <ModelPreviewer planePositionY={-0.95}>
+        <Suspense fallback={<ModelLoader />}>
+          <CrashLockBase
+            scale={14.5}
+            position={[0, 0.15, 0]}
+            rotation={[0, angleToRadians(30), 0]}
+          />
+        </Suspense>
+        // </ModelPreviewer>
+      );
+    else
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <CrashLockBaseSkeleton
+            scale={14.5}
+            position={[0, 0.15, 0]}
+            rotation={[0, angleToRadians(30), 0]}
+          />
+        </Suspense>
+      );
+  } else return <></>;
+};
 
-export default ModelBuilder
+export default ModelBuilder;

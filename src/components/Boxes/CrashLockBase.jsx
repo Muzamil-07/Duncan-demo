@@ -1,7 +1,5 @@
-/* eslint-disable react/no-unknown-property */
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations, useTexture } from '@react-three/drei';
-import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { useAppSelector } from '../../lib/store/hooks';
 import {
   selectBoxCoating,
@@ -11,31 +9,53 @@ import {
   selectBoxPrintSurface,
   selectBoxState,
 } from '../../lib/store/features/box/boxSlice';
-import { useThree, useFrame } from '@react-three/fiber';
-import { SkeletonUtils } from 'three-stdlib';
-import { useGraph } from '@react-three/fiber';
-import {
-  preloadMaterialTextures,
-  preloadPrintTextures,
-  preloadTextures,
-} from '../../lib/utils';
+import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
+import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 
-export function Tuckend(props) {
-  // useEffect(() => {
-  //   preloadTextures()
-  // }, [])
-  const group = React.useRef();
-  const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb');
-  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
-  const { nodes, materials } = useGraph(clone);
+export function CrashLockBase(props) {
+  const group = useRef();
+  const { nodes, materials, animations } = useGLTF(
+    '/assets/models/crash-lock-base/crash-lock-base-old.glb'
+  );
   const { actions } = useAnimations(animations, group);
 
-  const boxState = useAppSelector(selectBoxState);
   const print = useAppSelector(selectBoxPrint);
   const material = useAppSelector(selectBoxMaterial);
-  const printSurface = useAppSelector(selectBoxPrintSurface);
-  const coating = useAppSelector(selectBoxCoating);
   const finishing = useAppSelector(selectBoxFinishing);
+  const coating = useAppSelector(selectBoxCoating);
+  const printSurface = useAppSelector(selectBoxPrintSurface);
+  const boxState = useAppSelector(selectBoxState);
+
+  let outsideBaseTexturePath = '';
+  let insideBaseTexturePath = '';
+  let sideTexturePath = '';
+
+  if (print !== 'none') {
+    outsideBaseTexturePath = `assets/models/crash-lock-base/${
+      material.includes('white')
+        ? material.replaceAll('microflute-', 'coated-')
+        : material.replaceAll('microflute-', '')
+    }/outside_${print}.webp`;
+  } else {
+    outsideBaseTexturePath = `/assets/models/crash-lock-base/${
+      material.includes('white')
+        ? material.replaceAll('microflute-', 'coated-')
+        : material.replaceAll('microflute-', '')
+    }/base.webp`;
+  }
+  const outsideBaseTexture = useTexture(outsideBaseTexturePath);
+  outsideBaseTexture.flipY = false;
+  outsideBaseTexture.colorSpace = SRGBColorSpace;
+
+  if (material.includes('microflute-')) {
+    sideTexturePath = `/assets/models/crash-lock-base/${material}/side.webp`;
+  } else {
+    sideTexturePath = `/assets/models/crash-lock-base/${material}/base.webp`;
+  }
+  const sideBaseTexture = useTexture(sideTexturePath);
+  sideBaseTexture.colorSpace = SRGBColorSpace;
+  sideBaseTexture.flipY = false;
+  sideBaseTexture.wrapS = RepeatWrapping;
 
   // Ref to track the previous coating and finishing values
   const previousCoatingRef = useRef(coating);
@@ -85,38 +105,14 @@ export function Tuckend(props) {
     previousFinishingRef.current = { ...finishing };
   }, [coating, finishing]);
 
-  // ********** CONFIGURATOR SCRIPT
-  let outsideBaseTexturePath = '';
-  let insideBaseTexturePath = '';
-  let sideTexturePath = '';
-
-  if (print !== 'none') {
-    outsideBaseTexturePath = `/assets/models/tuckend/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/outside_${print}.webp`;
-  } else {
-    outsideBaseTexturePath = `/assets/models/tuckend/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
-  }
-
-  console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath);
-  const outsideBaseTexture = useTexture(outsideBaseTexturePath);
-  outsideBaseTexture.flipY = false;
-  outsideBaseTexture.colorSpace = SRGBColorSpace;
-
   if (print !== 'none' && printSurface === 'outside-inside') {
-    insideBaseTexturePath = `/assets/models/tuckend/${
+    insideBaseTexturePath = `/assets/models/crash-lock-base/${
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
     }/inside_${print}.webp`;
   } else {
-    insideBaseTexturePath = `/assets/models/tuckend/${
+    insideBaseTexturePath = `/assets/models/crash-lock-base/${
       material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
@@ -124,28 +120,19 @@ export function Tuckend(props) {
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath);
-  insideBaseTexture.flipY = false;
+
   insideBaseTexture.colorSpace = SRGBColorSpace;
+  insideBaseTexture.flipY = false;
 
-  if (material.includes('microflute-')) {
-    sideTexturePath = `/assets/models/tuckend/${material}/side.webp`;
-  } else {
-    sideTexturePath = `/assets/models/tuckend/${material}/base.webp`;
-  }
-
-  const sideBaseTexture = useTexture(sideTexturePath);
-  sideBaseTexture.flipY = false;
-  sideBaseTexture.colorSpace = SRGBColorSpace;
-  sideBaseTexture.wrapS = RepeatWrapping;
-  // sideBaseTexture.wrapT = RepeatWrapping
-
+  let bumpMap = null;
   let goldFoil_opacity = 0;
   let spotgloss_opacity = 0;
-  let bumpMap = null;
+
   const embossingTexture = useTexture(
-    '/assets/models/tuckend/textures/embossing_OUTSIDE.png'
+    '/assets/models/crash-lock-base/textures/finishing_emboss_normal_map.webp'
   );
   embossingTexture.flipY = false;
+
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
     if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -156,59 +143,61 @@ export function Tuckend(props) {
   let clearCoatRoughness = 0;
 
   const coatingTexture = useTexture(
-    '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
+    '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
   );
-  coatingTexture.flipY = false;
 
+  coatingTexture.flipY = false;
   if (coating !== 'none') {
     if (coating === 'gloss') {
       clearCoat = 1;
       clearCoatRoughness = 0.15;
-    }
-    if (coating === 'silk') {
+    } else if (coating === 'silk') {
       clearCoat = 0.8;
       clearCoatRoughness = 0.2;
-    }
-    if (coating === 'matt') {
+    } else if (coating === 'matt') {
       clearCoat = 1;
       clearCoatRoughness = 0.4;
     }
   }
 
+  let metalnessVal = 0;
+
+  if (material === 'uncoated-white') metalnessVal = 0.3;
+  else if (material.includes('kraft')) metalnessVal = 0.2;
+
   let roughnessMapOutsideTexturePath =
-    '/assets/models/tuckend/textures/base.webp';
+    '/assets/models/crash-lock-base/textures/base.webp';
+
   let roughnessMapInsideTexturePath =
-    '/assets/models/tuckend/textures/base.webp';
-  let roughnessMapOutside = null;
-  let roughnessMapInside = null;
+    '/assets/models/crash-lock-base/textures/base.webp';
+
+  let roughnessMapInside = '';
+  let roughnessMapOutside = '';
 
   if (print === 'cmyk_1spot_metflo' || print === 'cmyk_2spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_outside.webp';
+      '/assets/models/crash-lock-base/textures/cmyk_1spot_roughness_metflo_outside.webp';
     roughnessMapInsideTexturePath =
-      '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_inside.webp';
+      '/assets/models/crash-lock-base/textures/cmyk_1spot_roughness_metflo_inside.webp';
   }
   if (print === '1spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/tuckend/textures/1spot_roughness_metflo_outside.webp';
+      '/assets/models/crash-lock-base/textures/1spot_roughness_metflo_outside.webp';
     roughnessMapInsideTexturePath =
-      '/assets/models/tuckend/textures/1spot_roughness_metflo_inside.webp';
+      '/assets/models/crash-lock-base/textures/1spot_roughness_metflo_inside.webp';
   }
   if (print === '2spot_metflo') {
     roughnessMapOutsideTexturePath =
-      '/assets/models/tuckend/textures/2spot_roughness_metflo_outside.webp';
+      '/assets/models/crash-lock-base/textures/2spot_roughness_metflo_outside.webp';
     roughnessMapInsideTexturePath =
-      '/assets/models/tuckend/textures/2spot_roughness_metflo_inside.webp';
+      '/assets/models/crash-lock-base/textures/2spot_roughness_metflo_inside.webp';
   }
 
-  roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath);
   roughnessMapInside = useTexture(roughnessMapInsideTexturePath);
+  roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath);
+  roughnessMapInside.flipY = true;
+  roughnessMapOutside.wrapS = RepeatWrapping;
   roughnessMapOutside.flipY = false;
-  roughnessMapInside.flipY = false;
-
-  let metalnessVal = 0;
-  if (material === 'uncoated-white') metalnessVal = 0.3;
-  else if (material.includes('kraft')) metalnessVal = 0.2;
 
   useEffect(() => {
     setTimeout(() => {
@@ -223,16 +212,14 @@ export function Tuckend(props) {
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
-        <group name="Armature" position={[0, -0.01, 0]} scale={0.073}>
-          <primitive object={nodes.main} />
-          <primitive object={nodes.neutral_bone} />
-          <group name="Mesh_0004">
+        <group name="Armature" position={[0, -0.08, 0]} scale={0.124}>
+          <group name="box">
             <skinnedMesh
-              name="outside"
               castShadow
-              geometry={nodes.Mesh_0004_1.geometry}
+              name="outside"
+              geometry={nodes.Mesh_0.geometry}
               // material={materials.Material_color_outside}
-              skeleton={nodes.Mesh_0004_1.skeleton}
+              skeleton={nodes.Mesh_0.skeleton}
             >
               <meshPhysicalMaterial
                 map={outsideBaseTexture}
@@ -248,53 +235,54 @@ export function Tuckend(props) {
             <skinnedMesh
               castShadow
               name="inside"
-              geometry={nodes.Mesh_0004_2.geometry}
-              // material={materials.Material_color_inside
-              skeleton={nodes.Mesh_0004_2.skeleton}
+              geometry={nodes.Mesh_0_1.geometry}
+              // material={materials.Material_color_inside}
+              skeleton={nodes.Mesh_0_1.skeleton}
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
                 clearcoatMap={coatingTexture}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
+                metalness={metalnessVal}
                 roughnessMap={
                   printSurface === 'outside-inside' ? roughnessMapInside : null
                 }
-                metalness={metalnessVal}
               />
             </skinnedMesh>
             <skinnedMesh
+              name="Mesh_0_2"
               castShadow
-              name="side"
-              geometry={nodes.Mesh_0004_3.geometry}
+              geometry={nodes.Mesh_0_2.geometry}
               material={materials.Material_side}
-              skeleton={nodes.Mesh_0004_3.skeleton}
+              skeleton={nodes.Mesh_0_2.skeleton}
             >
-              <meshStandardMaterial map={sideBaseTexture} />
+              <meshPhysicalMaterial map={sideBaseTexture} />
             </skinnedMesh>
             <skinnedMesh
               castShadow
               name="gold_foil"
-              geometry={nodes.Mesh_0004_4.geometry}
+              geometry={nodes.Mesh_0_3.geometry}
               material={materials.finishing_gold_foil}
               material-transparent={true}
               material-opacity={goldFoil_opacity}
-              skeleton={nodes.Mesh_0004_4.skeleton}
+              skeleton={nodes.Mesh_0_3.skeleton}
             />
             <skinnedMesh
-              castShadow
               name="spot_gloss"
-              geometry={nodes.Mesh_0004_5.geometry}
-              material={materials.finishing_spot_gloss}
               material-transparent={true}
               material-opacity={spotgloss_opacity}
-              skeleton={nodes.Mesh_0004_5.skeleton}
+              geometry={nodes.Mesh_0_4.geometry}
+              material={materials.finishing_spot_gloss}
+              skeleton={nodes.Mesh_0_4.skeleton}
             />
           </group>
+          <primitive object={nodes.Bone} />
+          <primitive object={nodes.neutral_bone} />
         </group>
       </group>
     </group>
   );
 }
 
-useGLTF.preload('/assets/models/tuckend/tuckend.glb');
+useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base-old.glb');

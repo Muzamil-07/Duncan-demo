@@ -15,6 +15,8 @@ import { selectIsDefaultMode } from '../../lib/store/features/general/generalSli
 import { TuckendSkeleton } from '../Boxes/TuckendSkeleton';
 import { CrashLockBaseSkeleton } from '../Boxes/CrashLockBaseSkeleton';
 import { CrashLockBase } from '../Boxes/CrashLockBase';
+import { SkilletSkeleton } from '../Boxes/SkilletSkeleton';
+import { Skillet } from '../Boxes/Skillet';
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle);
@@ -85,6 +87,27 @@ const ModelBuilder = () => {
         <Suspense fallback={<ModelLoader />}>
           <CrashLockBaseSkeleton
             scale={14.5}
+            position={[0, 0.15, 0]}
+            rotation={[0, angleToRadians(30), 0]}
+          />
+        </Suspense>
+      );
+  } else if (style === 'skillet') {
+    if (!isDefaultMode)
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <Skillet
+            scale={9.5}
+            position={[0, 0.15, 0]}
+            rotation={[0, angleToRadians(30), 0]}
+          />
+        </Suspense>
+      );
+    else
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <SkilletSkeleton
+            scale={9.5}
             position={[0, 0.15, 0]}
             rotation={[0, angleToRadians(30), 0]}
           />

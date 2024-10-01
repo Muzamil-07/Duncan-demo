@@ -11,6 +11,7 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { roughness } from 'three/examples/jsm/nodes/Nodes.js';
+import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 
 export function Skillet(props) {
   const group = useRef();
@@ -199,6 +200,16 @@ export function Skillet(props) {
   sideBaseTexture.flipY = false;
   sideBaseTexture.colorSpace = SRGBColorSpace;
   sideBaseTexture.wrapS = RepeatWrapping;
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------');
+      preloadMaterialTextures();
+      preloadPrintTextures();
+      // preloadTextures()
+    }, 0);
+    console.log('DONE----------------------');
+  }, []);
 
   return (
     <group ref={group} {...props} dispose={null}>

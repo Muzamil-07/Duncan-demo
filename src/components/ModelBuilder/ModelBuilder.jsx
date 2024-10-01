@@ -17,6 +17,8 @@ import { CrashLockBaseSkeleton } from '../Boxes/CrashLockBaseSkeleton';
 import { CrashLockBase } from '../Boxes/CrashLockBase';
 import { SkilletSkeleton } from '../Boxes/SkilletSkeleton';
 import { Skillet } from '../Boxes/Skillet';
+import { BufferLid } from '../Boxes/BufferLid';
+import { BufferLidSkeleton } from '../Boxes/BufferLidSkeleton';
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle);
@@ -77,7 +79,7 @@ const ModelBuilder = () => {
           <CrashLockBase
             scale={14.5}
             position={[0, 0.15, 0]}
-            rotation={[0, angleToRadians(30), 0]}
+            rotation={[0, angleToRadians(210), 0]}
           />
         </Suspense>
         // </ModelPreviewer>
@@ -88,7 +90,7 @@ const ModelBuilder = () => {
           <CrashLockBaseSkeleton
             scale={14.5}
             position={[0, 0.15, 0]}
-            rotation={[0, angleToRadians(30), 0]}
+            rotation={[0, angleToRadians(210), 0]}
           />
         </Suspense>
       );
@@ -110,6 +112,27 @@ const ModelBuilder = () => {
             scale={9.5}
             position={[0, 0.15, 0]}
             rotation={[0, angleToRadians(30), 0]}
+          />
+        </Suspense>
+      );
+  } else if (style === 'buffer-lid') {
+    if (!isDefaultMode)
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <BufferLid
+            scale={9.5}
+            position={[0, -0.45, 0]}
+            rotation={[0, angleToRadians(120), 0]}
+          />
+        </Suspense>
+      );
+    else
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <BufferLidSkeleton
+            scale={9.5}
+            position={[0, -0.65, 0]}
+            rotation={[0, angleToRadians(120), 0]}
           />
         </Suspense>
       );

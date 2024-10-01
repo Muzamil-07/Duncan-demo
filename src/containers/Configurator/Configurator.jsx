@@ -13,15 +13,17 @@ import {
   setMode,
   setZoom,
 } from '../../lib/store/features/general/generalSlice';
-import { Box, Grid, IconButton, Stack } from '@mui/material';
+import { Box, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 import Navbar from '../../components/Navbar';
 import PlaceHolder from '../../components/PlaceHoler/PlaceHolder';
 import CanvasScreen from '../Experience/CanvasScreen';
 import ModelBuilder from '../../components/ModelBuilder';
 import { divideVh } from '../../lib/utils';
+import SideInfoCard from '../../components/SideInfoCard/SideInfoCard';
 
 const Configurator = () => {
   // const [mode, setMode] = useState('black')
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const style = useAppSelector(selectBoxStyle);
   const boxState = useAppSelector(selectBoxState);
   const dispatch = useAppDispatch();
@@ -136,23 +138,40 @@ const Configurator = () => {
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
-          <IconButton
-            sx={{
-              bgcolor: 'white',
-              borderRadius: '8px',
-              marginBottom: '8px',
-              width: '30px',
-              height: '30px',
-              '&:hover': {
-                bgcolor: 'white',
+          <Tooltip
+            title={<SideInfoCard setIsInfoOpen={setIsInfoOpen} />}
+            open={isInfoOpen}
+            placement="right"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  padding: '0px',
+                  backgroundColor: 'white',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                },
               },
             }}
           >
-            <img
-              src="/assets/icons/info-circle.webp"
-              style={{ width: '20px', height: '20px' }}
-            />
-          </IconButton>
+            <IconButton
+              sx={{
+                bgcolor: 'white',
+                borderRadius: '8px',
+                marginBottom: '8px',
+                width: '30px',
+                height: '30px',
+                '&:hover': {
+                  bgcolor: 'white',
+                },
+              }}
+              onClick={() => setIsInfoOpen(!isInfoOpen)}
+            >
+              <img
+                src="/assets/icons/info-circle.webp"
+                style={{ width: '20px', height: '20px' }}
+              />
+            </IconButton>
+          </Tooltip>
           <IconButton
             sx={{
               bgcolor: 'white',

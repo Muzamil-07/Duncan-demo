@@ -31,19 +31,20 @@ export function BufferLid(props) {
   const previousFinishingRef = useRef({ ...finishing });
 
   // ******** ANIMATION SCRIPT
+
   // useEffect(() => {
   //   if (boxState === 'open') {
-  //     actions.ArmatureAction.setLoop(LoopOnce);
-  //     actions.ArmatureAction.clampWhenFinished = true;
-  //     actions.ArmatureAction.timeScale = 1;
-  //     actions.ArmatureAction.reset().play();
+  //     actions['ArmatureAction.001'].setLoop(LoopOnce);
+  //     actions['ArmatureAction.001'].clampWhenFinished = true;
+  //     actions['ArmatureAction.001'].timeScale = 1;
+  //     actions['ArmatureAction.001'].reset().play();
   //   } else if (boxState === 'close') {
-  //     actions.ArmatureAction.setLoop(LoopOnce);
-  //     actions.ArmatureAction.clampWhenFinished = true;
-  //     actions.ArmatureAction.timeScale = -1;
-  //     actions.ArmatureAction.paused = false;
+  //     actions['ArmatureAction.001'].setLoop(LoopOnce);
+  //     actions['ArmatureAction.001'].clampWhenFinished = true;
+  //     actions['ArmatureAction.001'].timeScale = -1;
+  //     actions['ArmatureAction.001'].paused = false;
   //   }
-  // }, [boxState, actions.ArmatureAction]);
+  // }, [boxState, actions['ArmatureAction.001']]);
 
   // ********** ROTATION SCRIPT
   useEffect(() => {
@@ -97,6 +98,8 @@ export function BufferLid(props) {
   const outsideBaseTexture = useTexture(outsideBaseTexturePath);
   outsideBaseTexture.flipY = false;
   outsideBaseTexture.colorSpace = SRGBColorSpace;
+  outsideBaseTexture.wrapT = RepeatWrapping;
+  outsideBaseTexture.wrapS = RepeatWrapping;
 
   if (print !== 'none' && printSurface === 'outside-inside') {
     insideBaseTexturePath = `/assets/models/buffer-lid/${
@@ -115,6 +118,8 @@ export function BufferLid(props) {
   const insideBaseTexture = useTexture(insideBaseTexturePath);
   insideBaseTexture.flipY = false;
   insideBaseTexture.colorSpace = SRGBColorSpace;
+  insideBaseTexture.wrapT = RepeatWrapping;
+  insideBaseTexture.wrapS = RepeatWrapping;
 
   if (material.includes('microflute-')) {
     sideTexturePath = `/assets/models/buffer-lid/${material}/side.webp`;
@@ -180,10 +185,12 @@ export function BufferLid(props) {
   }
 
   const embossingTexture = useTexture(
-    '/assets/models/buffer-lid/textures/embossing_OUTSIDE.png'
+    '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp'
   );
 
   embossingTexture.flipY = false;
+  embossingTexture.wrapS = RepeatWrapping;
+  embossingTexture.wrapT = RepeatWrapping;
 
   let goldFoil_opacity = 0;
   let spotGloss_opacity = 0;
@@ -198,8 +205,6 @@ export function BufferLid(props) {
   let metalnessVal = 0;
   if (material === 'uncoated-white') metalnessVal = 0.3;
   else if (material.includes('kraft')) metalnessVal = 0.2;
-
-  console.log(bumpMap);
 
   useEffect(() => {
     setTimeout(() => {

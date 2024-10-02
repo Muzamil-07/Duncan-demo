@@ -56,6 +56,29 @@ const Configurator = () => {
     }
   };
 
+  const handleFullscreen = () => {
+    const body = document.querySelector('#root');
+    const fullscreenElement =
+      document.fullscreenElement || document.webkitFullscreenElement;
+
+    if (!fullscreenElement) {
+      if (body.requestFullscreen) {
+        body.requestFullscreen();
+      } else if (body.webkitRequestFullscreen) {
+        body.requestFullscreen();
+      }
+
+      console.log('Open full screen');
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      console.log('Close full screen');
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -143,6 +166,7 @@ const Configurator = () => {
             open={isInfoOpen}
             placement="right"
             PopperProps={{
+              container: document.querySelector('#root'),
               sx: {
                 '& .MuiTooltip-tooltip': {
                   padding: '0px',
@@ -182,6 +206,7 @@ const Configurator = () => {
                 bgcolor: 'white',
               },
             }}
+            onClick={handleFullscreen}
           >
             <img
               src="/assets/icons/maximize.webp"

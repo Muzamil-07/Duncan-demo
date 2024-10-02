@@ -1,5 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
+import { selectBoxState } from '../../lib/store/features/box/boxSlice';
+import { useAppSelector } from '../../lib/store/hooks';
+import { LoopOnce } from 'three';
+import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 
 export function SkilletSkeleton(props) {
   const group = useRef();
@@ -7,6 +11,33 @@ export function SkilletSkeleton(props) {
     '/assets/models/skillet/skillet.glb'
   );
   const { actions } = useAnimations(animations, group);
+  const boxState = useAppSelector(selectBoxState);
+
+  // ******** ANIMATION SCRIPT
+  useEffect(() => {
+    if (boxState === 'open') {
+      actions.ArmatureAction.setLoop(LoopOnce);
+      actions.ArmatureAction.clampWhenFinished = true;
+      actions.ArmatureAction.timeScale = 1;
+      actions.ArmatureAction.reset().play();
+    } else if (boxState === 'close') {
+      actions.ArmatureAction.setLoop(LoopOnce);
+      actions.ArmatureAction.clampWhenFinished = true;
+      actions.ArmatureAction.timeScale = -1;
+      actions.ArmatureAction.paused = false;
+    }
+  }, [boxState, actions.ArmatureAction]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------');
+      preloadMaterialTextures();
+      preloadPrintTextures();
+      // preloadTextures()
+    }, 0);
+    console.log('DONE----------------------');
+  }, []);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

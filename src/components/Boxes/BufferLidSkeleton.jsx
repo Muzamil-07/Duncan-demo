@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
+import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 
 export function BufferLidSkeleton(props) {
   const group = useRef();
@@ -7,6 +8,15 @@ export function BufferLidSkeleton(props) {
     '/assets/models/buffer-lid/buffer-lid.glb'
   );
   const { actions } = useAnimations(animations, group);
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------');
+      preloadMaterialTextures();
+      preloadPrintTextures();
+      // preloadTextures()
+    }, 0);
+    console.log('DONE----------------------');
+  }, []);
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

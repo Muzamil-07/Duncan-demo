@@ -6,7 +6,7 @@ import Configurator from '../containers/Configurator';
 const Home = () => {
   // usePreload()
   return (
-    <Stack>
+    <Stack sx={{ backgroundColor: 'background.primary' }}>
       <Configurator />
       <Menu />
     </Stack>

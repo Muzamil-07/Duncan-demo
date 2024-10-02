@@ -5,6 +5,9 @@ import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 
 import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import { LoopOnce } from 'three';
+import { selectBoxState } from '../../lib/store/features/box/boxSlice';
+import { useAppSelector } from '../../lib/store/hooks';
 
 export function CrashLockBaseSkeleton(props) {
   // useEffect(() => {
@@ -17,6 +20,23 @@ export function CrashLockBaseSkeleton(props) {
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
+
+  const boxState = useAppSelector(selectBoxState);
+  // ******** ANIMATION SCRIPT
+  useEffect(() => {
+    if (boxState === 'open') {
+      actions.ArmatureAction.setLoop(LoopOnce);
+      actions.ArmatureAction.clampWhenFinished = true;
+      actions.ArmatureAction.timeScale = 1;
+      actions.ArmatureAction.reset().play();
+    } else if (boxState === 'close') {
+      actions.ArmatureAction.setLoop(LoopOnce);
+      actions.ArmatureAction.clampWhenFinished = true;
+      actions.ArmatureAction.timeScale = -1;
+      actions.ArmatureAction.paused = false;
+    }
+  }, [boxState, actions.ArmatureAction]);
+
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');

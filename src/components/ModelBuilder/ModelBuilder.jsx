@@ -19,6 +19,8 @@ import { SkilletSkeleton } from '../Boxes/SkilletSkeleton';
 import { Skillet } from '../Boxes/Skillet';
 import { BufferLid } from '../Boxes/BufferLid';
 import { BufferLidSkeleton } from '../Boxes/BufferLidSkeleton';
+import { Sleeve } from '../Boxes/Sleeve';
+import { SleeveSkeleton } from '../Boxes/SleeveSkeleton';
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle);
@@ -132,6 +134,27 @@ const ModelBuilder = () => {
           <BufferLidSkeleton
             scale={9.5}
             position={[0, -0.65, 0]}
+            rotation={[0, angleToRadians(120), 0]}
+          />
+        </Suspense>
+      );
+  } else if (style === 'sleeve') {
+    if (!isDefaultMode)
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <Sleeve
+            scale={9.5}
+            position={[0, 0, 0]}
+            rotation={[0, angleToRadians(120), 0]}
+          />
+        </Suspense>
+      );
+    else
+      return (
+        <Suspense fallback={<ModelLoader />}>
+          <SleeveSkeleton
+            scale={9.5}
+            position={[0, 0, 0]}
             rotation={[0, angleToRadians(120), 0]}
           />
         </Suspense>

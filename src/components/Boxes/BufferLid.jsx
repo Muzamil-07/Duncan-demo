@@ -10,13 +10,19 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { useAppSelector } from '../../lib/store/hooks';
 import { RepeatWrapping, SRGBColorSpace } from 'three';
+import { SkeletonUtils } from 'three-stdlib';
+import { useGraph } from '@react-three/fiber';
+import { LoopOnce } from 'three';
 import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 
 export function BufferLid(props) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF(
+
+  const { scene, animations } = useGLTF(
     '/assets/models/buffer-lid/buffer-lid.glb'
   );
+  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
 
   const boxState = useAppSelector(selectBoxState);
@@ -32,19 +38,19 @@ export function BufferLid(props) {
 
   // ******** ANIMATION SCRIPT
 
-  // useEffect(() => {
-  //   if (boxState === 'open') {
-  //     actions['ArmatureAction.001'].setLoop(LoopOnce);
-  //     actions['ArmatureAction.001'].clampWhenFinished = true;
-  //     actions['ArmatureAction.001'].timeScale = 1;
-  //     actions['ArmatureAction.001'].reset().play();
-  //   } else if (boxState === 'close') {
-  //     actions['ArmatureAction.001'].setLoop(LoopOnce);
-  //     actions['ArmatureAction.001'].clampWhenFinished = true;
-  //     actions['ArmatureAction.001'].timeScale = -1;
-  //     actions['ArmatureAction.001'].paused = false;
-  //   }
-  // }, [boxState, actions['ArmatureAction.001']]);
+  useEffect(() => {
+    if (boxState === 'open') {
+      actions['ArmatureAction.001'].setLoop(LoopOnce);
+      actions['ArmatureAction.001'].clampWhenFinished = true;
+      actions['ArmatureAction.001'].timeScale = 1;
+      actions['ArmatureAction.001'].reset().play();
+    } else if (boxState === 'close') {
+      actions['ArmatureAction.001'].setLoop(LoopOnce);
+      actions['ArmatureAction.001'].clampWhenFinished = true;
+      actions['ArmatureAction.001'].timeScale = -1;
+      actions['ArmatureAction.001'].paused = false;
+    }
+  }, [boxState, actions['ArmatureAction.001']]);
 
   // ********** ROTATION SCRIPT
   useEffect(() => {

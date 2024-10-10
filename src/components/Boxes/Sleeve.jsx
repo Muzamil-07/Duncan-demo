@@ -27,52 +27,37 @@ export function Sleeve(props) {
   const boxState = useAppSelector(selectBoxState);
 
   // Ref to track the previous coating and finishing values
-  //   const previousCoatingRef = useRef(coating);
-  //   const previousFinishingRef = useRef({ ...finishing });
-
-  // ******** ANIMATION SCRIPT
-  //   useEffect(() => {
-  //     if (boxState === 'open') {
-  //       actions.ArmatureAction.setLoop(LoopOnce);
-  //       actions.ArmatureAction.clampWhenFinished = true;
-  //       actions.ArmatureAction.timeScale = 1;
-  //       actions.ArmatureAction.reset().play();
-  //     } else if (boxState === 'close') {
-  //       actions.ArmatureAction.setLoop(LoopOnce);
-  //       actions.ArmatureAction.clampWhenFinished = true;
-  //       actions.ArmatureAction.timeScale = -1;
-  //       actions.ArmatureAction.paused = false;
-  //     }
-  //   }, [boxState, actions.ArmatureAction]);
+  const previousCoatingRef = useRef(coating);
+  const previousFinishingRef = useRef({ ...finishing });
 
   //   ********** ROTATION SCRIPT
-  //   useEffect(() => {
-  //     const shouldRotate =
-  //       (coating !== 'none' && previousCoatingRef.current !== coating) ||
-  //       (finishing.goldFoil && !previousFinishingRef.current.goldFoil) ||
-  //       (finishing.embossing && !previousFinishingRef.current.embossing) ||
-  //       (finishing.spotGloss && !previousFinishingRef.current.spotGloss);
+  useEffect(() => {
+    const shouldRotate =
+      (coating !== 'none' && previousCoatingRef.current !== coating) ||
+      (finishing.goldFoil && !previousFinishingRef.current.goldFoil) ||
+      (finishing.embossing && !previousFinishingRef.current.embossing) ||
+      (finishing.spotGloss && !previousFinishingRef.current.spotGloss);
 
-  //     if (shouldRotate) {
-  //       // Rotate the model 360 degrees
-  //       let rotationY = 0;
-  //       const rotationSpeed = 0.05; // Adjust the speed of rotation as needed
+    if (shouldRotate) {
+      // Rotate the model 360 degrees
+      let rotationY = 0;
+      const rotationSpeed = 0.05; // Adjust the speed of rotation as needed
 
-  //       const animateRotation = () => {
-  //         if (rotationY < Math.PI * 2) {
-  //           rotationY += rotationSpeed;
-  //           group.current.rotation.y = rotationY;
-  //           requestAnimationFrame(animateRotation);
-  //         } else {
-  //           group.current.rotation.y = 0; // Reset the rotation
-  //         }
-  //       };
-  //       animateRotation();
-  //     }
+      const animateRotation = () => {
+        if (rotationY < Math.PI * 2) {
+          rotationY += rotationSpeed;
+          group.current.rotation.y = rotationY;
+          requestAnimationFrame(animateRotation);
+        } else {
+          group.current.rotation.y = 0; // Reset the rotation
+        }
+      };
+      animateRotation();
+    }
 
-  //     previousCoatingRef.current = coating;
-  //     previousFinishingRef.current = { ...finishing };
-  //   }, [coating, finishing]);
+    previousCoatingRef.current = coating;
+    previousFinishingRef.current = { ...finishing };
+  }, [coating, finishing]);
 
   let outsideBaseTexturePath = '';
   let insideBaseTexturePath = '';
@@ -211,11 +196,11 @@ export function Sleeve(props) {
   }, []);
 
   return (
-    <group {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
       <mesh
         name="outside"
         castShadow
-        receiveShadow
+        // receiveShadow
         geometry={nodes.Mesh_0_1.geometry}
         // material={materials.Material_color_outside}
       >
@@ -233,7 +218,7 @@ export function Sleeve(props) {
       <mesh
         name="inside"
         castShadow
-        receiveShadow
+        // receiveShadow
         geometry={nodes.Mesh_0_2.geometry}
         // material={materials.Material_color_inside}
       >

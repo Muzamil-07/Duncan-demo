@@ -11,12 +11,17 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import { SkeletonUtils } from 'three-stdlib';
+import { useGraph } from '@react-three/fiber';
 
 export function CrashLockBase(props) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF(
+
+  const { scene, animations } = useGLTF(
     '/assets/models/crash-lock-base/crash-lock-base-old.glb'
   );
+  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
 
   const print = useAppSelector(selectBoxPrint);
@@ -129,7 +134,7 @@ export function CrashLockBase(props) {
   let spotgloss_opacity = 0;
 
   const embossingTexture = useTexture(
-    '/assets/models/crash-lock-base/textures/finishing_emboss_normal_map.webp'
+    '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
   );
   embossingTexture.flipY = false;
 

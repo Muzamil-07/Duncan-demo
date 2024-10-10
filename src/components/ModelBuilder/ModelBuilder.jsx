@@ -21,6 +21,8 @@ import { BufferLid } from '../Boxes/BufferLid';
 import { BufferLidSkeleton } from '../Boxes/BufferLidSkeleton';
 import { Sleeve } from '../Boxes/Sleeve';
 import { SleeveSkeleton } from '../Boxes/SleeveSkeleton';
+import { SelefLockTray } from '../Boxes/SelefLockTray';
+import { SelefLockTraySkeleton } from '../Boxes/SelefLockTraySkeleton';
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle);
@@ -144,7 +146,7 @@ const ModelBuilder = () => {
         <Suspense fallback={<ModelLoader />}>
           <Sleeve
             scale={9.5}
-            position={[0, 0, 0]}
+            position={[0, -0.1, 0]}
             rotation={[0, angleToRadians(120), 0]}
           />
         </Suspense>
@@ -154,11 +156,29 @@ const ModelBuilder = () => {
         <Suspense fallback={<ModelLoader />}>
           <SleeveSkeleton
             scale={9.5}
-            position={[0, 0, 0]}
+            position={[0, -0.1, 0]}
             rotation={[0, angleToRadians(120), 0]}
           />
         </Suspense>
       );
+  } else if (style === 'selef-lock-tray') {
+    if (!isDefaultMode) {
+      return (
+        <SelefLockTray
+          position={[0, -0.7, 0]}
+          scale={9.5}
+          rotation={[0, angleToRadians(120), 0]}
+        />
+      );
+    } else {
+      return (
+        <SelefLockTraySkeleton
+          position={[0, -0.7, 0]}
+          scale={9.5}
+          rotation={[0, angleToRadians(120), 0]}
+        />
+      );
+    }
   } else return <></>;
 };
 

@@ -1,13 +1,40 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+/* eslint-disable react/no-unknown-property */
+import { LoopOnce } from 'three';
+import { useAppSelector } from '../../lib/store/hooks';
+import { selectBoxState } from '../../lib/store/features/box/boxSlice';
+import { SkeletonUtils } from 'three-stdlib';
+import { useGraph } from '@react-three/fiber';
 
 export function BufferLidSkeleton(props) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF(
+
+  const { scene, animations } = useGLTF(
     '/assets/models/buffer-lid/buffer-lid.glb'
   );
+  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
+
+  const boxState = useAppSelector(selectBoxState);
+
+  // ******** ANIMATION SCRIPT
+  useEffect(() => {
+    if (boxState === 'open') {
+      actions['ArmatureAction.001'].setLoop(LoopOnce);
+      actions['ArmatureAction.001'].clampWhenFinished = true;
+      actions['ArmatureAction.001'].timeScale = 1;
+      actions['ArmatureAction.001'].reset().play();
+    } else if (boxState === 'close') {
+      actions['ArmatureAction.001'].setLoop(LoopOnce);
+      actions['ArmatureAction.001'].clampWhenFinished = true;
+      actions['ArmatureAction.001'].timeScale = -1;
+      actions['ArmatureAction.001'].paused = false;
+    }
+  }, [boxState, actions['ArmatureAction.001']]);
+
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');

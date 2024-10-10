@@ -24,6 +24,7 @@ export function MailerBoxSkeleton(props) {
 
   const boxState = useAppSelector(selectBoxState);
   // ******** ANIMATION SCRIPT
+
   useEffect(() => {
     if (boxState === 'open') {
       actions.Animation.setLoop(LoopOnce);

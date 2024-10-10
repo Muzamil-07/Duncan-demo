@@ -12,6 +12,7 @@ function App() {
   //     preloadTextures()
   //   }, 1000)
   // }, [])
+
   return (
     <>
       <ThemeProvider theme={theme}>

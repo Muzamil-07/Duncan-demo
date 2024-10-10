@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../lib/store/hooks';
 import {
   selectBoxState,
@@ -28,6 +28,16 @@ const Configurator = () => {
   const boxState = useAppSelector(selectBoxState);
   const dispatch = useAppDispatch();
   const mode = useAppSelector(selectMode);
+  const [modelHasAnimation, setModelHasAnimation] = useState(true);
+
+  const modelsWithoutAnimation = ['sleeve', 'selef-lock-tray'];
+  useEffect(() => {
+    if (modelsWithoutAnimation.includes(style)) {
+      setModelHasAnimation(false);
+    } else {
+      setModelHasAnimation(true);
+    }
+  }, [style]);
 
   const handleMode = () => {
     dispatch(setMode(mode === 'black' ? 'white' : 'black'));
@@ -143,24 +153,26 @@ const Configurator = () => {
               style={{ width: '20px', height: '20px' }}
             />
           </IconButton>
-          <IconButton
-            sx={{
-              bgcolor: 'white',
-              borderRadius: '8px',
-              marginBottom: '8px',
-              width: '30px',
-              height: '30px',
-              '&:hover': {
+          {modelHasAnimation && (
+            <IconButton
+              sx={{
                 bgcolor: 'white',
-              },
-            }}
-            onClick={toggleBoxState}
-          >
-            <img
-              src={`/assets/icons/box-${boxState}.webp`}
-              style={{ width: '20px', height: '20px' }}
-            />
-          </IconButton>
+                borderRadius: '8px',
+                marginBottom: '8px',
+                width: '30px',
+                height: '30px',
+                '&:hover': {
+                  bgcolor: 'white',
+                },
+              }}
+              onClick={toggleBoxState}
+            >
+              <img
+                src={`/assets/icons/box-${boxState}.webp`}
+                style={{ width: '20px', height: '20px' }}
+              />
+            </IconButton>
+          )}
           <Tooltip
             title={<SideInfoCard setIsInfoOpen={setIsInfoOpen} />}
             open={isInfoOpen}

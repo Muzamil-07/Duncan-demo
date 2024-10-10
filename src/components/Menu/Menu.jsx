@@ -1,8 +1,8 @@
-import React from 'react'
-import MainMenu from './Main'
+import React from 'react';
+import MainMenu from './Main';
 
 const Menu = () => {
-  return <MainMenu />
-}
+  return <MainMenu />;
+};
 
-export default Menu
+export default Menu;

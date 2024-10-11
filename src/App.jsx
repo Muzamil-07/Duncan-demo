@@ -25,8 +25,8 @@ function App() {
 export default App;
 useGLTF.preload('/assets/models/mailer/mailer-box.gltf');
 useGLTF.preload('/assets/models/tuckend/tuckend.glb');
-useGLTF.preload('/assets/models/buffer-lid/buffer-lid.glt');
-useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base.glt');
-useGLTF.preload('/assets/models/selef-lock-tray/selef-lock-tray.glt');
-useGLTF.preload('/assets/models/skillet/skillet.glt');
-useGLTF.preload('/assets/models/sleeve/sleeve.glt');
+useGLTF.preload('/assets/models/buffer-lid/buffer-lid.glb');
+useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base.glb');
+useGLTF.preload('/assets/models/selef-lock-tray/selef-lock-tray.glb');
+useGLTF.preload('/assets/models/skillet/skillet.glb');
+useGLTF.preload('/assets/models/sleeve/sleeve.glb');

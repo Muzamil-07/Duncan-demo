@@ -168,52 +168,85 @@ const MainMenu = () => {
         </Grid>
 
         <Grid item xs={10}>
-          <Stack direction="row">
-            <IconButton onClick={handlePrev} disabled={activeIndex === 0}>
+          <Stack
+            direction="row"
+            sx={{
+              position: 'relative',
+              height: '100%',
+            }}
+          >
+            <IconButton
+              onClick={handlePrev}
+              disabled={activeIndex === 0}
+              sx={{ position: 'absolute', left: '0px' }}
+            >
               <ArrowBackIosIcon />
             </IconButton>
 
-            {stepKeys.map((val, index) => {
-              return (
-                // <Grid item xs={1} key={key}>
-                <Box
-                  key={val}
-                  sx={{
-                    display: 'flex',
-                    paddingInline: '30px',
-                    paddingBlock: '0px',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    borderRadius: '20px',
-                    transition: 'all 0.5s',
-                    bgcolor: activeTab === val ? '#3980AB' : 'none',
-                    color: activeTab === val ? 'white' : 'grey',
-                  }}
-                  onClick={() => handleMenuClick(val, index)}
-                >
-                  <Typography sx={{ fontSize: '14px' }}>
-                    {steps[val].name}
-                  </Typography>
-                  <CheckCircleIcon
+            <Stack
+              direction="row"
+              sx={{
+                overflow: 'auto',
+                margin: '0px 25px',
+                '&::-webkit-scrollbar': {
+                  height: '4px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: '#dedede',
+                  borderRadius: '10px',
+                },
+                '&::-webkit-scrollbar-thumb:hover': {
+                  backgroundColor: '#c2c2c2',
+                },
+                '&::-webkit-scrollbar-track': {
+                  backgroundColor: '#f1f1f1',
+                },
+              }}
+            >
+              {stepKeys.map((val, index) => {
+                return (
+                  // <Grid item xs={1} key={key}>
+                  <Box
+                    key={val}
                     sx={{
-                      color:
-                        activeTab === val
-                          ? 'white'
-                          : !_.isEqual(
-                              boxAttributes[steps[val].key],
-                              steps[val].defaultVal
-                            )
-                          ? 'green'
-                          : '#CCCCCC',
-                      height: '18px',
+                      display: 'flex',
+                      paddingInline: '30px',
+                      paddingBlock: '0px',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                      borderRadius: '20px',
+                      transition: 'all 0.5s',
+                      bgcolor: activeTab === val ? '#3980AB' : 'none',
+                      color: activeTab === val ? 'white' : 'grey',
                     }}
-                  />
-                </Box>
-              );
-            })}
+                    onClick={() => handleMenuClick(val, index)}
+                  >
+                    <Typography sx={{ fontSize: '14px' }}>
+                      {steps[val].name}
+                    </Typography>
+                    <CheckCircleIcon
+                      sx={{
+                        color:
+                          activeTab === val
+                            ? 'white'
+                            : !_.isEqual(
+                                boxAttributes[steps[val].key],
+                                steps[val].defaultVal
+                              )
+                            ? 'green'
+                            : '#CCCCCC',
+                        height: '18px',
+                      }}
+                    />
+                  </Box>
+                );
+              })}
+            </Stack>
+
             <IconButton
               onClick={handleNext}
               disabled={activeIndex === stepKeys.length - 1}
+              sx={{ position: 'absolute', right: '0px' }}
             >
               <ArrowForwardIosIcon />
             </IconButton>

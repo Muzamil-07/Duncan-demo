@@ -213,7 +213,7 @@ export function SelefLockTray(props) {
           clearcoatMap={coatingTexture}
           clearcoat={clearCoat}
           clearcoatRoughness={clearCoatRoughness}
-          bumpMap={embossingTexture}
+          bumpMap={bumpMap}
           roughnessMap={roughnessMapOutside}
           bumpScale={15}
         />

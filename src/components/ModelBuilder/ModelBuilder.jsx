@@ -125,7 +125,7 @@ const ModelBuilder = () => {
         <Suspense fallback={<ModelLoader />}>
           <BufferLid
             scale={9.5}
-            position={[0, -0.45, 0]}
+            position={[0, -0.75, 0]}
             rotation={[0, angleToRadians(120), 0]}
           />
         </Suspense>
@@ -135,7 +135,7 @@ const ModelBuilder = () => {
         <Suspense fallback={<ModelLoader />}>
           <BufferLidSkeleton
             scale={9.5}
-            position={[0, -0.65, 0]}
+            position={[0, -0.75, 0]}
             rotation={[0, angleToRadians(120), 0]}
           />
         </Suspense>

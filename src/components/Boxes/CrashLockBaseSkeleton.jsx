@@ -15,7 +15,7 @@ export function CrashLockBaseSkeleton(props) {
   // }, [])
   const group = React.useRef();
   const { scene, animations } = useGLTF(
-    '/assets/models/crash-lock-base/crash-lock-base-old.glb'
+    '/assets/models/crash-lock-base/crash-lock-base.glb'
   );
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
@@ -95,4 +95,4 @@ export function CrashLockBaseSkeleton(props) {
   );
 }
 
-useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base-old.glb');
+useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base.glb');

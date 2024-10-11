@@ -239,7 +239,7 @@ export function Sleeve(props) {
         geometry={nodes.Mesh_0_3.geometry}
         // material={materials.Material_side}
       >
-        <meshPhysicalMaterial map={sideBaseTexture} />
+        <meshStandardMaterial map={sideBaseTexture} />
       </mesh>
       <mesh
         castShadow

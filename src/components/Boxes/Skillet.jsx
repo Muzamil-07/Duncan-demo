@@ -256,7 +256,7 @@ export function Skillet(props) {
               // material={materials.Material_side}
               skeleton={nodes.Mesh_0001_3.skeleton}
             >
-              <meshPhysicalMaterial map={sideBaseTexture} />
+              <meshStandardMaterial map={sideBaseTexture} />
             </skinnedMesh>
             <skinnedMesh
               name="gold_foil"

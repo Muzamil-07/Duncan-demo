@@ -267,7 +267,7 @@ export function BufferLid(props) {
               // material={materials.Material_side}
               skeleton={nodes.Mesh_0_3.skeleton}
             >
-              <meshPhysicalMaterial map={sideBaseTexture} />
+              <meshStandardMaterial map={sideBaseTexture} />
             </skinnedMesh>
             <skinnedMesh
               name="Mesh_0_4"

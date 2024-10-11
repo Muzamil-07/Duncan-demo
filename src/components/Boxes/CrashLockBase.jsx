@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations, useTexture } from '@react-three/drei';
+import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { useAppSelector } from '../../lib/store/hooks';
 import {
   selectBoxCoating,
@@ -9,58 +10,29 @@ import {
   selectBoxPrintSurface,
   selectBoxState,
 } from '../../lib/store/features/box/boxSlice';
-import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
+import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
 
 export function CrashLockBase(props) {
-  const group = useRef();
-
+  // useEffect(() => {
+  //   preloadTextures()
+  // }, [])
+  const group = React.useRef();
   const { scene, animations } = useGLTF(
-    '/assets/models/crash-lock-base/crash-lock-base-old.glb'
+    '/assets/models/crash-lock-base/crash-lock-base.glb'
   );
+
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
 
+  const boxState = useAppSelector(selectBoxState);
   const print = useAppSelector(selectBoxPrint);
   const material = useAppSelector(selectBoxMaterial);
-  const finishing = useAppSelector(selectBoxFinishing);
-  const coating = useAppSelector(selectBoxCoating);
   const printSurface = useAppSelector(selectBoxPrintSurface);
-  const boxState = useAppSelector(selectBoxState);
-
-  let outsideBaseTexturePath = '';
-  let insideBaseTexturePath = '';
-  let sideTexturePath = '';
-
-  if (print !== 'none') {
-    outsideBaseTexturePath = `assets/models/crash-lock-base/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/outside_${print}.webp`;
-  } else {
-    outsideBaseTexturePath = `/assets/models/crash-lock-base/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
-  }
-  const outsideBaseTexture = useTexture(outsideBaseTexturePath);
-  outsideBaseTexture.flipY = false;
-  outsideBaseTexture.colorSpace = SRGBColorSpace;
-
-  if (material.includes('microflute-')) {
-    sideTexturePath = `/assets/models/crash-lock-base/${material}/side.webp`;
-  } else {
-    sideTexturePath = `/assets/models/crash-lock-base/${material}/base.webp`;
-  }
-  const sideBaseTexture = useTexture(sideTexturePath);
-  sideBaseTexture.colorSpace = SRGBColorSpace;
-  sideBaseTexture.flipY = false;
-  sideBaseTexture.wrapS = RepeatWrapping;
+  const coating = useAppSelector(selectBoxCoating);
+  const finishing = useAppSelector(selectBoxFinishing);
 
   // Ref to track the previous coating and finishing values
   const previousCoatingRef = useRef(coating);
@@ -110,6 +82,30 @@ export function CrashLockBase(props) {
     previousFinishingRef.current = { ...finishing };
   }, [coating, finishing]);
 
+  // ********** CONFIGURATOR SCRIPT
+  let outsideBaseTexturePath = '';
+  let insideBaseTexturePath = '';
+  let sideTexturePath = '';
+
+  if (print !== 'none') {
+    outsideBaseTexturePath = `/assets/models/crash-lock-base/${
+      material.includes('white')
+        ? material.replaceAll('microflute-', 'coated-')
+        : material.replaceAll('microflute-', '')
+    }/outside_${print}.webp`;
+  } else {
+    outsideBaseTexturePath = `/assets/models/crash-lock-base/${
+      material.includes('white')
+        ? material.replaceAll('microflute-', 'coated-')
+        : material.replaceAll('microflute-', '')
+    }/base.webp`;
+  }
+
+  console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath);
+  const outsideBaseTexture = useTexture(outsideBaseTexturePath);
+  outsideBaseTexture.flipY = false;
+  outsideBaseTexture.colorSpace = SRGBColorSpace;
+
   if (print !== 'none' && printSurface === 'outside-inside') {
     insideBaseTexturePath = `/assets/models/crash-lock-base/${
       material.includes('white')
@@ -125,19 +121,28 @@ export function CrashLockBase(props) {
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath);
-
-  insideBaseTexture.colorSpace = SRGBColorSpace;
   insideBaseTexture.flipY = false;
+  insideBaseTexture.colorSpace = SRGBColorSpace;
 
-  let bumpMap = null;
+  if (material.includes('microflute-')) {
+    sideTexturePath = `/assets/models/crash-lock-base/${material}/side.webp`;
+  } else {
+    sideTexturePath = `/assets/models/crash-lock-base/${material}/base.webp`;
+  }
+
+  const sideBaseTexture = useTexture(sideTexturePath);
+  sideBaseTexture.flipY = false;
+  sideBaseTexture.colorSpace = SRGBColorSpace;
+  sideBaseTexture.wrapS = RepeatWrapping;
+  // sideBaseTexture.wrapT = RepeatWrapping
+
   let goldFoil_opacity = 0;
   let spotgloss_opacity = 0;
-
+  let bumpMap = null;
   const embossingTexture = useTexture(
     '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
   );
   embossingTexture.flipY = false;
-
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
     if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -150,34 +155,29 @@ export function CrashLockBase(props) {
   const coatingTexture = useTexture(
     '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
   );
-
   coatingTexture.flipY = false;
+
   if (coating !== 'none') {
     if (coating === 'gloss') {
       clearCoat = 1;
       clearCoatRoughness = 0.15;
-    } else if (coating === 'silk') {
+    }
+    if (coating === 'silk') {
       clearCoat = 0.8;
       clearCoatRoughness = 0.2;
-    } else if (coating === 'matt') {
+    }
+    if (coating === 'matt') {
       clearCoat = 1;
       clearCoatRoughness = 0.4;
     }
   }
 
-  let metalnessVal = 0;
-
-  if (material === 'uncoated-white') metalnessVal = 0.3;
-  else if (material.includes('kraft')) metalnessVal = 0.2;
-
   let roughnessMapOutsideTexturePath =
     '/assets/models/crash-lock-base/textures/base.webp';
-
   let roughnessMapInsideTexturePath =
     '/assets/models/crash-lock-base/textures/base.webp';
-
-  let roughnessMapInside = '';
-  let roughnessMapOutside = '';
+  let roughnessMapOutside = null;
+  let roughnessMapInside = null;
 
   if (print === 'cmyk_1spot_metflo' || print === 'cmyk_2spot_metflo') {
     roughnessMapOutsideTexturePath =
@@ -198,11 +198,14 @@ export function CrashLockBase(props) {
       '/assets/models/crash-lock-base/textures/2spot_roughness_metflo_inside.webp';
   }
 
-  roughnessMapInside = useTexture(roughnessMapInsideTexturePath);
   roughnessMapOutside = useTexture(roughnessMapOutsideTexturePath);
-  roughnessMapInside.flipY = true;
-  roughnessMapOutside.wrapS = RepeatWrapping;
+  roughnessMapInside = useTexture(roughnessMapInsideTexturePath);
   roughnessMapOutside.flipY = false;
+  roughnessMapInside.flipY = false;
+
+  let metalnessVal = 0;
+  if (material === 'uncoated-white') metalnessVal = 0.3;
+  else if (material.includes('kraft')) metalnessVal = 0.2;
 
   useEffect(() => {
     setTimeout(() => {
@@ -220,7 +223,6 @@ export function CrashLockBase(props) {
         <group name="Armature" position={[0, -0.08, 0]} scale={0.124}>
           <group name="box">
             <skinnedMesh
-              castShadow
               name="outside"
               geometry={nodes.Mesh_0.geometry}
               // material={materials.Material_color_outside}
@@ -238,7 +240,6 @@ export function CrashLockBase(props) {
               />
             </skinnedMesh>
             <skinnedMesh
-              castShadow
               name="inside"
               geometry={nodes.Mesh_0_1.geometry}
               // material={materials.Material_color_inside}
@@ -249,37 +250,35 @@ export function CrashLockBase(props) {
                 clearcoatMap={coatingTexture}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
-                metalness={metalnessVal}
                 roughnessMap={
                   printSurface === 'outside-inside' ? roughnessMapInside : null
                 }
+                metalness={metalnessVal}
               />
             </skinnedMesh>
             <skinnedMesh
-              name="Mesh_0_2"
-              castShadow
+              name="side"
               geometry={nodes.Mesh_0_2.geometry}
-              material={materials.Material_side}
+              // material={materials.Material_side}
               skeleton={nodes.Mesh_0_2.skeleton}
             >
-              <meshPhysicalMaterial map={sideBaseTexture} />
+              <meshStandardMaterial map={sideBaseTexture} />
             </skinnedMesh>
             <skinnedMesh
-              castShadow
               name="gold_foil"
               geometry={nodes.Mesh_0_3.geometry}
               material={materials.finishing_gold_foil}
+              skeleton={nodes.Mesh_0_3.skeleton}
               material-transparent={true}
               material-opacity={goldFoil_opacity}
-              skeleton={nodes.Mesh_0_3.skeleton}
             />
             <skinnedMesh
               name="spot_gloss"
-              material-transparent={true}
-              material-opacity={spotgloss_opacity}
               geometry={nodes.Mesh_0_4.geometry}
               material={materials.finishing_spot_gloss}
               skeleton={nodes.Mesh_0_4.skeleton}
+              material-transparent={true}
+              material-opacity={spotgloss_opacity}
             />
           </group>
           <primitive object={nodes.Bone} />
@@ -290,4 +289,4 @@ export function CrashLockBase(props) {
   );
 }
 
-useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base-old.glb');
+useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base.glb');

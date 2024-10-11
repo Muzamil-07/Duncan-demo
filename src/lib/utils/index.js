@@ -302,8 +302,9 @@ const PrintSpecUrls = {
       '/assets/models/tuckend/textures/2spot_roughness_metflo_outside.webp',
       '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_inside.webp',
       '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_outside.webp',
-      '/assets/models/tuckend/textures/embossing_OUTSIDE.webp',
+      '/assets/models/tuckend/textures/embossing_OUTSIDE.png',
       '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp',
+
       '/assets/models/tuckend/kraft/inside_1spot.webp',
       '/assets/models/tuckend/kraft/inside_1spot_metflo.webp',
       '/assets/models/tuckend/kraft/inside_2spot.webp',
@@ -618,9 +619,10 @@ const PrintSpecUrls = {
       '/assets/models/buffer-lid/textures/2spot_roughness_metflo_inside.webp',
       '/assets/models/buffer-lid/textures/2spot_roughness_metflo_outside.webp',
       '/assets/models/buffer-lid/textures/cmyk_1spot_roughness_metflo_inside.webp',
-      '/assets/models/buffer-lid/textures/cmyk_1spot_roughness_metflo_outside.webp',
+      '/assets/models/buffer-lid/textures/cmyk_1spot_roughness_outside.webp',
       '/assets/models/buffer-lid/textures/base.webp',
       '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp',
+
       '/assets/models/buffer-lid/textures/outside_coating_gloss_OMR.webp',
       '/assets/models/buffer-lid/kraft/inside_1spot.webp',
       '/assets/models/buffer-lid/kraft/inside_1spot_metflo.webp',

@@ -6,28 +6,28 @@ import {
   Tooltip,
   tooltipClasses,
   Typography,
-  Zoom
-} from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle' // Make sure to import the icon
-import { toCamelCase } from '../../../lib/utils'
-import { useAppDispatch, useAppSelector } from '../../../lib/store/hooks'
+  Zoom,
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Make sure to import the icon
+import { toCamelCase } from '../../../lib/utils';
+import { useAppDispatch, useAppSelector } from '../../../lib/store/hooks';
 import {
   selectBoxStyle,
-  setBoxMaterial
-} from '../../../lib/store/features/box/boxSlice'
-import _ from 'lodash'
+  setBoxMaterial,
+} from '../../../lib/store/features/box/boxSlice';
+import _ from 'lodash';
 
 export const CustomTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
-    color: '#17242B'
+    color: '#17242B',
   },
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#17242B'
-  }
-}))
+    backgroundColor: '#17242B',
+  },
+}));
 
 const ToolTipContent = ({ option }) => {
   return (
@@ -40,36 +40,36 @@ const ToolTipContent = ({ option }) => {
         quos nemo sed nobis officia aliquid voluptas at, in tempore!
       </Typography>
     </Box>
-  )
-}
+  );
+};
 const SubMenu = ({
   options,
   handleSelector,
   selectedValue,
   multiselect,
-  styled
+  styled,
 }) => {
-  const [zoomLevel, setZoomLevel] = useState()
+  const [zoomLevel, setZoomLevel] = useState();
 
-  const dispatch = useAppDispatch()
-  const boxStyle = useAppSelector(selectBoxStyle)
+  const dispatch = useAppDispatch();
+  const boxStyle = useAppSelector(selectBoxStyle);
   const calculateZoom = () => {
-    const zoom = (window.outerWidth / window.innerWidth) * 100
-    setZoomLevel(zoom)
-  }
+    const zoom = (window.outerWidth / window.innerWidth) * 100;
+    setZoomLevel(zoom);
+  };
 
   useEffect(() => {
     // Calculate zoom level on mount
-    calculateZoom()
+    calculateZoom();
 
     // Recalculate zoom level when window is resized
-    window.addEventListener('resize', calculateZoom)
+    window.addEventListener('resize', calculateZoom);
 
     // Cleanup event listener on unmount
     return () => {
-      window.removeEventListener('resize', calculateZoom)
-    }
-  }, [])
+      window.removeEventListener('resize', calculateZoom);
+    };
+  }, []);
 
   if (!multiselect)
     return (
@@ -79,14 +79,14 @@ const SubMenu = ({
           overflowX: 'scroll',
           '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for Webkit browsers
           '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
-          'scrollbar-width': 'none'
+          'scrollbar-width': 'none',
         }}
       >
-        <Stack direction='row' spacing={2} justifyContent='space-between'>
+        <Stack direction="row" spacing={2} justifyContent="space-between">
           {options.map((option, index) => (
             <Stack
               key={index}
-              alignItems='center'
+              alignItems="center"
               sx={{ flex: 1 }} // Ensure equal space for each item
             >
               <Box
@@ -119,17 +119,19 @@ const SubMenu = ({
                       ? '0 0 2px rgba(0, 0, 0, 0.5)'
                       : 'none',
                   padding: selectedValue === option.name ? '5px' : '0',
-                  cursor: 'pointer' // Add cursor to indicate it's clickable
+                  cursor: 'pointer', // Add cursor to indicate it's clickable
                 }}
                 onClick={() => {
-                  handleSelector(option.name)
+                  if (option.name !== 'other') {
+                    handleSelector(option.name);
+                  }
                   if (styled && boxStyle === 'none')
-                    dispatch(setBoxMaterial('coated-white'))
+                    dispatch(setBoxMaterial('coated-white'));
                 }}
               >
                 <CustomTooltip title={<ToolTipContent option={option} />}>
                   <Box
-                    component='img'
+                    component="img"
                     src={option.image}
                     sx={{
                       width: '100%',
@@ -138,8 +140,8 @@ const SubMenu = ({
                       borderRadius: '50%',
                       transition: 'all 0.7s',
                       '&:hover': {
-                        transform: 'scale(1.2)' // Scale the image on hover
-                      }
+                        transform: 'scale(1.2)', // Scale the image on hover
+                      },
                     }}
                   />
                 </CustomTooltip>
@@ -149,7 +151,7 @@ const SubMenu = ({
                   fontSize: '12px',
                   color: '#3980AB',
                   textAlign: 'center',
-                  marginTop: '5px'
+                  marginTop: '5px',
                 }}
               >
                 {option.displayName
@@ -160,7 +162,7 @@ const SubMenu = ({
           ))}
         </Stack>
       </Box>
-    )
+    );
   else
     return (
       <Box
@@ -169,12 +171,12 @@ const SubMenu = ({
           overflowX: 'scroll',
           '&::-webkit-scrollbar': { display: 'none' }, // Hide scrollbar for Webkit browsers
           '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
-          'scrollbar-width': 'none'
+          'scrollbar-width': 'none',
         }}
       >
-        <Stack direction='row' spacing={2}>
+        <Stack direction="row" spacing={2}>
           {options.map((option, index) => (
-            <Stack key={index} justifyContent='center' alignItems='center'>
+            <Stack key={index} justifyContent="center" alignItems="center">
               <Box
                 key={index}
                 sx={{
@@ -193,12 +195,12 @@ const SubMenu = ({
                   padding: selectedValue[toCamelCase(option.name)]
                     ? '5px'
                     : '0',
-                  cursor: 'pointer' // Add cursor to indicate it's clickable
+                  cursor: 'pointer', // Add cursor to indicate it's clickable
                 }}
                 onClick={() => handleSelector(option.name)}
               >
                 <Box
-                  component='img'
+                  component="img"
                   src={option.image}
                   sx={{
                     width: '100%',
@@ -207,8 +209,8 @@ const SubMenu = ({
                     borderRadius: '50%',
                     transition: 'all 0.7s',
                     '&:hover': {
-                      transform: 'scale(1.1)' // Scale the image on hover
-                    }
+                      transform: 'scale(1.1)', // Scale the image on hover
+                    },
                   }}
                 />
               </Box>
@@ -217,7 +219,7 @@ const SubMenu = ({
                   fontSize: '12px',
                   color: '#3980AB',
                   textAlign: 'center',
-                  marginTop: '5px'
+                  marginTop: '5px',
                 }}
               >
                 {_.capitalize(option.name.replaceAll('-', ' '))}
@@ -226,7 +228,7 @@ const SubMenu = ({
           ))}
         </Stack>
       </Box>
-    )
-}
+    );
+};
 
-export default SubMenu
+export default SubMenu;

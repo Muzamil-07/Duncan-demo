@@ -241,7 +241,7 @@ export function SelefLockTray(props) {
         geometry={nodes.Mesh_0_3.geometry}
         material={materials.Material_side}
       >
-        <meshPhysicalMaterial map={sideTexture} />
+        <meshStandardMaterial map={sideTexture} />
       </mesh>
       <mesh
         castShadow

@@ -862,6 +862,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/tuckend/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/tuckend/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/tuckend/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/tuckend/textures/base.webp'],
   },
   mailer: {
     kraft: ['/assets/models/mailer/kraft/base.webp'],
@@ -869,6 +870,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/mailer/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/mailer/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/mailer/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/mailer/textures/base.webp'],
   },
   crashLockBase: {
     kraft: ['/assets/models/crash-lock-base/kraft/base.webp'],
@@ -880,6 +882,7 @@ const MaterialTexturesUrls = {
     microflute_white: [
       '/assets/models/crash-lock-base/microflute-white/side.webp',
     ],
+    base_roughness: ['/assets/models/crash-lock-base/textures/base.webp'],
   },
   skillet: {
     kraft: ['/assets/models/skillet/kraft/base.webp'],
@@ -887,6 +890,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/skillet/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/skillet/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/skillet/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/skillet/textures/base.webp'],
   },
   bufferLid: {
     kraft: ['/assets/models/buffer-lid/kraft/base.webp'],
@@ -894,6 +898,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/buffer-lid/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/buffer-lid/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/buffer-lid/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/buffer-lid/textures/base.webp'],
   },
   sleeve: {
     kraft: ['/assets/models/sleeve/kraft/base.webp'],
@@ -901,6 +906,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/sleeve/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/sleeve/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/sleeve/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/sleeve/textures/base.webp'],
   },
   selefLockTray: {
     kraft: ['/assets/models/selef-lock-tray/kraft/base.webp'],
@@ -912,6 +918,8 @@ const MaterialTexturesUrls = {
     microflute_white: [
       '/assets/models/selef-lock-tray/microflute-white/side.webp',
     ],
+    coating_gloss_OMR: ['/assets/models/selef-lock-tray/textures/base.webp'],
+    embossing_outside: ['/assets/models/selef-lock-tray/textures/base.webp'],
   },
 };
 
@@ -937,4 +945,36 @@ export const preloadPrintTextures = () => {
       });
     });
   });
+};
+
+export const preloadSingleModelTextures = (model) => {
+  Object.keys(PrintSpecUrls[model]).forEach((material) => {
+    PrintSpecUrls[model][material].forEach((url) => {
+      requestIdleCallback(() => {
+        useTexture.preload(url);
+      });
+    });
+  });
+};
+
+let modelsDirNames = [
+  'buffer-lid',
+  'crash-lock-base',
+  'mailer',
+  'selef-lock-tray',
+  'skillet',
+  'sleeve',
+  'tuckend',
+];
+export const preloadThisTextureForAllModels = (texturePath) => {
+  if (texturePath && typeof texturePath === 'string') {
+    modelsDirNames.forEach((modalDirName) => {
+      let texturePathArr = texturePath?.split('/');
+      texturePathArr[3] = modalDirName;
+      const newTexturePath = texturePathArr.join('/');
+      requestIdleCallback(() => {
+        useTexture.preload(newTexturePath);
+      });
+    });
+  }
 };

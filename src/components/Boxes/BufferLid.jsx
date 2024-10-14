@@ -13,7 +13,12 @@ import { RepeatWrapping, SRGBColorSpace } from 'three';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 import { LoopOnce } from 'three';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function BufferLid(props) {
   const group = useRef();
@@ -171,9 +176,12 @@ export function BufferLid(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexture = useTexture(
-    '/assets/models/buffer-lid/textures/outside_coating_gloss_OMR.webp'
-  );
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/crash-lock-base/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
+  coatingTexture.flipY = false;
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -190,10 +198,10 @@ export function BufferLid(props) {
     }
   }
 
-  const embossingTexture = useTexture(
-    '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp'
-  );
-
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/crash-lock-base/textures/base.webp';
+  const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
   embossingTexture.wrapS = RepeatWrapping;
   embossingTexture.wrapT = RepeatWrapping;
@@ -212,11 +220,32 @@ export function BufferLid(props) {
   if (material === 'uncoated-white') metalnessVal = 0.3;
   else if (material.includes('kraft')) metalnessVal = 0.2;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(coatingTexture);
+      preloadThisTextureForAllModels(embossingTexture);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('bufferLid');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -238,7 +267,7 @@ export function BufferLid(props) {
                 bumpMap={bumpMap}
                 bumpScale={15}
                 roughnessMap={roughnessMapOutside}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}
@@ -252,7 +281,7 @@ export function BufferLid(props) {
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}

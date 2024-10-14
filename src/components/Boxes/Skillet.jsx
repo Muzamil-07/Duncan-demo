@@ -11,7 +11,12 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { roughness } from 'three/examples/jsm/nodes/Nodes.js';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function Skillet(props) {
   const group = useRef();
@@ -149,18 +154,20 @@ export function Skillet(props) {
   let goldFoil_opacity = 0;
   let bumpMap = null;
 
-  const embossingTexture = useTexture(
-    '/assets/models/skillet/textures/embossing_OUTSIDE.webp'
-  );
-
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/skillet/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/skillet/textures/base.webp';
+  const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
 
   let clearCoat = 0;
   let clearCoatRoughness = 0;
-  const coatingTexture = useTexture(
-    '/assets/models/skillet/textures/outside_coating_gloss_OMR.webp'
-  );
 
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/skillet/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/skillet/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
   coatingTexture.flipY = false;
 
   if (coating !== 'none') {
@@ -201,11 +208,32 @@ export function Skillet(props) {
   sideBaseTexture.colorSpace = SRGBColorSpace;
   sideBaseTexture.wrapS = RepeatWrapping;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideBaseTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(coatingTexture);
+      preloadThisTextureForAllModels(embossingTexture);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideBaseTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('skillet');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -241,7 +269,7 @@ export function Skillet(props) {
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}

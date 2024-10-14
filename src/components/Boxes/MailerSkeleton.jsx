@@ -8,7 +8,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useGraph } from '@react-three/fiber';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { SkeletonUtils } from 'three-stdlib';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 import { useAppSelector } from '../../lib/store/hooks';
 import { selectBoxState } from '../../lib/store/features/box/boxSlice';
 import { LoopOnce } from 'three';
@@ -43,7 +47,9 @@ export function MailerBoxSkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('mailer');
+
+      // preloadPrintTextures();
     }, 0);
     console.log('DONE----------------------');
   }, []);

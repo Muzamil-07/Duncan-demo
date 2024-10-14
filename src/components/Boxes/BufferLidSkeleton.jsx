@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 /* eslint-disable react/no-unknown-property */
 import { LoopOnce } from 'three';
 import { useAppSelector } from '../../lib/store/hooks';
@@ -39,7 +43,8 @@ export function BufferLidSkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('bufferLid');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');

@@ -9,7 +9,12 @@ import {
   selectBoxPrintSurface,
 } from '../../lib/store/features/box/boxSlice';
 import { RepeatWrapping, SRGBColorSpace } from 'three';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function SelefLockTray(props) {
   const { nodes, materials } = useGLTF(
@@ -115,13 +120,19 @@ export function SelefLockTray(props) {
 
   let clearCoat = 0;
   let clearCoatRoughness = 0;
-  const coatingTexture = useTexture(
-    `/assets/models/selef-lock-tray/textures/outside_coating_gloss_OMR.webp`
-  );
 
-  const embossingTexture = useTexture(
-    `/assets/models/selef-lock-tray/textures/embossing_OUTSIDE.webp`
-  );
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/selef-lock-tray/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/selef-lock-tray/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
+  coatingTexture.flipY = false;
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/selef-lock-tray/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/selef-lock-tray/textures/base.webp';
+  const embossingTexture = useTexture(embossingTexturePath);
+  embossingTexture.flipY = false;
 
   let roughnessMapOutsideTexturePath =
     '/assets/models/selef-lock-tray/textures/base.webp';
@@ -189,11 +200,32 @@ export function SelefLockTray(props) {
     }
   }
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideTexturePath);
+      preloadThisTextureForAllModels(insideTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(coatingTexture);
+      preloadThisTextureForAllModels(embossingTexture);
+    }, 0);
+  }, [
+    outsideTexturePath,
+    insideTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('selefLockTray');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -227,7 +259,7 @@ export function SelefLockTray(props) {
         <meshPhysicalMaterial
           map={insideTexture}
           metalness={metalnessVal}
-          clearcoatMap={coatingTexture}
+          clearcoatMap={coating !== 'none' ? coatingTexture : null}
           clearcoat={clearCoat}
           clearcoatRoughness={clearCoatRoughness}
           roughnessMap={

@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 
 export function SleeveSkeleton(props) {
   const { nodes, materials } = useGLTF('/assets/models/sleeve/sleeve.glb');
@@ -9,7 +13,8 @@ export function SleeveSkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('sleeve');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');

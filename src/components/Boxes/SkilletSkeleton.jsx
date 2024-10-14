@@ -3,7 +3,11 @@ import { useGLTF, useAnimations } from '@react-three/drei';
 import { selectBoxState } from '../../lib/store/features/box/boxSlice';
 import { useAppSelector } from '../../lib/store/hooks';
 import { LoopOnce } from 'three';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 
 export function SkilletSkeleton(props) {
   const group = useRef();
@@ -32,7 +36,8 @@ export function SkilletSkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('skillet');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');

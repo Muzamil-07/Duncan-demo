@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 
 export function SelefLockTraySkeleton(props) {
   const { nodes, materials } = useGLTF(
@@ -10,11 +14,13 @@ export function SelefLockTraySkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('selefLockTray');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
   }, []);
+
   return (
     <group {...props} dispose={null}>
       <mesh

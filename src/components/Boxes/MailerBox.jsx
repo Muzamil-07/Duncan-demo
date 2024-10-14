@@ -131,10 +131,13 @@ export function MailerBox(props) {
   let goldFoil_opacity = 0;
   let spotgloss_opacity = 0;
   let bumpMap = null;
-  const embossingTexture = useTexture(
-    '/assets/models/mailer/textures/finishing_emboss_normal_map.jpg'
-  );
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/mailer/textures/embossing_OUTSIDE.png'
+    : '/assets/models/mailer/textures/base.webp';
+  const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
+
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
     if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -144,9 +147,11 @@ export function MailerBox(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexture = useTexture(
-    '/assets/models/mailer/textures/inside_coating_gloss_OMR.jpg'
-  );
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/mailer/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/mailer/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
   coatingTexture.flipY = false;
 
   if (coating !== 'none') {
@@ -217,7 +222,7 @@ export function MailerBox(props) {
               map={outsideBaseTexture}
               bumpMap={bumpMap}
               bumpScale={10}
-              clearcoatMap={coatingTexture}
+              clearcoatMap={coating !== 'none' ? coatingTexture : null}
               clearcoat={clearCoat}
               clearcoatRoughness={clearCoatRoughness}
               roughnessMap={roughnessMapOutside}

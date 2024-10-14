@@ -12,7 +12,12 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function CrashLockBase(props) {
   // useEffect(() => {
@@ -103,6 +108,7 @@ export function CrashLockBase(props) {
 
   console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath);
   const outsideBaseTexture = useTexture(outsideBaseTexturePath);
+
   outsideBaseTexture.flipY = false;
   outsideBaseTexture.colorSpace = SRGBColorSpace;
 
@@ -139,10 +145,13 @@ export function CrashLockBase(props) {
   let goldFoil_opacity = 0;
   let spotgloss_opacity = 0;
   let bumpMap = null;
-  const embossingTexture = useTexture(
-    '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
-  );
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/crash-lock-base/textures/base.webp';
+  const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
+
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
     if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -152,9 +161,11 @@ export function CrashLockBase(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexture = useTexture(
-    '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
-  );
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/crash-lock-base/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
   coatingTexture.flipY = false;
 
   if (coating !== 'none') {
@@ -207,11 +218,32 @@ export function CrashLockBase(props) {
   if (material === 'uncoated-white') metalnessVal = 0.3;
   else if (material.includes('kraft')) metalnessVal = 0.2;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(coatingTexture);
+      preloadThisTextureForAllModels(embossingTexture);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('crashLockBase');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -247,7 +279,7 @@ export function CrashLockBase(props) {
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 roughnessMap={

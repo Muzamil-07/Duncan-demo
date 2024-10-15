@@ -232,17 +232,15 @@ export function SelefLockTray(props) {
   }, []);
 
   return (
-    <group {...props} ref={group} dispose={null}>
+    <group {...props} dispose={null} ref={group}>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_1.geometry}
-        material={materials.Material_color_outside}
+        //  material={materials.Material_color_outside}
       >
         <meshPhysicalMaterial
           map={outsideTexture}
           metalness={metalnessVal}
-          clearcoatMap={coatingTexture}
+          clearcoatMap={coating !== 'none' ? coatingTexture : null}
           clearcoat={clearCoat}
           clearcoatRoughness={clearCoatRoughness}
           bumpMap={bumpMap}
@@ -251,10 +249,8 @@ export function SelefLockTray(props) {
         />
       </mesh>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_2.geometry}
-        material={materials.Material_color_inside}
+        //  material={materials.Material_color_outside}
       >
         <meshPhysicalMaterial
           map={insideTexture}
@@ -268,24 +264,18 @@ export function SelefLockTray(props) {
         />
       </mesh>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_3.geometry}
-        material={materials.Material_side}
+        //  material={materials.Material_side}
       >
         <meshStandardMaterial map={sideTexture} />
       </mesh>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_4.geometry}
         material={materials.finishing_gold_foil}
         material-transparent={true}
-        material-opacity={goldFoil_opacity}
+        material-opacity={spotgloss_opacity}
       />
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_5.geometry}
         material={materials.finishing_spot_gloss}
         material-transparent={true}

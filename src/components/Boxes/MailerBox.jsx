@@ -238,7 +238,7 @@ export function MailerBox(props) {
           >
             <meshPhysicalMaterial
               map={insideBaseTexture}
-              clearcoatMap={coatingTexture}
+              clearcoatMap={coating !== 'none' ? coatingTexture : null}
               clearcoat={clearCoat}
               clearcoatRoughness={clearCoatRoughness}
               roughnessMap={

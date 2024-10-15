@@ -254,7 +254,7 @@ export function Skillet(props) {
                 map={outsideBaseTexture}
                 bumpMap={bumpMap}
                 bumpScale={15}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}

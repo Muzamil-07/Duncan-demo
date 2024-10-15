@@ -19,17 +19,13 @@ import {
 
 export function Sleeve(props) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF(
-    '/assets/models/sleeve/sleeve.glb'
-  );
-  const { actions } = useAnimations(animations, group);
+  const { nodes, materials } = useGLTF('/assets/models/sleeve/sleeve.glb');
 
   const print = useAppSelector(selectBoxPrint);
   const material = useAppSelector(selectBoxMaterial);
   const finishing = useAppSelector(selectBoxFinishing);
   const coating = useAppSelector(selectBoxCoating);
   const printSurface = useAppSelector(selectBoxPrintSurface);
-  const boxState = useAppSelector(selectBoxState);
 
   // Ref to track the previous coating and finishing values
   const previousCoatingRef = useRef(coating);
@@ -139,8 +135,8 @@ export function Sleeve(props) {
   let bumpMap = null;
 
   const embossingTexturePath = finishing.embossing
-    ? '/assets/models/skillet/textures/embossing_OUTSIDE.webp'
-    : '/assets/models/skillet/textures/base.webp';
+    ? '/assets/models/sleeve/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/sleeve/textures/base.webp';
   const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
 
@@ -149,8 +145,8 @@ export function Sleeve(props) {
 
   const coatingTexturePath =
     coating !== 'none'
-      ? '/assets/models/skillet/textures/outside_coating_gloss_OMR.webp'
-      : '/assets/models/skillet/textures/base.webp';
+      ? '/assets/models/sleeve/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/sleeve/textures/base.webp';
   const coatingTexture = useTexture(coatingTexturePath);
   coatingTexture.flipY = false;
 
@@ -224,19 +220,16 @@ export function Sleeve(props) {
   }, []);
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group {...props} dispose={null} ref={group}>
       <mesh
-        name="outside"
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_1.geometry}
-        // material={materials.Material_color_outside}
+        material={materials.Material_color_outside}
       >
         <meshPhysicalMaterial
           map={outsideBaseTexture}
           bumpMap={bumpMap}
           bumpScale={15}
-          clearcoatMap={coatingTexture}
+          clearcoatMap={coating !== 'none' ? coatingTexture : null}
           clearcoat={clearCoat}
           clearcoatRoughness={clearCoatRoughness}
           metalness={metalnessVal}
@@ -244,11 +237,8 @@ export function Sleeve(props) {
         />
       </mesh>
       <mesh
-        name="inside"
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_2.geometry}
-        // material={materials.Material_color_inside}
+        material={materials.Material_color_outside}
       >
         <meshPhysicalMaterial
           map={insideBaseTexture}
@@ -262,24 +252,18 @@ export function Sleeve(props) {
         />
       </mesh>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Mesh_0_3.geometry}
-        // material={materials.Material_side}
+        material={materials.Material_side}
       >
         <meshStandardMaterial map={sideBaseTexture} />
       </mesh>
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Mesh_0_4.geometry}
         material={materials.finishing_gold_foil}
         material-transparent={true}
         material-opacity={goldFoil_opacity}
       />
       <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Mesh_0_5.geometry}
         material={materials.finishing_spot_gloss}
         material-transparent={true}

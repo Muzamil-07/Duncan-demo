@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
-import { preloadTextures } from '../utils'
-import { useTexture } from '@react-three/drei'
+import { useEffect } from 'react';
+import { preloadTextures } from '../utils';
+import { useTexture } from '@react-three/drei';
 const PrintSpecUrls = {
   tuckend: {
     kraft: [
@@ -30,7 +30,7 @@ const PrintSpecUrls = {
       '/assets/models/tuckend/kraft/outside_cmyk_1spot.webp',
       '/assets/models/tuckend/kraft/outside_cmyk_1spot_metflo.webp',
       '/assets/models/tuckend/kraft/outside_cmyk_2spot.webp',
-      '/assets/models/tuckend/kraft/outside_cmyk_2spot_metflo.webp'
+      '/assets/models/tuckend/kraft/outside_cmyk_2spot_metflo.webp',
     ],
     coated_white: [
       '/assets/models/tuckend/coated-white/inside_1spot.webp',
@@ -52,7 +52,7 @@ const PrintSpecUrls = {
       '/assets/models/tuckend/coated-white/outside_cmyk_1spot.webp',
       '/assets/models/tuckend/coated-white/outside_cmyk_1spot_metflo.webp',
       '/assets/models/tuckend/coated-white/outside_cmyk_2spot.webp',
-      '/assets/models/tuckend/coated-white/outside_cmyk_2spot_metflo.webp'
+      '/assets/models/tuckend/coated-white/outside_cmyk_2spot_metflo.webp',
     ],
     uncoated_white: [
       '/assets/models/tuckend/uncoated-white/inside_1spot.webp',
@@ -74,10 +74,10 @@ const PrintSpecUrls = {
       '/assets/models/tuckend/uncoated-white/outside_cmyk_1spot.webp',
       '/assets/models/tuckend/uncoated-white/outside_cmyk_1spot_metflo.webp',
       '/assets/models/tuckend/uncoated-white/outside_cmyk_2spot.webp',
-      '/assets/models/tuckend/uncoated-white/outside_cmyk_2spot_metflo.webp'
+      '/assets/models/tuckend/uncoated-white/outside_cmyk_2spot_metflo.webp',
     ],
     microflute_kraft: ['/assets/models/tuckend/microflute-kraft/side.webp'],
-    microflute_white: ['/assets/models/tuckend/microflute-white/side.webp']
+    microflute_white: ['/assets/models/tuckend/microflute-white/side.webp'],
   },
   mailer: {
     kraft: [
@@ -108,7 +108,7 @@ const PrintSpecUrls = {
       '/assets/models/mailer/kraft/outside_cmyk_1spot.webp',
       '/assets/models/mailer/kraft/outside_cmyk_1spot_metflo.webp',
       '/assets/models/mailer/kraft/outside_cmyk_2spot.webp',
-      '/assets/models/mailer/kraft/outside_cmyk_2spot_metflo.webp'
+      '/assets/models/mailer/kraft/outside_cmyk_2spot_metflo.webp',
     ],
     coated_white: [
       '/assets/models/mailer/coated-white/inside_1spot.webp',
@@ -130,7 +130,7 @@ const PrintSpecUrls = {
       '/assets/models/mailer/coated-white/outside_cmyk_1spot.webp',
       '/assets/models/mailer/coated-white/outside_cmyk_1spot_metflo.webp',
       '/assets/models/mailer/coated-white/outside_cmyk_2spot.webp',
-      '/assets/models/mailer/coated-white/outside_cmyk_2spot_metflo.webp'
+      '/assets/models/mailer/coated-white/outside_cmyk_2spot_metflo.webp',
     ],
     uncoated_white: [
       '/assets/models/mailer/uncoated-white/inside_1spot.webp',
@@ -152,34 +152,34 @@ const PrintSpecUrls = {
       '/assets/models/mailer/uncoated-white/outside_cmyk_1spot.webp',
       '/assets/models/mailer/uncoated-white/outside_cmyk_1spot_metflo.webp',
       '/assets/models/mailer/uncoated-white/outside_cmyk_2spot.webp',
-      '/assets/models/mailer/uncoated-white/outside_cmyk_2spot_metflo.webp'
+      '/assets/models/mailer/uncoated-white/outside_cmyk_2spot_metflo.webp',
     ],
     microflute_kraft: ['/assets/models/mailer/microflute-kraft/side.webp'],
-    microflute_white: ['/assets/models/mailer/microflute-white/side.webp']
-  }
-}
+    microflute_white: ['/assets/models/mailer/microflute-white/side.webp'],
+  },
+};
 const MaterialTexturesUrls = {
   tuckend: {
     kraft: ['/assets/models/tuckend/kraft/base.webp'],
     coated_white: ['/assets/models/tuckend/coated-white/base.webp'],
     uncoated_white: ['/assets/models/tuckend/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/tuckend/microflute-kraft/side.webp'],
-    microflute_white: ['/assets/models/tuckend/microflute-white/side.webp']
+    microflute_white: ['/assets/models/tuckend/microflute-white/side.webp'],
   },
   mailer: {
     kraft: ['/assets/models/mailer/kraft/base.webp'],
     coated_white: ['/assets/models/mailer/coated-white/base.webp'],
     uncoated_white: ['/assets/models/mailer/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/mailer/microflute-kraft/side.webp'],
-    microflute_white: ['/assets/models/mailer/microflute-white/side.webp']
-  }
-}
+    microflute_white: ['/assets/models/mailer/microflute-white/side.webp'],
+  },
+};
 
 const usePreload = ({ isModelLoaded }) => {
   // Material customization
 
   // Return anything that might be needed from this hook
-  if (!isModelLoaded) return null
-}
+  if (!isModelLoaded) return null;
+};
 
-export default usePreload
+export default usePreload;

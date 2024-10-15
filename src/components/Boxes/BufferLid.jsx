@@ -257,66 +257,66 @@ export function BufferLid(props) {
         <group name="Armature" scale={0.119}>
           <primitive object={nodes.Bone} />
           <primitive object={nodes.neutral_bone} />
-        </group>
-        <group name="Mesh_0" scale={0.119}>
-          <skinnedMesh
-            name="Mesh_0_1"
-            geometry={nodes.Mesh_0_1.geometry}
-            // material={materials.Material_color_outside}
-            skeleton={nodes.Mesh_0_1.skeleton}
-          >
-            <meshPhysicalMaterial
-              map={outsideBaseTexture}
-              bumpMap={bumpMap}
-              bumpScale={15}
-              roughnessMap={roughnessMapOutside}
-              clearcoatMap={coating !== 'none' ? coatingTexture : null}
-              clearcoat={clearCoat}
-              clearcoatRoughness={clearCoatRoughness}
-              metalness={metalnessVal}
+          <group name="Mesh_0">
+            <skinnedMesh
+              name="Mesh_0_1"
+              geometry={nodes.Mesh_0_1.geometry}
+              //  material={materials.Material_color_outside}
+              skeleton={nodes.Mesh_0_1.skeleton}
+            >
+              <meshPhysicalMaterial
+                map={outsideBaseTexture}
+                bumpMap={bumpMap}
+                bumpScale={15}
+                roughnessMap={roughnessMapOutside}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
+                clearcoat={clearCoat}
+                clearcoatRoughness={clearCoatRoughness}
+                metalness={metalnessVal}
+              />
+            </skinnedMesh>
+            <skinnedMesh
+              name="Mesh_0_2"
+              geometry={nodes.Mesh_0_2.geometry}
+              //  material={materials.Material_color_inside}
+              skeleton={nodes.Mesh_0_2.skeleton}
+            >
+              <meshPhysicalMaterial
+                map={insideBaseTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
+                clearcoat={clearCoat}
+                clearcoatRoughness={clearCoatRoughness}
+                metalness={metalnessVal}
+                roughnessMap={
+                  printSurface === 'outside-inside' ? roughnessMapInside : null
+                }
+              />
+            </skinnedMesh>
+            <skinnedMesh
+              name="Mesh_0_3"
+              geometry={nodes.Mesh_0_3.geometry}
+              //  material={materials.Material_side}
+              skeleton={nodes.Mesh_0_3.skeleton}
+            >
+              <meshStandardMaterial map={sideBaseTexture} />
+            </skinnedMesh>
+            <skinnedMesh
+              name="Mesh_0_4"
+              geometry={nodes.Mesh_0_4.geometry}
+              material={materials.finishing_gold_foil}
+              skeleton={nodes.Mesh_0_4.skeleton}
+              material-transparent={true}
+              material-opacity={goldFoil_opacity}
             />
-          </skinnedMesh>
-          <skinnedMesh
-            name="Mesh_0_2"
-            geometry={nodes.Mesh_0_2.geometry}
-            // material={materials.Material_color_outside}
-            skeleton={nodes.Mesh_0_2.skeleton}
-          >
-            <meshPhysicalMaterial
-              map={insideBaseTexture}
-              clearcoatMap={coating !== 'none' ? coatingTexture : null}
-              clearcoat={clearCoat}
-              clearcoatRoughness={clearCoatRoughness}
-              metalness={metalnessVal}
-              roughnessMap={
-                printSurface === 'outside-inside' ? roughnessMapInside : null
-              }
+            <skinnedMesh
+              name="Mesh_0_5"
+              geometry={nodes.Mesh_0_5.geometry}
+              material={materials.finishing_spot_gloss}
+              skeleton={nodes.Mesh_0_5.skeleton}
+              material-transparent={true}
+              material-opacity={spotGloss_opacity}
             />
-          </skinnedMesh>
-          <skinnedMesh
-            name="Mesh_0_3"
-            geometry={nodes.Mesh_0_3.geometry}
-            // material={materials.Material_side}
-            skeleton={nodes.Mesh_0_3.skeleton}
-          >
-            <meshStandardMaterial map={sideBaseTexture} />
-          </skinnedMesh>
-          <skinnedMesh
-            name="Mesh_0_4"
-            geometry={nodes.Mesh_0_4.geometry}
-            material={materials.finishing_gold_foil}
-            skeleton={nodes.Mesh_0_4.skeleton}
-            material-transparent={true}
-            material-opacity={goldFoil_opacity}
-          />
-          <skinnedMesh
-            name="Mesh_0_5"
-            geometry={nodes.Mesh_0_5.geometry}
-            material={materials.finishing_spot_gloss}
-            skeleton={nodes.Mesh_0_5.skeleton}
-            material-transparent={true}
-            material-opacity={spotGloss_opacity}
-          />
+          </group>
         </group>
       </group>
     </group>

@@ -250,6 +250,7 @@ export function SelefLockTray(props) {
         material={materials.finishing_gold_foil}
         material-transparent={true}
         material-opacity={goldFoil_opacity}
+        material-metalness={0.6}
       />
       <mesh
         castShadow

@@ -265,6 +265,7 @@ export function Skillet(props) {
               skeleton={nodes.Mesh_0001_4.skeleton}
               material-transparent={true}
               material-opacity={goldFoil_opacity}
+              material-metalness={0.6}
             />
             <skinnedMesh
               name="spot_gloss"

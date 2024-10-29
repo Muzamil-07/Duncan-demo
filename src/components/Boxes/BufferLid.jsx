@@ -276,6 +276,7 @@ export function BufferLid(props) {
               skeleton={nodes.Mesh_0_4.skeleton}
               material-transparent={true}
               material-opacity={goldFoil_opacity}
+              material-metalness={0.6}
             />
             <skinnedMesh
               name="Mesh_0_5"
@@ -284,6 +285,7 @@ export function BufferLid(props) {
               skeleton={nodes.Mesh_0_5.skeleton}
               material-transparent={true}
               material-opacity={spotGloss_opacity}
+
             />
           </group>
           <primitive object={nodes.Bone} />

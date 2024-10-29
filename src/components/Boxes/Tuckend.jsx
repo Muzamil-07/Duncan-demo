@@ -281,6 +281,7 @@ export function Tuckend(props) {
               material-transparent={true}
               material-opacity={goldFoil_opacity}
               skeleton={nodes.Mesh_0004_4.skeleton}
+              material-metalness={0.6}
             />
             <skinnedMesh
               castShadow

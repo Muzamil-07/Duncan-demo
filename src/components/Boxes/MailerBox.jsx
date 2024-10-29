@@ -259,6 +259,7 @@ export function MailerBox(props) {
             skeleton={nodes.material_print001_4.skeleton}
             material-transparent={true}
             material-opacity={goldFoil_opacity}
+            material-metalness={-0.6}
           />
           <skinnedMesh
             castShadow

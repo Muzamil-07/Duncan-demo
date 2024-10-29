@@ -271,6 +271,7 @@ export function CrashLockBase(props) {
               skeleton={nodes.Mesh_0_3.skeleton}
               material-transparent={true}
               material-opacity={goldFoil_opacity}
+              material-metalness={0.6}
             />
             <skinnedMesh
               name="spot_gloss"

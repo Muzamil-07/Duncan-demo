@@ -137,7 +137,7 @@ export function CrashLockBase(props) {
   // sideBaseTexture.wrapT = RepeatWrapping
 
   let goldFoil_opacity = 0;
-  let spotgloss_opacity = 0;
+  let spotGloss_opacity = 0;
   let bumpMap = null;
   const embossingTexture = useTexture(
     '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
@@ -145,7 +145,7 @@ export function CrashLockBase(props) {
   embossingTexture.flipY = false;
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
-    if (finishing.spotGloss) spotgloss_opacity = 1;
+    if (finishing.spotGloss) spotGloss_opacity = 1;
     if (finishing.embossing) bumpMap = embossingTexture;
   }
 
@@ -279,7 +279,7 @@ export function CrashLockBase(props) {
               material={materials.finishing_spot_gloss}
               skeleton={nodes.Mesh_0_4.skeleton}
               material-transparent={true}
-              material-opacity={spotgloss_opacity}
+              material-opacity={spotGloss_opacity}
             />
           </group>
           <primitive object={nodes.Bone} />

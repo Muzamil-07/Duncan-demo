@@ -204,7 +204,7 @@ export function BufferLid(props) {
 
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
-    if (finishing.spotGloss) spotgloss_opacity = 1;
+    if (finishing.spotGloss) spotGloss_opacity = 1;
     if (finishing.embossing) bumpMap = embossingTexture;
   }
 

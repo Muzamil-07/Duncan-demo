@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { Environment } from '@react-three/drei'
+import { Environment, Float, Lightformer } from '@react-three/drei'
 import React from 'react'
 import { useHelper } from '@react-three/drei'
 import { useRef, useEffect } from 'react'
@@ -7,8 +7,13 @@ import {
   DirectionalLightHelper,
   AxesHelper,
   GridHelper,
-  PointLightHelper
+  PointLightHelper,
+  BackSide
 } from 'three'
+import { useFrame } from '@react-three/fiber'
+import { Color, Depth, LayerMaterial } from 'lamina'
+import { useAppSelector } from '../../../lib/store/hooks'
+import { selectMode } from '../../../lib/store/features/general/generalSlice'
 
 const Lights = () => {
   const dirLight1 = useRef()
@@ -75,16 +80,52 @@ const Lights = () => {
 
       <ambientLight intensity={0.5} />
       {/* <Environment
-        background={false} // can be true, false or "only" (which only sets the background) (default: false)
-        blur={0} // blur factor between 0 and 1 (default: 0, only works with three 0.146 and up)
-        files={'/assets/texture/overcast_soil_puresky_1k (1).hdr'}
+        background={true} // can be true, false or "only" (which only sets the background) (default: false)
+        backgroundBlurriness={1} // blur factor between 0 and 1 (default: 0, only works with three 0.146 and up)
+        files={'/assets/circus_arena_1k.hdr'}
+        environmentRotation={[0,0,Math.PI/6]}
+        environmentIntensity={0}
+        // environmentRotation={Math.PI/2}
         // path='/assets/buikslotermeerplein_1k.hdr'
         // preset={'city'}
         // scene={undefined} // adds the ability to pass a custom THREE.Scene, can also be a ref
         // encoding={undefined} // adds the ability to pass a custom THREE.TextureEncoding (default: THREE.sRGBEncoding for an array of files and THREE.LinearEncoding for a single texture)
       /> */}
+      <Environment resolution={256} background backgroundBlurriness={1} environmentIntensity={0.5}>
+        <Lightformers />
+      </Environment>
     </>
   )
 }
+
+function Lightformers({ positions = [2, 0, 2, 0, 2, 0] }) {
+  const group = useRef()
+  const mode = useAppSelector(selectMode);
+  useFrame((state, delta) => (group.current.position.z += delta * 1) > 20 && (group.current.position.z = -10))
+  return (
+    <>
+      <Lightformer intensity={0.75} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
+      <group rotation={[0, 0.5, 0]}>
+        <group ref={group}>
+          {positions.map((x, i) => (
+            <Lightformer key={i} form="circle" intensity={0.5} rotation={[Math.PI / 2, 0, 0]} position={[x, 4, i * 4]} scale={[3, 1, 1]} />
+          ))}
+        </group>
+      </group>
+      <Float speed={5} floatIntensity={2} rotationIntensity={2}>
+        <Lightformer form="ring" color={mode === 'black' ? "red" : '#e0dede'} intensity={0.7} scale={10} position={[-15, 4, -18]} target={[0, 0, 0]} />
+      </Float>
+      {/* Background */}
+      <mesh scale={100}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <LayerMaterial side={BackSide}>
+          <Color color={mode === 'black' ? "#444" : '#e0dede'} alpha={1} mode="normal" />
+          <Depth colorA="#777" colorB="black" alpha={0.5} mode="normal" near={0} far={300} origin={[100, 100, 100]} />
+        </LayerMaterial>
+      </mesh>
+    </>
+  )
+}
+
 
 export default Lights

@@ -57,18 +57,21 @@ export function CrashLockBaseSkeleton(props) {
               geometry={nodes.Mesh_0.geometry}
               material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_1"
               geometry={nodes.Mesh_0_1.geometry}
               material={materials.Material_color_inside}
               skeleton={nodes.Mesh_0_1.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_2"
               geometry={nodes.Mesh_0_2.geometry}
               material={materials.Material_side}
               skeleton={nodes.Mesh_0_2.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_3"
@@ -77,6 +80,7 @@ export function CrashLockBaseSkeleton(props) {
               skeleton={nodes.Mesh_0_3.skeleton}
               material-transparent={true}
               material-opacity={0}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_4"
@@ -85,6 +89,7 @@ export function CrashLockBaseSkeleton(props) {
               skeleton={nodes.Mesh_0_4.skeleton}
               material-transparent={true}
               material-opacity={0}
+              castShadow
             />
           </group>
           <primitive object={nodes.Bone} />

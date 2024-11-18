@@ -149,6 +149,11 @@ export function Skillet(props) {
   let goldFoil_opacity = 0;
   let bumpMap = null;
 
+  const spotGlossNormalTexture = useTexture(
+    '/assets/models/skillet/textures/spotgloss_Normal.webp'
+  );
+  spotGlossNormalTexture.flipY = false;
+
   const embossingTexture = useTexture(
     '/assets/models/skillet/textures/embossing_OUTSIDE.webp'
   );
@@ -221,6 +226,7 @@ export function Skillet(props) {
               geometry={nodes.Mesh_0001_1.geometry}
               // material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0001_1.skeleton}
+              castShadow
             >
               <meshPhysicalMaterial
                 map={outsideBaseTexture}
@@ -238,6 +244,7 @@ export function Skillet(props) {
               geometry={nodes.Mesh_0001_2.geometry}
               // material={materials.Material_color_inside}
               skeleton={nodes.Mesh_0001_2.skeleton}
+              castShadow
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
@@ -255,6 +262,7 @@ export function Skillet(props) {
               geometry={nodes.Mesh_0001_3.geometry}
               // material={materials.Material_side}
               skeleton={nodes.Mesh_0001_3.skeleton}
+              castShadow
             >
               <meshStandardMaterial map={sideBaseTexture} />
             </skinnedMesh>
@@ -266,6 +274,7 @@ export function Skillet(props) {
               material-transparent={true}
               material-opacity={goldFoil_opacity}
               material-metalness={0.6}
+              castShadow
             />
             <skinnedMesh
               name="spot_gloss"
@@ -274,6 +283,9 @@ export function Skillet(props) {
               skeleton={nodes.Mesh_0001_5.skeleton}
               material-transparent={true}
               material-opacity={spotgloss_opacity}
+              material-normalMap={spotGlossNormalTexture}
+              material-normalScale= {[0, 0.1]}
+              castShadow
             />
           </group>
           <primitive object={nodes.Bone} />

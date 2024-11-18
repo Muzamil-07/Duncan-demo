@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import React, { Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Preload, SoftShadows } from '@react-three/drei';
+import { OrbitControls, Preload, SoftShadows, useTexture } from '@react-three/drei';
 // import ZoomEffect from '../ZoomEffect'
 import * as THREE from 'three';
 import Lights from '../Lights/Lights';
@@ -59,11 +59,9 @@ const CanvasScreen = ({ children }) => {
         <Lights />
         {/************ ZOOM EFFECT  ****************/}
         <ZoomEffect />
-
         {/************ SHADOWS  ****************/}
         {/* <SoftShadows size={25} samples={100} focus={0.6} /> */}
         <SoftShadows size={0} samples={10} focus={0} />
-
         {/* PLANE */}
         <mesh
           receiveShadow

@@ -54,18 +54,21 @@ export function BufferLidSkeleton(props) {
               geometry={nodes.Mesh_0_1.geometry}
               material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0_1.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_2"
               geometry={nodes.Mesh_0_2.geometry}
               material={materials.Material_color_inside}
               skeleton={nodes.Mesh_0_2.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_3"
               geometry={nodes.Mesh_0_3.geometry}
               material={materials.Material_side}
               skeleton={nodes.Mesh_0_3.skeleton}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_4"
@@ -74,6 +77,7 @@ export function BufferLidSkeleton(props) {
               skeleton={nodes.Mesh_0_4.skeleton}
               material-transparent={true}
               material-opacity={0}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_5"
@@ -82,6 +86,7 @@ export function BufferLidSkeleton(props) {
               skeleton={nodes.Mesh_0_5.skeleton}
               material-transparent={true}
               material-opacity={0}
+              castShadow
             />
           </group>
           <primitive object={nodes.Bone} />

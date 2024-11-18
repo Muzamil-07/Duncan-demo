@@ -156,6 +156,12 @@ export function Tuckend(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
+  const spotGlossNormalTexture = useTexture(
+    '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+  );
+
+  spotGlossNormalTexture.flipY = false;
+
   const coatingTexture = useTexture(
     '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
   );
@@ -291,6 +297,8 @@ export function Tuckend(props) {
               material-transparent={true}
               material-opacity={spotgloss_opacity}
               skeleton={nodes.Mesh_0004_5.skeleton}
+              material-normalMap={spotGlossNormalTexture}
+              material-normalScale= {[0, 0.1]}
             />
           </group>
         </group>

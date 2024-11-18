@@ -303,6 +303,7 @@ const PrintSpecUrls = {
       '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_inside.webp',
       '/assets/models/tuckend/textures/cmyk_1spot_roughness_metflo_outside.webp',
       '/assets/models/tuckend/textures/embossing_OUTSIDE.png',
+      '/assets/models/tuckend/textures/spotgloss_Normal.webp',
       '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp',
 
       '/assets/models/tuckend/kraft/inside_1spot.webp',
@@ -460,6 +461,7 @@ const PrintSpecUrls = {
       '/assets/models/crash-lock-base/textures/cmyk_1spot_roughness_metflo_inside.webp',
       '/assets/models/crash-lock-base/textures/cmyk_1spot_roughness_metflo_outside.webp',
       '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp',
+      '/assets/models/crash-lock-base/textures/spotgloss_Normal.webp',
       '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp',
       '/assets/models/crash-lock-base/kraft/inside_1spot.webp',
       '/assets/models/crash-lock-base/kraft/inside_1spot_metflo.webp',
@@ -541,6 +543,7 @@ const PrintSpecUrls = {
       '/assets/models/skillet/textures/2spot_roughness_metflo_outside.webp',
       '/assets/models/skillet/textures/cmyk_1spot_roughness_metflo_inside.webp',
       '/assets/models/skillet/textures/cmyk_1spot_roughness_metflo_outside.webp',
+      '/assets/models/skillet/textures/spotgloss_Normal.webp',
       '/assets/models/skillet/textures/base.webp',
       '/assets/models/skillet/textures/embossing_OUTSIDE.webp',
       '/assets/models/skillet/textures/outside_coating_gloss_OMR.webp',

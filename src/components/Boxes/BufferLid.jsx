@@ -232,6 +232,7 @@ export function BufferLid(props) {
               geometry={nodes.Mesh_0_1.geometry}
               //   material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0_1.skeleton}
+              castShadow
             >
               <meshPhysicalMaterial
                 map={outsideBaseTexture}
@@ -249,6 +250,7 @@ export function BufferLid(props) {
               geometry={nodes.Mesh_0_2.geometry}
               //   material={materials.Material_color_inside}
               skeleton={nodes.Mesh_0_2.skeleton}
+              castShadow
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
@@ -266,6 +268,7 @@ export function BufferLid(props) {
               geometry={nodes.Mesh_0_3.geometry}
               // material={materials.Material_side}
               skeleton={nodes.Mesh_0_3.skeleton}
+              castShadow
             >
               <meshStandardMaterial map={sideBaseTexture} />
             </skinnedMesh>
@@ -277,6 +280,7 @@ export function BufferLid(props) {
               material-transparent={true}
               material-opacity={goldFoil_opacity}
               material-metalness={0.6}
+              castShadow
             />
             <skinnedMesh
               name="Mesh_0_5"
@@ -285,7 +289,7 @@ export function BufferLid(props) {
               skeleton={nodes.Mesh_0_5.skeleton}
               material-transparent={true}
               material-opacity={spotGloss_opacity}
-
+              castShadow
             />
           </group>
           <primitive object={nodes.Bone} />

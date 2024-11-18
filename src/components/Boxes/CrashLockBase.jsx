@@ -142,6 +142,12 @@ export function CrashLockBase(props) {
   const embossingTexture = useTexture(
     '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
   );
+  const spotGlossNormalTexture = useTexture(
+    '/assets/models/crash-lock-base/textures/spotgloss_Normal.webp'
+  );
+
+  spotGlossNormalTexture.flipY = false
+
   embossingTexture.flipY = false;
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
@@ -155,7 +161,7 @@ export function CrashLockBase(props) {
   const coatingTexture = useTexture(
     '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
   );
-  coatingTexture.flipY = false;
+  coatingTexture.flipY = true;
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -227,6 +233,7 @@ export function CrashLockBase(props) {
               geometry={nodes.Mesh_0.geometry}
               // material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0.skeleton}
+              castShadow
             >
               <meshPhysicalMaterial
                 map={outsideBaseTexture}
@@ -244,6 +251,7 @@ export function CrashLockBase(props) {
               geometry={nodes.Mesh_0_1.geometry}
               // material={materials.Material_color_inside}
               skeleton={nodes.Mesh_0_1.skeleton}
+              castShadow
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
@@ -261,6 +269,7 @@ export function CrashLockBase(props) {
               geometry={nodes.Mesh_0_2.geometry}
               // material={materials.Material_side}
               skeleton={nodes.Mesh_0_2.skeleton}
+              castShadow
             >
               <meshStandardMaterial map={sideBaseTexture} />
             </skinnedMesh>
@@ -272,6 +281,7 @@ export function CrashLockBase(props) {
               material-transparent={true}
               material-opacity={goldFoil_opacity}
               material-metalness={0.6}
+              castShadow
             />
             <skinnedMesh
               name="spot_gloss"
@@ -280,6 +290,9 @@ export function CrashLockBase(props) {
               skeleton={nodes.Mesh_0_4.skeleton}
               material-transparent={true}
               material-opacity={spotGloss_opacity}
+              material-normalMap={spotGlossNormalTexture}
+              material-normalScale= {[0, 0.1]}
+              castShadow
             />
           </group>
           <primitive object={nodes.Bone} />

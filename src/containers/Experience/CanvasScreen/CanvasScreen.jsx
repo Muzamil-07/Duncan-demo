@@ -71,7 +71,7 @@ const CanvasScreen = ({ children }) => {
           <planeGeometry attach="geometry" args={[100, 100]} />
           <meshStandardMaterial
             attach="material"
-            color={mode === 'black' ? '#443E3E' : '#e0dede'}
+            color={mode === 'black' ? '#443E3E' : '#a5a4a4'}
           />
         </mesh>
 

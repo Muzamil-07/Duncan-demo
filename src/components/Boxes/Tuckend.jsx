@@ -24,12 +24,12 @@ export function Tuckend(props) {
   // useEffect(() => {
   //   preloadTextures()
   // }, [])
-  const group = React.useRef();
   const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb');
+  const group = React.useRef();
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
-
+  
   const boxState = useAppSelector(selectBoxState);
   const print = useAppSelector(selectBoxPrint);
   const material = useAppSelector(selectBoxMaterial);

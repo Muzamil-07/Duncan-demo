@@ -190,16 +190,16 @@ const ModelBuilder = () => {
     if (!isDefaultMode) {
       return (
         <LidAndBase
-          position={[0, -0.7, 0]}
-          scale={9.5}
+          position={[0, -0.6, 0]}
+          scale={15.5}
           rotation={[0, angleToRadians(120), 0]}
         />
       );
     } else {
       return (
         <LidAndBaseSkeleton
-          position={[0, -0.7, 0]}
-          scale={9.5}
+          position={[0, -0.6, 0]}
+          scale={15.5}
           rotation={[0, angleToRadians(120), 0]}
         />
       );
@@ -209,16 +209,16 @@ const ModelBuilder = () => {
     if (!isDefaultMode) {
       return (
         <HeaderCard
-          position={[0, -0.7, 0]}
-          scale={9.5}
+          position={[0, -0.9, 0]}
+          scale={15.5}
           rotation={[0, angleToRadians(120), 0]}
         />
       );
     } else {
       return (
         <HeaderCardSkeleton
-          position={[0, -0.7, 0]}
-          scale={9.5}
+          position={[0, -0.9, 0]}
+          scale={15.5}
           rotation={[0, angleToRadians(120), 0]}
         />
       );

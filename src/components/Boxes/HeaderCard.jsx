@@ -171,7 +171,7 @@ export function HeaderCard(props) {
         <group {...props} dispose={null}>
             <mesh
                 castShadow
-                receiveShadow
+                // receiveShadow
                 geometry={nodes.Mesh_0.geometry}
             // material={materials.Material_color_outside}
             >
@@ -188,7 +188,7 @@ export function HeaderCard(props) {
             </mesh>
             <mesh
                 castShadow
-                receiveShadow
+                // receiveShadow
                 geometry={nodes.Mesh_0_1.geometry}
             // material={materials.Material_color_inside}
             >
@@ -205,7 +205,7 @@ export function HeaderCard(props) {
             </mesh>
             <mesh
                 castShadow
-                receiveShadow
+                // receiveShadow
                 geometry={nodes.Mesh_0_2.geometry}
                 material={materials.Material_side}
             >
@@ -214,7 +214,7 @@ export function HeaderCard(props) {
             </mesh>
             <mesh
                 castShadow
-                receiveShadow
+                // receiveShadow
                 geometry={nodes.Mesh_0_3.geometry}
                 material={materials.finishing_gold_foil}
                 material-transparent={true}
@@ -222,7 +222,7 @@ export function HeaderCard(props) {
             />
             <mesh
                 castShadow
-                receiveShadow
+                // receiveShadow
                 geometry={nodes.Mesh_0_4.geometry}
                 material={materials.finishing_spot_gloss}
                 material-transparent={true}

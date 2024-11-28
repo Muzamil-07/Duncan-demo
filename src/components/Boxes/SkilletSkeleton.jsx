@@ -52,24 +52,28 @@ export function SkilletSkeleton(props) {
         </group>
         <group name="Mesh_0001" position={[0.001, 0, 0]} scale={0.098}>
           <skinnedMesh
+            castShadow
             name="Mesh_0001_1"
             geometry={nodes.Mesh_0001_1.geometry}
             material={materials.Material_color_outside}
             skeleton={nodes.Mesh_0001_1.skeleton}
           />
           <skinnedMesh
+            castShadow
             name="Mesh_0001_2"
             geometry={nodes.Mesh_0001_2.geometry}
             material={materials.Material_color_inside}
             skeleton={nodes.Mesh_0001_2.skeleton}
           />
           <skinnedMesh
+            castShadow
             name="Mesh_0001_3"
             geometry={nodes.Mesh_0001_3.geometry}
             material={materials.Material_side}
             skeleton={nodes.Mesh_0001_3.skeleton}
           />
           <skinnedMesh
+            castShadow
             name="Mesh_0001_4"
             geometry={nodes.Mesh_0001_4.geometry}
             material={materials.finishing_gold_foil}
@@ -78,6 +82,7 @@ export function SkilletSkeleton(props) {
             material-opacity={0}
           />
           <skinnedMesh
+            castShadow
             name="Mesh_0001_5"
             geometry={nodes.Mesh_0001_5.geometry}
             material={materials.finishing_spot_gloss}

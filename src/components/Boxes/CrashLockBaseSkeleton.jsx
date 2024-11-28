@@ -56,6 +56,47 @@ export function CrashLockBaseSkeleton(props) {
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature" position={[0, -0.08, 0]} scale={0.124}>
+          <group name="box">
+            <skinnedMesh
+              name="Mesh_0"
+              geometry={nodes.Mesh_0.geometry}
+              material={materials.Material_color_outside}
+              skeleton={nodes.Mesh_0.skeleton}
+              castShadow
+            />
+            <skinnedMesh
+              name="Mesh_0_1"
+              geometry={nodes.Mesh_0_1.geometry}
+              material={materials.Material_color_inside}
+              skeleton={nodes.Mesh_0_1.skeleton}
+              castShadow
+            />
+            <skinnedMesh
+              name="Mesh_0_2"
+              geometry={nodes.Mesh_0_2.geometry}
+              material={materials.Material_side}
+              skeleton={nodes.Mesh_0_2.skeleton}
+              castShadow
+            />
+            <skinnedMesh
+              name="Mesh_0_3"
+              geometry={nodes.Mesh_0_3.geometry}
+              material={materials.finishing_gold_foil}
+              skeleton={nodes.Mesh_0_3.skeleton}
+              material-transparent={true}
+              material-opacity={0}
+              castShadow
+            />
+            <skinnedMesh
+              name="Mesh_0_4"
+              geometry={nodes.Mesh_0_4.geometry}
+              material={materials.finishing_spot_gloss}
+              skeleton={nodes.Mesh_0_4.skeleton}
+              material-transparent={true}
+              material-opacity={0}
+              castShadow
+            />
+          </group>
           <primitive object={nodes.Bone} />
           <primitive object={nodes.neutral_bone} />
         </group>

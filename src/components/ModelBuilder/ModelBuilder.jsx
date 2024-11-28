@@ -23,10 +23,15 @@ import { Sleeve } from '../Boxes/Sleeve';
 import { SleeveSkeleton } from '../Boxes/SleeveSkeleton';
 import { SelefLockTray } from '../Boxes/SelefLockTray';
 import { SelefLockTraySkeleton } from '../Boxes/SelefLockTraySkeleton';
+import { LidAndBase } from '../Boxes/LidAndBase';
+import { LidAndBaseSkeleton } from '../Boxes/LidAndBaseSkeleton';
+import { HeaderCard } from '../Boxes/HeaderCard';
+import { HeaderCardSkeleton } from '../Boxes/HeaderCardSkeleton';
 
 const ModelBuilder = () => {
   const style = useAppSelector(selectBoxStyle);
   const isDefaultMode = useAppSelector(selectIsDefaultMode);
+
 
   if (style === 'mailer') {
     if (!isDefaultMode)
@@ -161,7 +166,8 @@ const ModelBuilder = () => {
           />
         </Suspense>
       );
-  } else if (style === 'selef-lock-tray') {
+  }
+  else if (style === 'selef-lock-tray') {
     if (!isDefaultMode) {
       return (
         <SelefLockTray
@@ -179,7 +185,47 @@ const ModelBuilder = () => {
         />
       );
     }
-  } else return <></>;
+  }
+  else if (style === 'lid-and-base') {
+    if (!isDefaultMode) {
+      return (
+        <LidAndBase
+          position={[0, -0.6, 0]}
+          scale={15.5}
+          rotation={[0, angleToRadians(120), 0]}
+        />
+      );
+    } else {
+      return (
+        <LidAndBaseSkeleton
+          position={[0, -0.6, 0]}
+          scale={15.5}
+          rotation={[0, angleToRadians(120), 0]}
+        />
+      );
+    }
+  }
+  else if (style === 'header-card') {
+    if (!isDefaultMode) {
+      return (
+        <HeaderCard
+          position={[0, -0.9, 0]}
+          scale={15.5}
+          rotation={[0, angleToRadians(120), 0]}
+        />
+      );
+    } else {
+      return (
+        <HeaderCardSkeleton
+          position={[0, -0.9, 0]}
+          scale={15.5}
+          rotation={[0, angleToRadians(120), 0]}
+        />
+      );
+    }
+  }
+
+  else return <></>;
 };
 
 export default ModelBuilder;

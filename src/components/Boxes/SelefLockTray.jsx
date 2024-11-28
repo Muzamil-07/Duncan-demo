@@ -273,7 +273,8 @@ export function SelefLockTray(props) {
         geometry={nodes.Mesh_0_4.geometry}
         material={materials.finishing_gold_foil}
         material-transparent={true}
-        material-opacity={spotgloss_opacity}
+        material-opacity={goldFoil_opacity}
+        material-metalness={0.4}
       />
       <mesh
         geometry={nodes.Mesh_0_5.geometry}

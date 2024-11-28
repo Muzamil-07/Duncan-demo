@@ -142,30 +142,32 @@ export function CrashLockBase(props) {
   // sideBaseTexture.wrapT = RepeatWrapping
 
   let goldFoil_opacity = 0;
-  let spotgloss_opacity = 0;
+  let spotGloss_opacity = 0;
   let bumpMap = null;
+  const embossingTexture = useTexture(
+    '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
+  );
+  const spotGlossNormalTexture = useTexture(
+    '/assets/models/crash-lock-base/textures/spotgloss_Normal.webp'
+  );
 
-  const embossingTexturePath = finishing.embossing
-    ? '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
-    : '/assets/models/crash-lock-base/textures/base.webp';
-  const embossingTexture = useTexture(embossingTexturePath);
+  spotGlossNormalTexture.flipY = false
+
   embossingTexture.flipY = false;
 
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
-    if (finishing.spotGloss) spotgloss_opacity = 1;
+    if (finishing.spotGloss) spotGloss_opacity = 1;
     if (finishing.embossing) bumpMap = embossingTexture;
   }
 
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexturePath =
-    coating !== 'none'
-      ? '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
-      : '/assets/models/crash-lock-base/textures/base.webp';
-  const coatingTexture = useTexture(coatingTexturePath);
-  coatingTexture.flipY = false;
+  const coatingTexture = useTexture(
+    '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
+  );
+  coatingTexture.flipY = true;
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -252,6 +254,74 @@ export function CrashLockBase(props) {
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature" position={[0, -0.08, 0]} scale={0.124}>
+          <group name="box">
+            <skinnedMesh
+              name="outside"
+              geometry={nodes.Mesh_0.geometry}
+              // material={materials.Material_color_outside}
+              skeleton={nodes.Mesh_0.skeleton}
+              castShadow
+            >
+              <meshPhysicalMaterial
+                map={outsideBaseTexture}
+                bumpMap={bumpMap}
+                bumpScale={15}
+                clearcoatMap={coatingTexture}
+                clearcoat={clearCoat}
+                clearcoatRoughness={clearCoatRoughness}
+                roughnessMap={roughnessMapOutside}
+                metalness={metalnessVal}
+              />
+            </skinnedMesh>
+            <skinnedMesh
+              name="inside"
+              geometry={nodes.Mesh_0_1.geometry}
+              // material={materials.Material_color_inside}
+              skeleton={nodes.Mesh_0_1.skeleton}
+              castShadow
+            >
+              <meshPhysicalMaterial
+                map={insideBaseTexture}
+                clearcoatMap={coatingTexture}
+                clearcoat={clearCoat}
+                clearcoatRoughness={clearCoatRoughness}
+                roughnessMap={
+                  printSurface === 'outside-inside' ? roughnessMapInside : null
+                }
+                metalness={metalnessVal}
+              />
+            </skinnedMesh>
+            <skinnedMesh
+              name="side"
+              geometry={nodes.Mesh_0_2.geometry}
+              // material={materials.Material_side}
+              skeleton={nodes.Mesh_0_2.skeleton}
+              castShadow
+            >
+              <meshStandardMaterial map={sideBaseTexture} />
+            </skinnedMesh>
+            <skinnedMesh
+              name="gold_foil"
+              geometry={nodes.Mesh_0_3.geometry}
+              material={materials.finishing_gold_foil}
+              skeleton={nodes.Mesh_0_3.skeleton}
+              material-transparent={true}
+              material-opacity={goldFoil_opacity}
+              material-metalness={0.6}
+              castShadow
+            />
+            <skinnedMesh
+              name="spot_gloss"
+              geometry={nodes.Mesh_0_4.geometry}
+              material={materials.finishing_spot_gloss}
+              skeleton={nodes.Mesh_0_4.skeleton}
+              material-transparent={true}
+              material-opacity={spotGloss_opacity}
+              material-normalMap={spotGlossNormalTexture}
+              material-normalScale= {[0, 0.1]}
+              castShadow
+            />
+          </group>
           <primitive object={nodes.Bone} />
           <primitive object={nodes.neutral_bone} />
         </group>

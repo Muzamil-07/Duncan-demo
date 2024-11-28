@@ -262,6 +262,7 @@ export function Sleeve(props) {
         material={materials.finishing_gold_foil}
         material-transparent={true}
         material-opacity={goldFoil_opacity}
+        material-metalness={0.4}
       />
       <mesh
         geometry={nodes.Mesh_0_5.geometry}

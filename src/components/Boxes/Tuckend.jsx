@@ -26,12 +26,12 @@ export function Tuckend(props) {
   // useEffect(() => {
   //   preloadTextures()
   // }, [])
-  const group = React.useRef();
   const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb');
+  const group = React.useRef();
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
-
+  
   const boxState = useAppSelector(selectBoxState);
   const print = useAppSelector(selectBoxPrint);
   const material = useAppSelector(selectBoxMaterial);
@@ -160,11 +160,15 @@ export function Tuckend(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexturePath =
-    coating !== 'none'
-      ? '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
-      : '/assets/models/tuckend/textures/base.webp';
-  const coatingTexture = useTexture(coatingTexturePath);
+  const spotGlossNormalTexture = useTexture(
+    '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+  );
+
+  spotGlossNormalTexture.flipY = false;
+
+  const coatingTexture = useTexture(
+    '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
+  );
   coatingTexture.flipY = false;
 
   if (coating !== 'none') {
@@ -308,6 +312,7 @@ export function Tuckend(props) {
               material-transparent={true}
               material-opacity={goldFoil_opacity}
               skeleton={nodes.Mesh_0004_4.skeleton}
+              material-metalness={0.6}
             />
             <skinnedMesh
               castShadow
@@ -317,6 +322,8 @@ export function Tuckend(props) {
               material-transparent={true}
               material-opacity={spotgloss_opacity}
               skeleton={nodes.Mesh_0004_5.skeleton}
+              material-normalMap={spotGlossNormalTexture}
+              material-normalScale= {[0, 0.1]}
             />
           </group>
         </group>

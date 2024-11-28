@@ -100,42 +100,6 @@ export function CrashLockBaseSkeleton(props) {
           <primitive object={nodes.Bone} />
           <primitive object={nodes.neutral_bone} />
         </group>
-        <group name="box" position={[0, -0.08, 0]} scale={0.124}>
-          <skinnedMesh
-            name="Mesh_0"
-            geometry={nodes.Mesh_0.geometry}
-            material={materials.Material_color_outside}
-            skeleton={nodes.Mesh_0.skeleton}
-          />
-          <skinnedMesh
-            name="Mesh_0_1"
-            geometry={nodes.Mesh_0_1.geometry}
-            material={materials.Material_color_outside}
-            skeleton={nodes.Mesh_0_1.skeleton}
-          />
-          <skinnedMesh
-            name="Mesh_0_2"
-            geometry={nodes.Mesh_0_2.geometry}
-            material={materials.Material_side}
-            skeleton={nodes.Mesh_0_2.skeleton}
-          />
-          <skinnedMesh
-            name="Mesh_0_3"
-            geometry={nodes.Mesh_0_3.geometry}
-            material={materials.finishing_gold_foil}
-            skeleton={nodes.Mesh_0_3.skeleton}
-            material-transparent={true}
-            material-opacity={0}
-          />
-          <skinnedMesh
-            name="Mesh_0_4"
-            geometry={nodes.Mesh_0_4.geometry}
-            material={materials.finishing_spot_gloss}
-            skeleton={nodes.Mesh_0_4.skeleton}
-            material-transparent={true}
-            material-opacity={0}
-          />
-        </group>
       </group>
     </group>
   );

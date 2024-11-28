@@ -139,17 +139,22 @@ export function Sleeve(props) {
     : '/assets/models/sleeve/textures/base.webp';
   const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
-
-  let clearCoat = 0;
-  let clearCoatRoughness = 0;
-
+  
   const coatingTexturePath =
-    coating !== 'none'
-      ? '/assets/models/sleeve/textures/outside_coating_gloss_OMR.webp'
-      : '/assets/models/sleeve/textures/base.webp';
+  coating !== 'none'
+  ? '/assets/models/sleeve/textures/outside_coating_gloss_OMR.webp'
+  : '/assets/models/sleeve/textures/base.webp';
   const coatingTexture = useTexture(coatingTexturePath);
   coatingTexture.flipY = false;
 
+  
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/sleeve/textures/spotgloss_Normal.webp'
+    : '/assets/models/sleeve/textures/base.webp';
+
+  let clearCoat = 0;
+  let clearCoatRoughness = 0;
+  
   if (coating !== 'none') {
     if (coating === 'gloss') {
       clearCoat = 1;
@@ -193,11 +198,12 @@ export function Sleeve(props) {
     setTimeout(() => {
       preloadThisTextureForAllModels(outsideBaseTexturePath);
       preloadThisTextureForAllModels(insideBaseTexturePath);
-      preloadThisTextureForAllModels(sideBaseTexturePath);
+      preloadThisTextureForAllModels(sideBaseTexture);
       preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
       preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
-      preloadThisTextureForAllModels(coatingTexture);
-      preloadThisTextureForAllModels(embossingTexture);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
     }, 0);
   }, [
     outsideBaseTexture,
@@ -206,6 +212,7 @@ export function Sleeve(props) {
     roughnessMapOutsideTexturePath,
     roughnessMapInsideTexturePath,
     coatingTexture,
+    spotGlossNormalTexturePath
   ]);
   // preload this model all textures and materials
   useEffect(() => {

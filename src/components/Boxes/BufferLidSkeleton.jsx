@@ -49,6 +49,7 @@ export function BufferLidSkeleton(props) {
     }, 0);
     console.log('DONE----------------------');
   }, []);
+  
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

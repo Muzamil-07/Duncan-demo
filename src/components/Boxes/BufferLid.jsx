@@ -92,17 +92,15 @@ export function BufferLid(props) {
   let sideTexturePath = '';
 
   if (print !== 'none') {
-    outsideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/outside_${print}.webp`;
+    outsideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/outside_${print}.webp`;
   } else {
-    outsideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
+    outsideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
   }
 
   console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath);
@@ -113,17 +111,15 @@ export function BufferLid(props) {
   outsideBaseTexture.wrapS = RepeatWrapping;
 
   if (print !== 'none' && printSurface === 'outside-inside') {
-    insideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/inside_${print}.webp`;
+    insideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/inside_${print}.webp`;
   } else {
-    insideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
+    insideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath);
@@ -180,8 +176,21 @@ export function BufferLid(props) {
     coating !== 'none'
       ? '/assets/models/buffer-lid/textures/outside_coating_gloss_OMR.webp'
       : '/assets/models/buffer-lid/textures/base.webp';
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/buffer-lid/textures/base.webp';
+
   const coatingTexture = useTexture(coatingTexturePath);
+  const embossingTexture = useTexture(embossingTexturePath);
   coatingTexture.flipY = false;
+  embossingTexture.flipY = false;
+  embossingTexture.wrapS = RepeatWrapping;
+  embossingTexture.wrapT = RepeatWrapping;
+
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+    : '/assets/models/tuckend/textures/base.webp';
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -197,14 +206,6 @@ export function BufferLid(props) {
       clearCoatRoughness = 0.4;
     }
   }
-
-  const embossingTexturePath = finishing.embossing
-    ? '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp'
-    : '/assets/models/buffer-lid/textures/base.webp';
-  const embossingTexture = useTexture(embossingTexturePath);
-  embossingTexture.flipY = false;
-  embossingTexture.wrapS = RepeatWrapping;
-  embossingTexture.wrapT = RepeatWrapping;
 
   let goldFoil_opacity = 0;
   let spotGloss_opacity = 0;
@@ -228,8 +229,9 @@ export function BufferLid(props) {
       preloadThisTextureForAllModels(sideTexturePath);
       preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
       preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
-      preloadThisTextureForAllModels(coatingTexture);
-      preloadThisTextureForAllModels(embossingTexture);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
     }, 0);
   }, [
     outsideBaseTexture,
@@ -238,6 +240,7 @@ export function BufferLid(props) {
     roughnessMapOutsideTexturePath,
     roughnessMapInsideTexturePath,
     coatingTexture,
+    spotGlossNormalTexturePath
   ]);
   // preload this model all textures and materials
   useEffect(() => {

@@ -142,32 +142,43 @@ export function CrashLockBase(props) {
   // sideBaseTexture.wrapT = RepeatWrapping
 
   let goldFoil_opacity = 0;
-  let spotGloss_opacity = 0;
+  let spotgloss_opacity = 0;
   let bumpMap = null;
-  const embossingTexture = useTexture(
-    '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
-  );
-  const spotGlossNormalTexture = useTexture(
-    '/assets/models/crash-lock-base/textures/spotgloss_Normal.webp'
-  );
 
-  spotGlossNormalTexture.flipY = false
+
+  
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/crash-lock-base/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/crash-lock-base/textures/base.webp';
+
+  const coatingTexturePath = coating !== 'none'
+    ? '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
+    : '/assets/models/crash-lock-base/textures/base.webp';
+
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/crash-lock-base/textures/spotgloss_Normal.webp'
+    : '/assets/models/crash-lock-base/textures/base.webp';
+
+  const embossingTexture = useTexture(embossingTexturePath);
+  const coatingTexture = useTexture(coatingTexturePath);
+  const spotGlossNormalTexture = useTexture(spotGlossNormalTexturePath);
 
   embossingTexture.flipY = false;
+  coatingTexture.flipY = false;
+  spotGlossNormalTexture.flipY = false;
+
+
 
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
-    if (finishing.spotGloss) spotGloss_opacity = 1;
+    if (finishing.spotGloss) spotgloss_opacity = 1;
     if (finishing.embossing) bumpMap = embossingTexture;
   }
 
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexture = useTexture(
-    '/assets/models/crash-lock-base/textures/outside_coating_gloss_OMR.webp'
-  );
-  coatingTexture.flipY = true;
+
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -227,8 +238,9 @@ export function CrashLockBase(props) {
       preloadThisTextureForAllModels(sideTexturePath);
       preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
       preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
-      preloadThisTextureForAllModels(coatingTexture);
-      preloadThisTextureForAllModels(embossingTexture);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
     }, 0);
   }, [
     outsideBaseTexture,
@@ -237,6 +249,7 @@ export function CrashLockBase(props) {
     roughnessMapOutsideTexturePath,
     roughnessMapInsideTexturePath,
     coatingTexture,
+    spotGlossNormalTexturePath
   ]);
   // preload this model all textures and materials
   useEffect(() => {
@@ -316,7 +329,7 @@ export function CrashLockBase(props) {
               material={materials.finishing_spot_gloss}
               skeleton={nodes.Mesh_0_4.skeleton}
               material-transparent={true}
-              material-opacity={spotGloss_opacity}
+              material-opacity={spotgloss_opacity}
               material-normalMap={spotGlossNormalTexture}
               material-normalScale= {[0, 0.1]}
               castShadow
@@ -324,66 +337,6 @@ export function CrashLockBase(props) {
           </group>
           <primitive object={nodes.Bone} />
           <primitive object={nodes.neutral_bone} />
-        </group>
-        <group name="box" position={[0, -0.08, 0]} scale={0.124}>
-          <skinnedMesh
-            name="Mesh_0"
-            geometry={nodes.Mesh_0.geometry}
-            //  material={materials.Material_color_outside}
-            skeleton={nodes.Mesh_0.skeleton}
-          >
-            <meshPhysicalMaterial
-              map={outsideBaseTexture}
-              bumpMap={bumpMap}
-              bumpScale={15}
-              clearcoatMap={coating !== 'none' ? coatingTexture : null}
-              clearcoat={clearCoat}
-              clearcoatRoughness={clearCoatRoughness}
-              roughnessMap={roughnessMapOutside}
-              metalness={metalnessVal}
-            />
-          </skinnedMesh>
-          <skinnedMesh
-            name="Mesh_0_1"
-            geometry={nodes.Mesh_0_1.geometry}
-            //  material={materials.Material_color_outside}
-            skeleton={nodes.Mesh_0_1.skeleton}
-          >
-            <meshPhysicalMaterial
-              map={insideBaseTexture}
-              clearcoatMap={coating !== 'none' ? coatingTexture : null}
-              clearcoat={clearCoat}
-              clearcoatRoughness={clearCoatRoughness}
-              roughnessMap={
-                printSurface === 'outside-inside' ? roughnessMapInside : null
-              }
-              metalness={metalnessVal}
-            />
-          </skinnedMesh>
-          <skinnedMesh
-            name="Mesh_0_2"
-            geometry={nodes.Mesh_0_2.geometry}
-            //  material={materials.Material_side}
-            skeleton={nodes.Mesh_0_2.skeleton}
-          >
-            <meshStandardMaterial map={sideBaseTexture} />
-          </skinnedMesh>
-          <skinnedMesh
-            name="Mesh_0_3"
-            geometry={nodes.Mesh_0_3.geometry}
-            material={materials.finishing_gold_foil}
-            skeleton={nodes.Mesh_0_3.skeleton}
-            material-transparent={true}
-            material-opacity={goldFoil_opacity}
-          />
-          <skinnedMesh
-            name="Mesh_0_4"
-            geometry={nodes.Mesh_0_4.geometry}
-            material={materials.finishing_spot_gloss}
-            skeleton={nodes.Mesh_0_4.skeleton}
-            material-transparent={true}
-            material-opacity={spotgloss_opacity}
-          />
         </group>
       </group>
     </group>

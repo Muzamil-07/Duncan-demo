@@ -82,17 +82,15 @@ export function MailerBox(props) {
   let sideTexturePath = '';
 
   if (print !== 'none') {
-    outsideBaseTexturePath = `/assets/models/mailer/${
-      material.includes('white')
+    outsideBaseTexturePath = `/assets/models/mailer/${material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/outside_${print}.jpg`;
+      }/outside_${print}.jpg`;
   } else {
-    outsideBaseTexturePath = `/assets/models/mailer/${
-      material.includes('white')
+    outsideBaseTexturePath = `/assets/models/mailer/${material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/base.jpg`;
+      }/base.jpg`;
   }
 
   const outsideBaseTexture = useTexture(outsideBaseTexturePath);
@@ -100,17 +98,15 @@ export function MailerBox(props) {
   outsideBaseTexture.colorSpace = SRGBColorSpace;
 
   if (print !== 'none' && printSurface === 'outside-inside') {
-    insideBaseTexturePath = `/assets/models/mailer/${
-      material.includes('white')
+    insideBaseTexturePath = `/assets/models/mailer/${material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/inside_${print}.jpg`;
+      }/inside_${print}.jpg`;
   } else {
-    insideBaseTexturePath = `/assets/models/mailer/${
-      material.includes('white')
+    insideBaseTexturePath = `/assets/models/mailer/${material.includes('white')
         ? material.replaceAll('microflute-', 'coated-')
         : material.replaceAll('microflute-', '')
-    }/base.jpg`;
+      }/base.jpg`;
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath);
@@ -133,10 +129,19 @@ export function MailerBox(props) {
   let bumpMap = null;
 
   const embossingTexturePath = finishing.embossing
-    ? '/assets/models/mailer/textures/embossing_OUTSIDE.png'
+    ? '/assets/models/mailer/textures/embossing_OUTSIDE.webp'
     : '/assets/models/mailer/textures/base.webp';
   const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
+
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/mailer/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/mailer/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
+  coatingTexture.flipY = false;
+
+
 
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
@@ -147,12 +152,6 @@ export function MailerBox(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexturePath =
-    coating !== 'none'
-      ? '/assets/models/mailer/textures/outside_coating_gloss_OMR.webp'
-      : '/assets/models/mailer/textures/base.webp';
-  const coatingTexture = useTexture(coatingTexturePath);
-  coatingTexture.flipY = false;
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -264,7 +263,7 @@ export function MailerBox(props) {
             skeleton={nodes.material_print001_4.skeleton}
             material-transparent={true}
             material-opacity={goldFoil_opacity}
-            // material-roughness={1}
+          // material-roughness={1}
           />
           <skinnedMesh
             castShadow

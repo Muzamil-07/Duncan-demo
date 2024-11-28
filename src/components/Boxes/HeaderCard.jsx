@@ -4,20 +4,22 @@ import { useGLTF, useAnimations, useTexture } from '@react-three/drei';
 import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { useAppSelector } from '../../lib/store/hooks';
 import {
-  selectBoxCoating,
-  selectBoxFinishing,
-  selectBoxMaterial,
-  selectBoxPrint,
-  selectBoxPrintSurface,
-  selectBoxState,
+    selectBoxCoating,
+    selectBoxFinishing,
+    selectBoxMaterial,
+    selectBoxPrint,
+    selectBoxPrintSurface,
+    selectBoxState,
 } from '../../lib/store/features/box/boxSlice';
 import { useThree, useFrame } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 import {
-  preloadMaterialTextures,
-  preloadPrintTextures,
-  preloadTextures,
+    preloadMaterialTextures,
+    preloadPrintTextures,
+    preloadSingleModelTextures,
+    preloadTextures,
+    preloadThisTextureForAllModels,
 } from '../../lib/utils';
 
 export function HeaderCard(props) {
@@ -31,6 +33,42 @@ export function HeaderCard(props) {
     const printSurface = useAppSelector(selectBoxPrintSurface);
     const coating = useAppSelector(selectBoxCoating);
     const finishing = useAppSelector(selectBoxFinishing);
+
+
+
+    // Ref to track the previous coating and finishing values
+    const previousCoatingRef = useRef(coating);
+    const previousFinishingRef = useRef({ ...finishing });
+
+    // ********** ROTATION SCRIPT
+    useEffect(() => {
+        const shouldRotate =
+            (coating !== 'none' && previousCoatingRef.current !== coating) ||
+            (finishing.goldFoil && !previousFinishingRef.current.goldFoil) ||
+            (finishing.embossing && !previousFinishingRef.current.embossing) ||
+            (finishing.spotGloss && !previousFinishingRef.current.spotGloss);
+
+        if (shouldRotate) {
+            // Rotate the model 360 degrees
+            let rotationY = 0;
+            const rotationSpeed = 0.05; // Adjust the speed of rotation as needed
+
+            const animateRotation = () => {
+                if (rotationY < Math.PI * 2) {
+                    rotationY += rotationSpeed;
+                    group.current.rotation.y = rotationY;
+                    requestAnimationFrame(animateRotation);
+                } else {
+                    group.current.rotation.y = 0; // Reset the rotation
+                }
+            };
+            animateRotation();
+        }
+
+        previousCoatingRef.current = coating;
+        previousFinishingRef.current = { ...finishing };
+    }, [coating, finishing]);
+
 
 
     // ********** CONFIGURATOR SCRIPT
@@ -86,11 +124,26 @@ export function HeaderCard(props) {
     let goldFoil_opacity = 0;
     let spotgloss_opacity = 0;
     let bumpMap = null;
-    const embossingTexture = useTexture(
-        '/assets/models/header-card/textures/embossing_OUTSIDE.webp'
-    );
 
+    const embossingTexturePath = finishing.embossing
+        ? '/assets/models/header-card/textures/embossing_OUTSIDE.webp'
+        : '/assets/models/header-card/textures/base.webp';
+    const embossingTexture = useTexture(embossingTexturePath);
     embossingTexture.flipY = false;
+    embossingTexture.flipY = false;
+
+    const coatingTexturePath =
+        coating !== 'none'
+            ? '/assets/models/header-card/textures/outside_coating_gloss_OMR.webp'
+            : '/assets/models/header-card/textures/base.webp';
+    const coatingTexture = useTexture(coatingTexturePath);
+    coatingTexture.flipY = false;
+
+  const spotGlossNormalTexturePath = finishing.spotGloss
+  ? '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+  : '/assets/models/tuckend/textures/base.webp';
+
+
     if (!finishing.none) {
         if (finishing.goldFoil) goldFoil_opacity = 1;
         if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -99,11 +152,6 @@ export function HeaderCard(props) {
 
     let clearCoat = 0;
     let clearCoatRoughness = 0;
-
-    const coatingTexture = useTexture(
-        '/assets/models/header-card/textures/outside_coating_gloss_OMR.webp'
-    );
-    coatingTexture.flipY = false;
 
     if (coating !== 'none') {
         if (coating === 'gloss') {
@@ -127,7 +175,6 @@ export function HeaderCard(props) {
     let roughnessMapOutside = null;
     let roughnessMapInside = null;
 
-    console.log("print",print)
 
     if (print === 'cmyk_1spot_metflo' || print === 'cmyk_2spot_metflo') {
         roughnessMapOutsideTexturePath =
@@ -157,18 +204,41 @@ export function HeaderCard(props) {
     if (material === 'uncoated-white') metalnessVal = 0.3;
     else if (material.includes('kraft')) metalnessVal = 0.2;
 
+    // preload the applied textures and materials for all the models
+    useEffect(() => {
+        setTimeout(() => {
+            preloadThisTextureForAllModels(outsideBaseTexturePath);
+            preloadThisTextureForAllModels(insideBaseTexturePath);
+            preloadThisTextureForAllModels(sideTexturePath);
+            preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+            preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+            preloadThisTextureForAllModels(embossingTexturePath);
+            preloadThisTextureForAllModels(coatingTexturePath);
+            preloadThisTextureForAllModels(spotGlossNormalTexturePath);
+        }, 0);
+    }, [
+        outsideBaseTexture,
+        insideBaseTexturePath,
+        sideTexturePath,
+        roughnessMapOutsideTexturePath,
+        roughnessMapInsideTexturePath,
+        coatingTexture,
+        spotGlossNormalTexturePath
+    ]);
+
     useEffect(() => {
         setTimeout(() => {
             console.log('SETTIMEOUT DONE----------------------');
             preloadMaterialTextures();
-            preloadPrintTextures();
+            preloadSingleModelTextures('headerCard');
+            // preloadPrintTextures();
             // preloadTextures()
         }, 0);
         console.log('DONE----------------------');
     }, []);
 
     return (
-        <group {...props} dispose={null}>
+        <group ref={group} {...props} dispose={null}>
             <mesh
                 castShadow
                 // receiveShadow
@@ -194,7 +264,7 @@ export function HeaderCard(props) {
             >
                 <meshPhysicalMaterial
                     map={insideBaseTexture}
-                    clearcoatMap={coatingTexture}
+                    clearcoatMap={coating !== 'none' ? coatingTexture : null}
                     clearcoat={clearCoat}
                     clearcoatRoughness={clearCoatRoughness}
                     roughnessMap={
@@ -219,6 +289,7 @@ export function HeaderCard(props) {
                 material={materials.finishing_gold_foil}
                 material-transparent={true}
                 material-opacity={goldFoil_opacity}
+                material-metalness={0.6}
             />
             <mesh
                 castShadow

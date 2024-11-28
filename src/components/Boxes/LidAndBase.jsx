@@ -11,17 +11,18 @@ import {
   selectBoxPrintSurface,
   selectBoxState,
 } from '../../lib/store/features/box/boxSlice';
-import { useThree, useFrame } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 import {
   preloadMaterialTextures,
   preloadPrintTextures,
+  preloadSingleModelTextures,
   preloadTextures,
+  preloadThisTextureForAllModels,
 } from '../../lib/utils';
 
 export function LidAndBase(props) {
-  const { scene, animations } = useGLTF('/assets/models/lid-and-base/lid-and-base.glb');
+  const { scene, animations } = useGLTF('/assets/models/lid-and-base/lid-and-base-1.glb');
   const group = useRef();
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
@@ -53,7 +54,7 @@ export function LidAndBase(props) {
 
     }
   }, [boxState, actions['Mesh_0.001Action']]);
-  
+
 
   // ********** ROTATION SCRIPT
   useEffect(() => {
@@ -83,11 +84,13 @@ export function LidAndBase(props) {
     previousCoatingRef.current = coating;
     previousFinishingRef.current = { ...finishing };
   }, [coating, finishing]);
-  
+
 
   // ********** CONFIGURATOR SCRIPT
   let outsideBaseTexturePath = '';
+  let outsideLidTexturePath = ''
   let insideBaseTexturePath = '';
+  let insideLidTexturePath = '';
   let sideTexturePath = '';
 
   if (print !== 'none') {
@@ -95,8 +98,19 @@ export function LidAndBase(props) {
       ? material.replaceAll('microflute-', 'coated-')
       : material.replaceAll('microflute-', '')
       }/outside_${print}.webp`;
+
+    outsideLidTexturePath = `/assets/models/lid-and-base/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/lid_outside_${print}.webp`;
+
   } else {
     outsideBaseTexturePath = `/assets/models/lid-and-base/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
+
+      outsideLidTexturePath = `/assets/models/lid-and-base/${material.includes('white')
       ? material.replaceAll('microflute-', 'coated-')
       : material.replaceAll('microflute-', '')
       }/base.webp`;
@@ -107,13 +121,29 @@ export function LidAndBase(props) {
   outsideBaseTexture.flipY = false;
   outsideBaseTexture.colorSpace = SRGBColorSpace;
 
+  console.log("outsideLidTexturePath",outsideLidTexturePath)
+
+  const outsideLidTexture = useTexture(outsideLidTexturePath);
+  outsideBaseTexture.flipY = false;
+  outsideBaseTexture.colorSpace = SRGBColorSpace;
+
   if (print !== 'none' && printSurface === 'outside-inside') {
     insideBaseTexturePath = `/assets/models/lid-and-base/${material.includes('white')
       ? material.replaceAll('microflute-', 'coated-')
       : material.replaceAll('microflute-', '')
       }/inside_${print}.webp`;
+
+    insideLidTexturePath = `/assets/models/lid-and-base/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/lid_inside_${print}.webp`;
   } else {
     insideBaseTexturePath = `/assets/models/lid-and-base/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
+
+    insideLidTexturePath = `/assets/models/lid-and-base/${material.includes('white')
       ? material.replaceAll('microflute-', 'coated-')
       : material.replaceAll('microflute-', '')
       }/base.webp`;
@@ -122,6 +152,10 @@ export function LidAndBase(props) {
   const insideBaseTexture = useTexture(insideBaseTexturePath);
   insideBaseTexture.flipY = false;
   insideBaseTexture.colorSpace = SRGBColorSpace;
+
+  const insideLidTexture = useTexture(insideLidTexturePath);
+  insideLidTexture.flipY = false;
+  insideLidTexture.colorSpace = SRGBColorSpace;
 
   if (material.includes('microflute-')) {
     sideTexturePath = `/assets/models/lid-and-base/${material}/side.webp`;
@@ -138,11 +172,27 @@ export function LidAndBase(props) {
   let goldFoil_opacity = 0;
   let spotgloss_opacity = 0;
   let bumpMap = null;
-  const embossingTexture = useTexture(
-    '/assets/models/lid-and-base/textures/embossing_OUTSIDE.webp'
-  );
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/lid-and-base/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/lid-and-base/textures/base.webp';
+
+  const coatingTexturePath = coating !== 'none'
+    ? '/assets/models/lid-and-base/textures/outside_coating_gloss_OMR.webp'
+    : '/assets/models/lid-and-base/textures/base.webp';
+
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/lid-and-base/textures/spotgloss_Normal.webp'
+    : '/assets/models/lid-and-base/textures/base.webp';
+
+  const embossingTexture = useTexture(embossingTexturePath);
+  const coatingTexture = useTexture(coatingTexturePath);
+  const spotGlossNormalTexture = useTexture(spotGlossNormalTexturePath);
 
   embossingTexture.flipY = false;
+  coatingTexture.flipY = false;
+  spotGlossNormalTexture.flipY = false;
+
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
     if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -152,16 +202,7 @@ export function LidAndBase(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  // const spotGlossNormalTexture = useTexture(
-  //   '/assets/models/lid-and-base/textures/spotgloss_Normal.webp'
-  // );
 
-  // spotGlossNormalTexture.flipY = false;
-
-  const coatingTexture = useTexture(
-    '/assets/models/lid-and-base/textures/outside_coating_gloss_OMR.webp'
-  );
-  coatingTexture.flipY = false;
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -213,18 +254,41 @@ export function LidAndBase(props) {
   if (material === 'uncoated-white') metalnessVal = 0.3;
   else if (material.includes('kraft')) metalnessVal = 0.2;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+    spotGlossNormalTexturePath
+  ]);
+
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('lidAndBase');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
   }, []);
 
   return (
-    <group  ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Mesh_0">
           <mesh
@@ -283,7 +347,7 @@ export function LidAndBase(props) {
             material={materials.Material_color_lid_outside}
           >
             <meshPhysicalMaterial
-              map={outsideBaseTexture}
+              map={outsideLidTexture}
               bumpMap={bumpMap}
               bumpScale={15}
               clearcoatMap={coatingTexture}
@@ -301,8 +365,8 @@ export function LidAndBase(props) {
             material={materials.Material_color_lid_inside}
           >
             <meshPhysicalMaterial
-              map={insideBaseTexture}
-              clearcoatMap={coatingTexture}
+              map={insideLidTexture}
+              clearcoatMap={coating !== 'none' ? coatingTexture : null}
               clearcoat={clearCoat}
               clearcoatRoughness={clearCoatRoughness}
               roughnessMap={
@@ -344,5 +408,4 @@ export function LidAndBase(props) {
     </group>
   )
 }
-
-useGLTF.preload('/assets/models/lid-and-base/lid-and-base.glb')
+useGLTF.preload('/assets/models/lid-and-base/lid-and-base-1.glb')

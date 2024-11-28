@@ -7,9 +7,10 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
+import { preloadMaterialTextures, preloadSingleModelTextures } from '../../lib/utils';
 
 export function LidAndBaseSkeleton(props) {
-  const { scene, animations } = useGLTF('/assets/models/lid-and-base/lid-and-base.glb');
+  const { scene, animations } = useGLTF('/assets/models/lid-and-base/lid-and-base-1.glb');
   const group = useRef();
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
@@ -31,7 +32,18 @@ export function LidAndBaseSkeleton(props) {
 
     }
   }, [boxState, actions['Mesh_0.001Action']]);
-  
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------');
+      preloadMaterialTextures();
+      preloadSingleModelTextures('lidAndBase');
+      // preloadPrintTextures();
+      // preloadTextures()
+    }, 0);
+    console.log('DONE----------------------');
+  }, []);
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
@@ -104,4 +116,4 @@ export function LidAndBaseSkeleton(props) {
   )
 }
 
-useGLTF.preload('/assets/models/lid-and-base/lid-and-base.glb')
+useGLTF.preload('/assets/models/lid-and-base/lid-and-base-1.glb')

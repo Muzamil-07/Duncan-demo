@@ -1,8 +1,21 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { preloadMaterialTextures, preloadSingleModelTextures } from '../../lib/utils';
 
 export function HeaderCardSkeleton(props) {
   const { nodes, materials } = useGLTF('/assets/models/header-card/header-card.glb')
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('SETTIMEOUT DONE----------------------');
+      preloadMaterialTextures();
+      preloadSingleModelTextures('headerCard');
+      // preloadPrintTextures();
+      // preloadTextures()
+    }, 0);
+    console.log('DONE----------------------');
+  }, []);
+
   return (
     <group {...props} dispose={null}>
       <mesh

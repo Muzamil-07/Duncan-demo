@@ -133,6 +133,13 @@ export function SelefLockTray(props) {
     : '/assets/models/selef-lock-tray/textures/base.webp';
   const embossingTexture = useTexture(embossingTexturePath);
   embossingTexture.flipY = false;
+  
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+    : '/assets/models/tuckend/textures/base.webp';
+
+
+
 
   let roughnessMapOutsideTexturePath =
     '/assets/models/selef-lock-tray/textures/base.webp';
@@ -203,13 +210,14 @@ export function SelefLockTray(props) {
   // preload the applied textures and materials for all the models
   useEffect(() => {
     setTimeout(() => {
-      preloadThisTextureForAllModels(outsideTexturePath);
-      preloadThisTextureForAllModels(insideTexturePath);
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
       preloadThisTextureForAllModels(sideTexturePath);
       preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
       preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
-      preloadThisTextureForAllModels(coatingTexture);
-      preloadThisTextureForAllModels(embossingTexture);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
     }, 0);
   }, [
     outsideTexturePath,
@@ -218,6 +226,7 @@ export function SelefLockTray(props) {
     roughnessMapOutsideTexturePath,
     roughnessMapInsideTexturePath,
     coatingTexture,
+    spotGlossNormalTexturePath
   ]);
   // preload this model all textures and materials
   useEffect(() => {

@@ -124,8 +124,8 @@ export function LidAndBase(props) {
   console.log("outsideLidTexturePath",outsideLidTexturePath)
 
   const outsideLidTexture = useTexture(outsideLidTexturePath);
-  outsideBaseTexture.flipY = false;
-  outsideBaseTexture.colorSpace = SRGBColorSpace;
+  outsideLidTexture.flipY = false;
+  outsideLidTexture.colorSpace = SRGBColorSpace;
 
   if (print !== 'none' && printSurface === 'outside-inside') {
     insideBaseTexturePath = `/assets/models/lid-and-base/${material.includes('white')

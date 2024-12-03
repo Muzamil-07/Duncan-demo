@@ -15,9 +15,7 @@ import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 import {
   preloadMaterialTextures,
-  preloadPrintTextures,
   preloadSingleModelTextures,
-  preloadTextures,
   preloadThisTextureForAllModels,
 } from '../../lib/utils';
 

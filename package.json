@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.20",
     "@react-three/drei": "^9.108.3",
     "@react-three/fiber": "^8.16.8",
+    "@react-three/xr": "^6.4.12",
     "@reduxjs/toolkit": "^2.2.6",
     "lamina": "^1.1.23",
     "lodash": "^4.17.21",

@@ -91,7 +91,7 @@ const Lights = () => {
         // scene={undefined} // adds the ability to pass a custom THREE.Scene, can also be a ref
         // encoding={undefined} // adds the ability to pass a custom THREE.TextureEncoding (default: THREE.sRGBEncoding for an array of files and THREE.LinearEncoding for a single texture)
       /> */}
-      <Environment resolution={256} background backgroundBlurriness={1} environmentIntensity={0.5}>
+      <Environment resolution={256} background backgroundBlurriness={1} environmentIntensity={0}>
         <Lightformers />
       </Environment>
     </>

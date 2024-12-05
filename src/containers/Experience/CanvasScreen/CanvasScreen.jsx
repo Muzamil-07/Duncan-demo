@@ -23,10 +23,13 @@ const CanvasScreen = ({ children }) => {
   //   samples: { value: 10, min: 1, max: 100, step: 1 }
   // })
 
+
+
   const orbitRef = useRef();
   const camera = useRef();
 
   const height = useAppSelector(selectSceneHeight);
+
 
   return (
     <div

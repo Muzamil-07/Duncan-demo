@@ -89,6 +89,7 @@ const Configurator = () => {
     }
   };
 
+
   return (
     <Box
       sx={{
@@ -99,7 +100,7 @@ const Configurator = () => {
       }}
     >
       {/* NAVBAR */}
-      <Navbar mode={mode} />
+      {/* <Navbar mode={mode} /> */}
 
       <Grid container>
         {/* LEFT ICONS */}

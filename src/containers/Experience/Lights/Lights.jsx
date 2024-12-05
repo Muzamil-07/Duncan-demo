@@ -14,6 +14,7 @@ import { useFrame } from '@react-three/fiber'
 import { Color, Depth, LayerMaterial } from 'lamina'
 import { useAppSelector } from '../../../lib/store/hooks'
 import { selectMode } from '../../../lib/store/features/general/generalSlice'
+import { useControls } from 'leva'
 
 const Lights = () => {
   const dirLight1 = useRef()
@@ -26,13 +27,13 @@ const Lights = () => {
 
   // const pointLight1 = useRef()
 
-  // useHelper(dirLight1, DirectionalLightHelper, 1)
-  // useHelper(dirLight2, DirectionalLightHelper, 1)
-  // useHelper(dirLight3, DirectionalLightHelper, 1)
-  // useHelper(dirLight4, DirectionalLightHelper, 1)
-  // useHelper(dirLight5, DirectionalLightHelper, 1)
-  // useHelper(dirLight6, DirectionalLightHelper, 1)
-  // useHelper(dirLight7, DirectionalLightHelper, 1)
+  useHelper(dirLight1, DirectionalLightHelper, 1, "red")
+  useHelper(dirLight2, DirectionalLightHelper, 1, "green")
+  useHelper(dirLight3, DirectionalLightHelper, 1, "blue")
+  useHelper(dirLight4, DirectionalLightHelper, 1, "purple")
+  useHelper(dirLight5, DirectionalLightHelper, 1, "pink")
+  useHelper(dirLight6, DirectionalLightHelper, 1, "cyan")
+  useHelper(dirLight7, DirectionalLightHelper, 1, "orange")
 
   // useHelper(pointLight1, PointLightHelper, 1)
 
@@ -43,37 +44,89 @@ const Lights = () => {
     // dirLight1.current.parent.add(gridHelper)
   }, [])
 
+
+ // Adding Leva controls for each directional light
+ const light1Controls = useControls('Light 1(red)', {
+  position: { value: [2, 0, 4], step: 0.1 },
+  intensity: { value: 0.7, min: 0, max:  7, step: 0.1 },
+});
+
+const light2Controls = useControls('Light 2(green)', {
+  position: { value: [-2, 0, -4], step: 0.1 },
+  intensity: { value: 1, min: 0, max:  7, step: 0.1 },
+});
+
+const light3Controls = useControls('Light 3(blue)', {
+  position: { value: [0, 5, 0], step: 0.1 },
+  intensity: { value: 0.2, min: 0, max:  7, step: 0.1 },
+});
+
+const light4Controls = useControls('Light 4(purple)', {
+  position: { value: [0, -3, 0], step: 0.1 },
+  intensity: { value: 1.6, min: 0, max:  7, step: 0.1 },
+});
+
+const light5Controls = useControls('Light 5(pink)', {
+  position: { value: [4, 1, -0.5], step: 0.1 },
+  intensity: { value: 1, min: 0, max:  7, step: 0.1 },
+});
+
+const light6Controls = useControls('Light 6(cyan)', {
+  position: { value: [-4, 1, 0], step: 0.1 },
+  intensity: { value: 1, min: 0, max:  7, step: 0.1 },
+});
+
+const light7Controls = useControls('Light 7(orange)', {
+  position: { value: [0, -1, 4], step: 0.1 },
+  intensity: { value: 0.7, min: 0, max:  7, step: 0.1 },
+});
+
   return (
     <>
-      {/* FRONT */}
-      <directionalLight
+     {/* FRONT */}
+     <directionalLight
         castShadow
         ref={dirLight1}
-        position={[2, 0, 4]}
-        intensity={0.7}
+        position={light1Controls.position}
+        intensity={light1Controls.intensity}
       />
       <directionalLight
         castShadow
         ref={dirLight7}
-        position={[0, -1, 4]}
-        intensity={0.7}
+        position={light7Controls.position}
+        intensity={light7Controls.intensity}
       />
       {/* BACK */}
-      <directionalLight ref={dirLight2} position={[-2, 0, -4]} intensity={1} />
+      <directionalLight
+        ref={dirLight2}
+        position={light2Controls.position}
+        intensity={light2Controls.intensity}
+      />
       {/* TOP */}
       <directionalLight
-        ref={dirLight3}
         castShadow
-        position={[0, 5, 0]}
-        intensity={0.2}
+        ref={dirLight3}
+        position={light3Controls.position}
+        intensity={light3Controls.intensity}
       />
       {/* BOTTOM */}
-      <directionalLight ref={dirLight4} position={[0, -3, 0]} intensity={1.6} />
+      <directionalLight
+        ref={dirLight4}
+        position={light4Controls.position}
+        intensity={light4Controls.intensity}
+      />
       {/* RIGHT */}
-      <directionalLight ref={dirLight5} position={[4, 1, -0.5]} intensity={1} />
+      <directionalLight
+        ref={dirLight5}
+        position={light5Controls.position}
+        intensity={light5Controls.intensity}
+      />
       {/* LEFT */}
-      <directionalLight ref={dirLight6} position={[-4, 1, 0]} intensity={1} />
-
+      <directionalLight
+        ref={dirLight6}
+        position={light6Controls.position}
+        intensity={light6Controls.intensity}
+      />
       {/* POINT LIGHT */}
 
       {/* <pointLight ref={pointLight1} position={[0, 0, 3]} intensity={2} /> */}

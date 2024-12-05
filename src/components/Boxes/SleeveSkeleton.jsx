@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 
 export function SleeveSkeleton(props) {
   const { nodes, materials } = useGLTF('/assets/models/sleeve/sleeve.glb');
@@ -9,7 +13,8 @@ export function SleeveSkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('sleeve');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -18,34 +23,24 @@ export function SleeveSkeleton(props) {
   return (
     <group {...props} dispose={null}>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_1.geometry}
         material={materials.Material_color_outside}
       />
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_2.geometry}
-        material={materials.Material_color_inside}
+        material={materials.Material_color_outside}
       />
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_3.geometry}
         material={materials.Material_side}
       />
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_4.geometry}
         material={materials.finishing_gold_foil}
         material-transparent={true}
         material-opacity={0}
       />
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_5.geometry}
         material={materials.finishing_spot_gloss}
         material-transparent={true}

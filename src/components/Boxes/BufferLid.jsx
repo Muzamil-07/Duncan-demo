@@ -13,7 +13,12 @@ import { RepeatWrapping, SRGBColorSpace } from 'three';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 import { LoopOnce } from 'three';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function BufferLid(props) {
   const group = useRef();
@@ -87,17 +92,15 @@ export function BufferLid(props) {
   let sideTexturePath = '';
 
   if (print !== 'none') {
-    outsideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/outside_${print}.webp`;
+    outsideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/outside_${print}.webp`;
   } else {
-    outsideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
+    outsideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
   }
 
   console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath);
@@ -108,17 +111,15 @@ export function BufferLid(props) {
   outsideBaseTexture.wrapS = RepeatWrapping;
 
   if (print !== 'none' && printSurface === 'outside-inside') {
-    insideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/inside_${print}.webp`;
+    insideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/inside_${print}.webp`;
   } else {
-    insideBaseTexturePath = `/assets/models/buffer-lid/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
+    insideBaseTexturePath = `/assets/models/buffer-lid/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath);
@@ -171,9 +172,25 @@ export function BufferLid(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const coatingTexture = useTexture(
-    '/assets/models/buffer-lid/textures/outside_coating_gloss_OMR.webp'
-  );
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/buffer-lid/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/buffer-lid/textures/base.webp';
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/buffer-lid/textures/base.webp';
+
+  const coatingTexture = useTexture(coatingTexturePath);
+  const embossingTexture = useTexture(embossingTexturePath);
+  coatingTexture.flipY = false;
+  embossingTexture.flipY = false;
+  embossingTexture.wrapS = RepeatWrapping;
+  embossingTexture.wrapT = RepeatWrapping;
+
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+    : '/assets/models/tuckend/textures/base.webp';
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -190,14 +207,6 @@ export function BufferLid(props) {
     }
   }
 
-  const embossingTexture = useTexture(
-    '/assets/models/buffer-lid/textures/embossing_OUTSIDE.webp'
-  );
-
-  embossingTexture.flipY = false;
-  embossingTexture.wrapS = RepeatWrapping;
-  embossingTexture.wrapT = RepeatWrapping;
-
   let goldFoil_opacity = 0;
   let spotGloss_opacity = 0;
   let bumpMap = null;
@@ -212,11 +221,34 @@ export function BufferLid(props) {
   if (material === 'uncoated-white') metalnessVal = 0.3;
   else if (material.includes('kraft')) metalnessVal = 0.2;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+    spotGlossNormalTexturePath
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('bufferLid');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -226,11 +258,13 @@ export function BufferLid(props) {
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature" scale={0.119}>
+          <primitive object={nodes.Bone} />
+          <primitive object={nodes.neutral_bone} />
           <group name="Mesh_0">
             <skinnedMesh
-              name="outside"
+              name="Mesh_0_1"
               geometry={nodes.Mesh_0_1.geometry}
-              //   material={materials.Material_color_outside}
+              //  material={materials.Material_color_outside}
               skeleton={nodes.Mesh_0_1.skeleton}
               castShadow
             >
@@ -239,22 +273,22 @@ export function BufferLid(props) {
                 bumpMap={bumpMap}
                 bumpScale={15}
                 roughnessMap={roughnessMapOutside}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}
               />
             </skinnedMesh>
             <skinnedMesh
-              name="inside"
+              name="Mesh_0_2"
               geometry={nodes.Mesh_0_2.geometry}
-              //   material={materials.Material_color_inside}
+              //  material={materials.Material_color_inside}
               skeleton={nodes.Mesh_0_2.skeleton}
               castShadow
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}
@@ -264,9 +298,9 @@ export function BufferLid(props) {
               />
             </skinnedMesh>
             <skinnedMesh
-              name="side"
+              name="Mesh_0_3"
               geometry={nodes.Mesh_0_3.geometry}
-              // material={materials.Material_side}
+              //  material={materials.Material_side}
               skeleton={nodes.Mesh_0_3.skeleton}
               castShadow
             >
@@ -292,8 +326,6 @@ export function BufferLid(props) {
               castShadow
             />
           </group>
-          <primitive object={nodes.Bone} />
-          <primitive object={nodes.neutral_bone} />
         </group>
       </group>
     </group>

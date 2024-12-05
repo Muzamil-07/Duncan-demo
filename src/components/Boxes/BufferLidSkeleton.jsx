@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+} from '../../lib/utils';
 /* eslint-disable react/no-unknown-property */
 import { LoopOnce } from 'three';
 import { useAppSelector } from '../../lib/store/hooks';
@@ -9,11 +13,11 @@ import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
 
 export function BufferLidSkeleton(props) {
-  const group = useRef();
-
+  const group = React.useRef();
   const { scene, animations } = useGLTF(
     '/assets/models/buffer-lid/buffer-lid.glb'
   );
+
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
@@ -39,15 +43,19 @@ export function BufferLidSkeleton(props) {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('bufferLid');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
   }, []);
+  
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature" scale={0.119}>
+          <primitive object={nodes.Bone} />
+          <primitive object={nodes.neutral_bone} />
           <group name="Mesh_0">
             <skinnedMesh
               name="Mesh_0_1"
@@ -89,8 +97,6 @@ export function BufferLidSkeleton(props) {
               castShadow
             />
           </group>
-          <primitive object={nodes.Bone} />
-          <primitive object={nodes.neutral_bone} />
         </group>
       </group>
     </group>

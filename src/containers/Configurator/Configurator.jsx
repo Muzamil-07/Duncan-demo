@@ -30,7 +30,7 @@ const Configurator = () => {
   const mode = useAppSelector(selectMode);
   const [modelHasAnimation, setModelHasAnimation] = useState(true);
 
-  const modelsWithoutAnimation = ['sleeve', 'selef-lock-tray'];
+  const modelsWithoutAnimation = ['sleeve', 'selef-lock-tray', 'header-card'];
   useEffect(() => {
     if (modelsWithoutAnimation.includes(style)) {
       setModelHasAnimation(false);

@@ -30,4 +30,5 @@ useGLTF.preload('/assets/models/crash-lock-base/crash-lock-base.glb');
 useGLTF.preload('/assets/models/selef-lock-tray/selef-lock-tray.glb');
 useGLTF.preload('/assets/models/skillet/skillet.glb');
 useGLTF.preload('/assets/models/sleeve/sleeve.glb');
-useGLTF.preload('/assets/images/sleeve/shadow-2.png');
+useGLTF.preload('/assets/models/lid-and-base/lid-and-base.glb');
+useGLTF.preload('/assets/models/header-card/header-card.glb');

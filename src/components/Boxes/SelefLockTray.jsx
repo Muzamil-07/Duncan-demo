@@ -9,7 +9,12 @@ import {
   selectBoxPrintSurface,
 } from '../../lib/store/features/box/boxSlice';
 import { RepeatWrapping, SRGBColorSpace } from 'three';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function SelefLockTray(props) {
   const { nodes, materials } = useGLTF(
@@ -115,13 +120,26 @@ export function SelefLockTray(props) {
 
   let clearCoat = 0;
   let clearCoatRoughness = 0;
-  const coatingTexture = useTexture(
-    `/assets/models/selef-lock-tray/textures/outside_coating_gloss_OMR.webp`
-  );
 
-  const embossingTexture = useTexture(
-    `/assets/models/selef-lock-tray/textures/embossing_OUTSIDE.webp`
-  );
+  const coatingTexturePath =
+    coating !== 'none'
+      ? '/assets/models/selef-lock-tray/textures/outside_coating_gloss_OMR.webp'
+      : '/assets/models/selef-lock-tray/textures/base.webp';
+  const coatingTexture = useTexture(coatingTexturePath);
+  coatingTexture.flipY = false;
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/selef-lock-tray/textures/embossing_OUTSIDE.webp'
+    : '/assets/models/selef-lock-tray/textures/base.webp';
+  const embossingTexture = useTexture(embossingTexturePath);
+  embossingTexture.flipY = false;
+  
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+    : '/assets/models/tuckend/textures/base.webp';
+
+
+
 
   let roughnessMapOutsideTexturePath =
     '/assets/models/selef-lock-tray/textures/base.webp';
@@ -189,28 +207,49 @@ export function SelefLockTray(props) {
     }
   }
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
+    }, 0);
+  }, [
+    outsideTexturePath,
+    insideTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+    spotGlossNormalTexturePath
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('selefLockTray');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
   }, []);
 
   return (
-    <group {...props} ref={group} dispose={null}>
+    <group {...props} dispose={null} ref={group}>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_1.geometry}
-        material={materials.Material_color_outside}
+        //  material={materials.Material_color_outside}
       >
         <meshPhysicalMaterial
           map={outsideTexture}
           metalness={metalnessVal}
-          clearcoatMap={coatingTexture}
+          clearcoatMap={coating !== 'none' ? coatingTexture : null}
           clearcoat={clearCoat}
           clearcoatRoughness={clearCoatRoughness}
           bumpMap={bumpMap}
@@ -219,15 +258,13 @@ export function SelefLockTray(props) {
         />
       </mesh>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_2.geometry}
-        material={materials.Material_color_inside}
+        //  material={materials.Material_color_outside}
       >
         <meshPhysicalMaterial
           map={insideTexture}
           metalness={metalnessVal}
-          clearcoatMap={coatingTexture}
+          clearcoatMap={coating !== 'none' ? coatingTexture : null}
           clearcoat={clearCoat}
           clearcoatRoughness={clearCoatRoughness}
           roughnessMap={
@@ -236,16 +273,12 @@ export function SelefLockTray(props) {
         />
       </mesh>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_3.geometry}
-        material={materials.Material_side}
+        //  material={materials.Material_side}
       >
         <meshStandardMaterial map={sideTexture} />
       </mesh>
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_4.geometry}
         material={materials.finishing_gold_foil}
         material-transparent={true}
@@ -253,8 +286,6 @@ export function SelefLockTray(props) {
         material-metalness={0.4}
       />
       <mesh
-        castShadow
-        // receiveShadow
         geometry={nodes.Mesh_0_5.geometry}
         material={materials.finishing_spot_gloss}
         material-transparent={true}

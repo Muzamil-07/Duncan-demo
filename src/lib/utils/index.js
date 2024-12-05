@@ -857,6 +857,233 @@ const PrintSpecUrls = {
       '/assets/models/selef-lock-tray/microflute-white/side.webp',
     ],
   },
+  lidAndBase: {
+    kraft: [
+      '/assets/models/lid-and-base/textures/base.webp',
+      '/assets/models/lid-and-base/textures/embossing_OUTSIDE.webp',
+      '/assets/models/lid-and-base/textures/1spot_roughness_metflo_inside.webp',
+      '/assets/models/lid-and-base/textures/1spot_roughness_metflo_outside.webp',
+      '/assets/models/lid-and-base/textures/2spot_roughness_metflo_inside.webp',
+      '/assets/models/lid-and-base/textures/2spot_roughness_metflo_outside.webp',
+      '/assets/models/lid-and-base/textures/cmyk_1spot_roughness_metflo_inside.webp',
+      '/assets/models/lid-and-base/textures/cmyk_1spot_roughness_metflo_outside.webp',
+      '/assets/models/lid-and-base/textures/outside_coating_gloss_OMR.webp',
+      '/assets/models/lid-and-base/kraft/inside_1spot.webp',
+      '/assets/models/lid-and-base/kraft/inside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/inside_2spot.webp',
+      '/assets/models/lid-and-base/kraft/inside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/inside_black.webp',
+      '/assets/models/lid-and-base/kraft/inside_cmyk.webp',
+      '/assets/models/lid-and-base/kraft/inside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/kraft/inside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/inside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/kraft/inside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/outside_1spot.webp',
+      '/assets/models/lid-and-base/kraft/outside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/outside_2spot.webp',
+      '/assets/models/lid-and-base/kraft/outside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/outside_black.webp',
+      '/assets/models/lid-and-base/kraft/outside_cmyk.webp',
+      '/assets/models/lid-and-base/kraft/outside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/kraft/outside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/outside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/kraft/outside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_1spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_2spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_black.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_cmyk.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_inside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_1spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_2spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_black.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_cmyk.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/kraft/lid_outside_cmyk_2spot_metflo.webp',
+    ],
+    coated_white: [
+      '/assets/models/lid-and-base/coated-white/inside_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/inside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/inside_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/inside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/inside_black.webp',
+      '/assets/models/lid-and-base/coated-white/inside_cmyk.webp',
+      '/assets/models/lid-and-base/coated-white/inside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/inside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/inside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/inside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/outside_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/outside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/outside_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/outside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/outside_black.webp',
+      '/assets/models/lid-and-base/coated-white/outside_cmyk.webp',
+      '/assets/models/lid-and-base/coated-white/outside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/outside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/outside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/outside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_black.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_cmyk.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_inside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_black.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_cmyk.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/coated-white/lid_outside_cmyk_2spot_metflo.webp',
+    ],
+    uncoated_white: [
+      '/assets/models/lid-and-base/uncoated-white/inside_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_black.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_cmyk.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/inside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_black.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_cmyk.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/outside_cmyk_2spot_metflo.webp',
+
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_black.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_cmyk.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_inside_cmyk_2spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_2spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_black.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_cmyk.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_cmyk_1spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_cmyk_1spot_metflo.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_cmyk_2spot.webp',
+      '/assets/models/lid-and-base/uncoated-white/lid_outside_cmyk_2spot_metflo.webp',
+    ],
+    microflute_kraft: [
+      '/assets/models/lid-and-base/microflute-kraft/side.webp',
+    ],
+    microflute_white: [
+      '/assets/models/lid-and-base/microflute-white/side.webp',
+    ],
+  },
+  headerCard: {
+    kraft: [
+      '/assets/models/header-card/textures/1spot_roughness_metflo_inside.webp',
+      '/assets/models/header-card/textures/1spot_roughness_metflo_outside.webp',
+      '/assets/models/header-card/textures/2spot_roughness_metflo_inside.webp',
+      '/assets/models/header-card/textures/2spot_roughness_metflo_outside.webp',
+      '/assets/models/header-card/textures/cmyk_1spot_roughness_metflo_inside.webp',
+      '/assets/models/header-card/textures/cmyk_1spot_roughness_metflo_outside.webp',
+      '/assets/models/header-card/textures/base.webp',
+      '/assets/models/header-card/textures/embossing_OUTSIDE.webp',
+      '/assets/models/header-card/textures/outside_coating_gloss_OMR.webp',
+      '/assets/models/header-card/kraft/inside_1spot.webp',
+      '/assets/models/header-card/kraft/inside_1spot_metflo.webp',
+      '/assets/models/header-card/kraft/inside_2spot.webp',
+      '/assets/models/header-card/kraft/inside_2spot_metflo.webp',
+      '/assets/models/header-card/kraft/inside_black.webp',
+      '/assets/models/header-card/kraft/inside_cmyk.webp',
+      '/assets/models/header-card/kraft/inside_cmyk_1spot.webp',
+      '/assets/models/header-card/kraft/inside_cmyk_1spot_metflo.webp',
+      '/assets/models/header-card/kraft/inside_cmyk_2spot.webp',
+      '/assets/models/header-card/kraft/inside_cmyk_2spot_metflo.webp',
+      '/assets/models/header-card/kraft/outside_1spot.webp',
+      '/assets/models/header-card/kraft/outside_1spot_metflo.webp',
+      '/assets/models/header-card/kraft/outside_2spot.webp',
+      '/assets/models/header-card/kraft/outside_2spot_metflo.webp',
+      '/assets/models/header-card/kraft/outside_black.webp',
+      '/assets/models/header-card/kraft/outside_cmyk.webp',
+      '/assets/models/header-card/kraft/outside_cmyk_1spot.webp',
+      '/assets/models/header-card/kraft/outside_cmyk_1spot_metflo.webp',
+      '/assets/models/header-card/kraft/outside_cmyk_2spot.webp',
+      '/assets/models/header-card/kraft/outside_cmyk_2spot_metflo.webp',
+    ],
+    coated_white: [
+      '/assets/models/header-card/coated-white/inside_1spot.webp',
+      '/assets/models/header-card/coated-white/inside_1spot_metflo.webp',
+      '/assets/models/header-card/coated-white/inside_2spot.webp',
+      '/assets/models/header-card/coated-white/inside_2spot_metflo.webp',
+      '/assets/models/header-card/coated-white/inside_black.webp',
+      '/assets/models/header-card/coated-white/inside_cmyk.webp',
+      '/assets/models/header-card/coated-white/inside_cmyk_1spot.webp',
+      '/assets/models/header-card/coated-white/inside_cmyk_1spot_metflo.webp',
+      '/assets/models/header-card/coated-white/inside_cmyk_2spot.webp',
+      '/assets/models/header-card/coated-white/inside_cmyk_2spot_metflo.webp',
+      '/assets/models/header-card/coated-white/outside_1spot.webp',
+      '/assets/models/header-card/coated-white/outside_1spot_metflo.webp',
+      '/assets/models/header-card/coated-white/outside_2spot.webp',
+      '/assets/models/header-card/coated-white/outside_2spot_metflo.webp',
+      '/assets/models/header-card/coated-white/outside_black.webp',
+      '/assets/models/header-card/coated-white/outside_cmyk.webp',
+      '/assets/models/header-card/coated-white/outside_cmyk_1spot.webp',
+      '/assets/models/header-card/coated-white/outside_cmyk_1spot_metflo.webp',
+      '/assets/models/header-card/coated-white/outside_cmyk_2spot.webp',
+      '/assets/models/header-card/coated-white/outside_cmyk_2spot_metflo.webp',
+    ],
+    uncoated_white: [
+      '/assets/models/header-card/uncoated-white/inside_1spot.webp',
+      '/assets/models/header-card/uncoated-white/inside_1spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/inside_2spot.webp',
+      '/assets/models/header-card/uncoated-white/inside_2spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/inside_black.webp',
+      '/assets/models/header-card/uncoated-white/inside_cmyk.webp',
+      '/assets/models/header-card/uncoated-white/inside_cmyk_1spot.webp',
+      '/assets/models/header-card/uncoated-white/inside_cmyk_1spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/inside_cmyk_2spot.webp',
+      '/assets/models/header-card/uncoated-white/inside_cmyk_2spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/outside_1spot.webp',
+      '/assets/models/header-card/uncoated-white/outside_1spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/outside_2spot.webp',
+      '/assets/models/header-card/uncoated-white/outside_2spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/outside_black.webp',
+      '/assets/models/header-card/uncoated-white/outside_cmyk.webp',
+      '/assets/models/header-card/uncoated-white/outside_cmyk_1spot.webp',
+      '/assets/models/header-card/uncoated-white/outside_cmyk_1spot_metflo.webp',
+      '/assets/models/header-card/uncoated-white/outside_cmyk_2spot.webp',
+      '/assets/models/header-card/uncoated-white/outside_cmyk_2spot_metflo.webp',
+    ],
+    microflute_kraft: [
+      '/assets/models/header-card/microflute-kraft/side.webp',
+    ],
+    microflute_white: [
+      '/assets/models/header-card/microflute-white/side.webp',
+    ],
+  },
 };
 const MaterialTexturesUrls = {
   tuckend: {
@@ -865,6 +1092,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/tuckend/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/tuckend/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/tuckend/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/tuckend/textures/base.webp'],
   },
   mailer: {
     kraft: ['/assets/models/mailer/kraft/base.webp'],
@@ -872,6 +1100,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/mailer/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/mailer/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/mailer/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/mailer/textures/base.webp'],
   },
   crashLockBase: {
     kraft: ['/assets/models/crash-lock-base/kraft/base.webp'],
@@ -883,6 +1112,7 @@ const MaterialTexturesUrls = {
     microflute_white: [
       '/assets/models/crash-lock-base/microflute-white/side.webp',
     ],
+    base_roughness: ['/assets/models/crash-lock-base/textures/base.webp'],
   },
   skillet: {
     kraft: ['/assets/models/skillet/kraft/base.webp'],
@@ -890,6 +1120,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/skillet/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/skillet/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/skillet/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/skillet/textures/base.webp'],
   },
   bufferLid: {
     kraft: ['/assets/models/buffer-lid/kraft/base.webp'],
@@ -897,6 +1128,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/buffer-lid/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/buffer-lid/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/buffer-lid/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/buffer-lid/textures/base.webp'],
   },
   sleeve: {
     kraft: ['/assets/models/sleeve/kraft/base.webp'],
@@ -904,6 +1136,7 @@ const MaterialTexturesUrls = {
     uncoated_white: ['/assets/models/sleeve/uncoated-white/base.webp'],
     microflute_kraft: ['/assets/models/sleeve/microflute-kraft/side.webp'],
     microflute_white: ['/assets/models/sleeve/microflute-white/side.webp'],
+    base_roughness: ['/assets/models/sleeve/textures/base.webp'],
   },
   selefLockTray: {
     kraft: ['/assets/models/selef-lock-tray/kraft/base.webp'],
@@ -915,6 +1148,31 @@ const MaterialTexturesUrls = {
     microflute_white: [
       '/assets/models/selef-lock-tray/microflute-white/side.webp',
     ],
+    base_roughness: ['/assets/models/sleeve/textures/base.webp'],
+  },
+  lidAndBase: {
+    kraft: ['/assets/models/lid-and-base/kraft/base.webp'],
+    coated_white: ['/assets/models/lid-and-base/coated-white/base.webp'],
+    uncoated_white: ['/assets/models/lid-and-base/uncoated-white/base.webp'],
+    microflute_kraft: [
+      '/assets/models/lid-and-base/microflute-kraft/side.webp',
+    ],
+    microflute_white: [
+      '/assets/models/lid-and-base/microflute-white/side.webp',
+    ],
+    base_roughness: ['/assets/models/sleeve/textures/base.webp'],
+  },
+  headerCard: {
+    kraft: ['/assets/models/header-card/kraft/base.webp'],
+    coated_white: ['/assets/models/header-card/coated-white/base.webp'],
+    uncoated_white: ['/assets/models/header-card/uncoated-white/base.webp'],
+    microflute_kraft: [
+      '/assets/models/header-card/microflute-kraft/side.webp',
+    ],
+    microflute_white: [
+      '/assets/models/header-card/microflute-white/side.webp',
+    ],
+    base_roughness: ['/assets/models/sleeve/textures/base.webp'],
   },
 };
 
@@ -940,4 +1198,45 @@ export const preloadPrintTextures = () => {
       });
     });
   });
+};
+
+export const preloadSingleModelTextures = (model) => {
+  Object.keys(PrintSpecUrls[model]).forEach((material) => {
+    PrintSpecUrls[model][material].forEach((url) => {
+      requestIdleCallback(() => {
+        useTexture.preload(url);
+      });
+    });
+  });
+};
+
+let modelsDirNames = [
+  'buffer-lid',
+  'crash-lock-base',
+  'mailer',
+  'selef-lock-tray',
+  'skillet',
+  'sleeve',
+  'tuckend',
+  'header-card',
+  'lid-and-base'
+];
+export const preloadThisTextureForAllModels = (texturePath) => {
+  if (texturePath && typeof texturePath === 'string') {
+    modelsDirNames.forEach((modalDirName) => {
+      let texturePathArr = texturePath?.split('/');
+      texturePathArr[3] = modalDirName;
+      const newTexturePath = texturePathArr.join('/');
+      requestIdleCallback(() => {
+        useTexture.preload(newTexturePath);
+      });
+      if (modalDirName === 'lid-and-base') {
+        texturePathArr[3] = `lid_${modalDirName}`;
+        const lidNewTexturePath = texturePathArr.join('/');
+        requestIdleCallback(() => {
+          useTexture.preload(lidNewTexturePath);
+        });
+      }
+    });
+  }
 };

@@ -17,15 +17,17 @@ import { useGraph } from '@react-three/fiber';
 import {
   preloadMaterialTextures,
   preloadPrintTextures,
+  preloadSingleModelTextures,
   preloadTextures,
+  preloadThisTextureForAllModels,
 } from '../../lib/utils';
 
 export function Tuckend(props) {
   // useEffect(() => {
   //   preloadTextures()
   // }, [])
-  const group = React.useRef();
   const { scene, animations } = useGLTF('/assets/models/tuckend/tuckend.glb');
+  const group = React.useRef();
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const { actions } = useAnimations(animations, group);
@@ -91,17 +93,15 @@ export function Tuckend(props) {
   let sideTexturePath = '';
 
   if (print !== 'none') {
-    outsideBaseTexturePath = `/assets/models/tuckend/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/outside_${print}.webp`;
+    outsideBaseTexturePath = `/assets/models/tuckend/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/outside_${print}.webp`;
   } else {
-    outsideBaseTexturePath = `/assets/models/tuckend/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
+    outsideBaseTexturePath = `/assets/models/tuckend/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
   }
 
   console.log('OUTSIDE BASE TEXT PATH:', outsideBaseTexturePath);
@@ -110,17 +110,15 @@ export function Tuckend(props) {
   outsideBaseTexture.colorSpace = SRGBColorSpace;
 
   if (print !== 'none' && printSurface === 'outside-inside') {
-    insideBaseTexturePath = `/assets/models/tuckend/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/inside_${print}.webp`;
+    insideBaseTexturePath = `/assets/models/tuckend/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/inside_${print}.webp`;
   } else {
-    insideBaseTexturePath = `/assets/models/tuckend/${
-      material.includes('white')
-        ? material.replaceAll('microflute-', 'coated-')
-        : material.replaceAll('microflute-', '')
-    }/base.webp`;
+    insideBaseTexturePath = `/assets/models/tuckend/${material.includes('white')
+      ? material.replaceAll('microflute-', 'coated-')
+      : material.replaceAll('microflute-', '')
+      }/base.webp`;
   }
 
   const insideBaseTexture = useTexture(insideBaseTexturePath);
@@ -142,11 +140,29 @@ export function Tuckend(props) {
   let goldFoil_opacity = 0;
   let spotgloss_opacity = 0;
   let bumpMap = null;
-  const embossingTexture = useTexture(
-    '/assets/models/tuckend/textures/embossing_OUTSIDE.png'
-  );
+
+  const embossingTexturePath = finishing.embossing
+    ? '/assets/models/tuckend/textures/embossing_OUTSIDE.png'
+    : '/assets/models/tuckend/textures/base.webp';
+
+  const coatingTexturePath = coating !== 'none'
+    ? '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
+    : '/assets/models/tuckend/textures/base.webp';
+
+  const spotGlossNormalTexturePath = finishing.spotGloss
+    ? '/assets/models/tuckend/textures/spotgloss_Normal.webp'
+    : '/assets/models/tuckend/textures/base.webp';
+
+  const embossingTexture = useTexture(embossingTexturePath);
+  const coatingTexture = useTexture(coatingTexturePath);
+  const spotGlossNormalTexture = useTexture(spotGlossNormalTexturePath);
 
   embossingTexture.flipY = false;
+  coatingTexture.flipY = false;
+  spotGlossNormalTexture.flipY = false;
+
+
+
   if (!finishing.none) {
     if (finishing.goldFoil) goldFoil_opacity = 1;
     if (finishing.spotGloss) spotgloss_opacity = 1;
@@ -156,16 +172,9 @@ export function Tuckend(props) {
   let clearCoat = 0;
   let clearCoatRoughness = 0;
 
-  const spotGlossNormalTexture = useTexture(
-    '/assets/models/tuckend/textures/spotgloss_Normal.webp'
-  );
 
-  spotGlossNormalTexture.flipY = false;
 
-  const coatingTexture = useTexture(
-    '/assets/models/tuckend/textures/outside_coating_gloss_OMR.webp'
-  );
-  coatingTexture.flipY = false;
+
 
   if (coating !== 'none') {
     if (coating === 'gloss') {
@@ -217,11 +226,34 @@ export function Tuckend(props) {
   if (material === 'uncoated-white') metalnessVal = 0.3;
   else if (material.includes('kraft')) metalnessVal = 0.2;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+    spotGlossNormalTexturePath
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('tuckend');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -245,7 +277,7 @@ export function Tuckend(props) {
                 map={outsideBaseTexture}
                 bumpMap={bumpMap}
                 bumpScale={15}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 roughnessMap={roughnessMapOutside}
@@ -261,7 +293,7 @@ export function Tuckend(props) {
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 roughnessMap={
@@ -297,8 +329,8 @@ export function Tuckend(props) {
               material-transparent={true}
               material-opacity={spotgloss_opacity}
               skeleton={nodes.Mesh_0004_5.skeleton}
-              material-normalMap={spotGlossNormalTexture}
-              material-normalScale= {[0, 0.1]}
+              material-normalMap={finishing.spotGloss ? spotGlossNormalTexture : null}
+              material-normalScale={[0, 0.1]}
             />
           </group>
         </group>

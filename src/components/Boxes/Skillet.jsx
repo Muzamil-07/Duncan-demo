@@ -11,7 +11,12 @@ import {
 } from '../../lib/store/features/box/boxSlice';
 import { LoopOnce, RepeatWrapping, SRGBColorSpace } from 'three';
 import { roughness } from 'three/examples/jsm/nodes/Nodes.js';
-import { preloadMaterialTextures, preloadPrintTextures } from '../../lib/utils';
+import {
+  preloadMaterialTextures,
+  preloadPrintTextures,
+  preloadSingleModelTextures,
+  preloadThisTextureForAllModels,
+} from '../../lib/utils';
 
 export function Skillet(props) {
   const group = useRef();
@@ -149,25 +154,30 @@ export function Skillet(props) {
   let goldFoil_opacity = 0;
   let bumpMap = null;
 
-  const spotGlossNormalTexture = useTexture(
-    '/assets/models/skillet/textures/spotgloss_Normal.webp'
-  );
-  spotGlossNormalTexture.flipY = false;
+  const embossingTexturePath = finishing.embossing
+  ? '/assets/models/skillet/textures/embossing_OUTSIDE.webp'
+  : '/assets/models/skillet/textures/base.webp';
 
-  const embossingTexture = useTexture(
-    '/assets/models/skillet/textures/embossing_OUTSIDE.webp'
-  );
+const coatingTexturePath = coating !== 'none'
+  ? '/assets/models/skillet/textures/outside_coating_gloss_OMR.webp'
+  : '/assets/models/skillet/textures/base.webp';
 
-  embossingTexture.flipY = false;
+const spotGlossNormalTexturePath = finishing.spotGloss
+  ? '/assets/models/skillet/textures/spotgloss_Normal.webp'
+  : '/assets/models/skillet/textures/base.webp';
+
+const embossingTexture = useTexture(embossingTexturePath);
+const coatingTexture = useTexture(coatingTexturePath);
+const spotGlossNormalTexture = useTexture(spotGlossNormalTexturePath);
+
+embossingTexture.flipY = false;
+coatingTexture.flipY = false;
+spotGlossNormalTexture.flipY = false;
+
 
   let clearCoat = 0;
   let clearCoatRoughness = 0;
-  const coatingTexture = useTexture(
-    '/assets/models/skillet/textures/outside_coating_gloss_OMR.webp'
-  );
-
-  coatingTexture.flipY = false;
-
+  
   if (coating !== 'none') {
     if (coating === 'gloss') {
       clearCoat = 1;
@@ -206,11 +216,34 @@ export function Skillet(props) {
   sideBaseTexture.colorSpace = SRGBColorSpace;
   sideBaseTexture.wrapS = RepeatWrapping;
 
+  // preload the applied textures and materials for all the models
+  useEffect(() => {
+    setTimeout(() => {
+      preloadThisTextureForAllModels(outsideBaseTexturePath);
+      preloadThisTextureForAllModels(insideBaseTexturePath);
+      preloadThisTextureForAllModels(sideBaseTexture);
+      preloadThisTextureForAllModels(roughnessMapOutsideTexturePath);
+      preloadThisTextureForAllModels(roughnessMapInsideTexturePath);
+      preloadThisTextureForAllModels(embossingTexturePath);
+      preloadThisTextureForAllModels(coatingTexturePath);
+      preloadThisTextureForAllModels(spotGlossNormalTexturePath);
+    }, 0);
+  }, [
+    outsideBaseTexture,
+    insideBaseTexturePath,
+    sideBaseTexturePath,
+    roughnessMapOutsideTexturePath,
+    roughnessMapInsideTexturePath,
+    coatingTexture,
+    spotGlossNormalTexturePath
+  ]);
+  // preload this model all textures and materials
   useEffect(() => {
     setTimeout(() => {
       console.log('SETTIMEOUT DONE----------------------');
       preloadMaterialTextures();
-      preloadPrintTextures();
+      preloadSingleModelTextures('skillet');
+      // preloadPrintTextures();
       // preloadTextures()
     }, 0);
     console.log('DONE----------------------');
@@ -232,7 +265,7 @@ export function Skillet(props) {
                 map={outsideBaseTexture}
                 bumpMap={bumpMap}
                 bumpScale={15}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}
@@ -248,7 +281,7 @@ export function Skillet(props) {
             >
               <meshPhysicalMaterial
                 map={insideBaseTexture}
-                clearcoatMap={coatingTexture}
+                clearcoatMap={coating !== 'none' ? coatingTexture : null}
                 clearcoat={clearCoat}
                 clearcoatRoughness={clearCoatRoughness}
                 metalness={metalnessVal}
